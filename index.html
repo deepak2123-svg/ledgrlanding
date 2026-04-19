@@ -1,0 +1,404 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ledgr — Academic Tracking for Coaching Centres</title>
+  <meta name="description" content="Every class. Every teacher. One place. Ledgr gives coaching centres real-time visibility into teaching activity — no WhatsApp, no Excel." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #0f1f18;
+      --panel:    #152b22;
+      --card:     #1a3829;
+      --border:   #1f4a30;
+      --green:    #1b8a4c;
+      --mint:     #34d077;
+      --text:     #e8f4ee;
+      --muted:    #7baa8e;
+      --radius:   16px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ───────────────────────────────── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 4rem 1.5rem 6rem;
+      position: relative;
+      text-align: center;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background:
+        radial-gradient(ellipse 60% 40% at 50% 20%, #1b8a4c22 0%, transparent 70%),
+        radial-gradient(ellipse 40% 30% at 80% 70%, #34d07711 0%, transparent 60%);
+      pointer-events: none;
+    }
+
+    .logo-mark {
+      width: 80px;
+      height: 80px;
+      background: var(--green);
+      border-radius: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin: 0 auto 1.5rem;
+      animation: fadeUp 0.6s ease both;
+    }
+
+    .logo-mark span {
+      font-family: 'Syne', sans-serif;
+      font-size: 40px;
+      font-weight: 800;
+      color: #fff;
+      line-height: 1;
+    }
+
+    .wordmark {
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(3rem, 8vw, 5.5rem);
+      font-weight: 800;
+      color: #fff;
+      letter-spacing: -0.02em;
+      line-height: 1;
+      animation: fadeUp 0.6s 0.1s ease both;
+    }
+
+    .tagline {
+      margin-top: 1.25rem;
+      font-size: clamp(1rem, 2.5vw, 1.25rem);
+      color: var(--muted);
+      font-weight: 400;
+      animation: fadeUp 0.6s 0.2s ease both;
+    }
+
+    .hero-desc {
+      max-width: 480px;
+      margin: 1.5rem auto 0;
+      font-size: 1rem;
+      line-height: 1.7;
+      color: var(--muted);
+      animation: fadeUp 0.6s 0.3s ease both;
+    }
+
+    /* ── PORTAL CARDS ───────────────────────── */
+    .portals {
+      display: flex;
+      gap: 1.25rem;
+      margin-top: 3.5rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      animation: fadeUp 0.6s 0.4s ease both;
+    }
+
+    .portal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 2rem 2.25rem;
+      width: 260px;
+      text-align: left;
+      text-decoration: none;
+      color: var(--text);
+      transition: border-color 0.2s, transform 0.2s, background 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .portal-card::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, #34d07708 0%, transparent 60%);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .portal-card:hover {
+      border-color: var(--mint);
+      background: #1f3e2e;
+      transform: translateY(-3px);
+    }
+
+    .portal-card:hover::after { opacity: 1; }
+
+    .portal-icon {
+      width: 44px;
+      height: 44px;
+      background: #0f2b1e;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.25rem;
+    }
+
+    .portal-icon svg { width: 22px; height: 22px; stroke: var(--mint); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .portal-label {
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 0.4rem;
+    }
+
+    .portal-title {
+      font-family: 'Syne', sans-serif;
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: #fff;
+      margin-bottom: 0.6rem;
+    }
+
+    .portal-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    .portal-arrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 1.25rem;
+      font-size: 0.875rem;
+      font-weight: 600;
+      color: var(--mint);
+      transition: gap 0.2s;
+    }
+
+    .portal-card:hover .portal-arrow { gap: 10px; }
+
+    /* ── FEATURES ────────────────────────────── */
+    .features {
+      padding: 5rem 1.5rem;
+      max-width: 860px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      text-align: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: var(--mint);
+      margin-bottom: 0.75rem;
+    }
+
+    .section-title {
+      text-align: center;
+      font-family: 'Syne', sans-serif;
+      font-size: clamp(1.75rem, 4vw, 2.5rem);
+      font-weight: 800;
+      color: #fff;
+      margin-bottom: 3rem;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+    }
+
+    .feat {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+    }
+
+    .feat-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--mint);
+      margin-bottom: 1rem;
+    }
+
+    .feat-title {
+      font-weight: 600;
+      font-size: 1rem;
+      color: #fff;
+      margin-bottom: 0.4rem;
+    }
+
+    .feat-desc {
+      font-size: 0.875rem;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    /* ── FOOTER ─────────────────────────────── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 1.5rem;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: gap;
+      max-width: 860px;
+      margin: 0 auto;
+      gap: 1rem;
+    }
+
+    .footer-brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .footer-logo {
+      width: 30px;
+      height: 30px;
+      background: var(--green);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-logo span {
+      font-family: 'Syne', sans-serif;
+      font-size: 15px;
+      font-weight: 800;
+      color: #fff;
+    }
+
+    .footer-name {
+      font-family: 'Syne', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .footer-copy {
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    /* ── ANIMATIONS ─────────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 520px) {
+      .portal-card { width: 100%; max-width: 340px; }
+      footer { flex-direction: column; text-align: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="logo-mark"><span>L</span></div>
+
+    <h1 class="wordmark">Ledgr</h1>
+    <p class="tagline">Every class. Every teacher. One place.</p>
+    <p class="hero-desc">
+      Academic tracking for coaching centres — teachers log in seconds,
+      HQ sees everything in real time. No WhatsApp. No monthly Excel.
+    </p>
+
+    <!-- PORTAL CARDS -->
+    <div class="portals">
+
+      <a class="portal-card" href="https://teacherct.vercel.app" target="_blank" rel="noopener">
+        <div class="portal-icon">
+          <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="portal-label">For Teachers</div>
+        <div class="portal-title">Teacher App</div>
+        <div class="portal-desc">Log each class in 30 seconds — topic, time, and status. Works on any phone or PC.</div>
+        <div class="portal-arrow">Open app →</div>
+      </a>
+
+      <a class="portal-card" href="https://ctadmin.vercel.app" target="_blank" rel="noopener">
+        <div class="portal-icon">
+          <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+        </div>
+        <div class="portal-label">For Directors</div>
+        <div class="portal-title">Admin Panel</div>
+        <div class="portal-desc">Real-time view of every teacher, class, and institute. Manage invites and access controls.</div>
+        <div class="portal-arrow">Open panel →</div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- FEATURES -->
+  <section class="features">
+    <p class="section-label">What Ledgr does</p>
+    <h2 class="section-title">Built for how coaching centres actually work</h2>
+
+    <div class="features-grid">
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div class="feat-title">Calendar-based logging</div>
+        <div class="feat-desc">Teachers log past 7 days anytime — no need to log in the moment the class happens.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div class="feat-title">Smart time suggestions</div>
+        <div class="feat-desc">Ledgr learns each teacher's schedule and pre-fills timings so logging is even faster.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div class="feat-title">Real-time HQ dashboard</div>
+        <div class="feat-desc">Directors see entries the moment they're saved — no waiting for end-of-month sheets.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div class="feat-title">Role-based access</div>
+        <div class="feat-desc">Teachers see only their own data. Admins see everything across all institutes.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div class="feat-title">No app download needed</div>
+        <div class="feat-desc">Open the link and start logging. Works on Android, iPhone, Windows, and Mac.</div>
+      </div>
+      <div class="feat">
+        <div class="feat-dot"></div>
+        <div class="feat-title">Offline-ready</div>
+        <div class="feat-desc">Entries save locally when there's no internet and auto-sync when you're back online.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-brand">
+      <div class="footer-logo"><span>L</span></div>
+      <span class="footer-name">Ledgr</span>
+    </div>
+    <span class="footer-copy">Academic Tracking for Coaching Centres</span>
+  </footer>
+
+</body>
+</html>
