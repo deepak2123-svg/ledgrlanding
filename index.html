@@ -3,37 +3,45 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Ledgr Classes - Academic operations for coaching centres</title>
-  <meta name="description" content="Ledgr Classes helps coaching centres log classes, monitor syllabus progress, run mock tests, and review academic reports from one operating system." />
+  <title>Ledgr Classes - Class logging for coaching centres</title>
+  <meta name="description" content="Ledgr Classes helps coaching centres track daily classes, pending teachers, syllabus coverage, reports and mock-test workflows with a ClassLog-style academic control centre." />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --bg: #07130f;
-      --bg-2: #0b1a15;
-      --surface: #10251d;
-      --surface-2: #143025;
-      --surface-3: #182b31;
-      --line: #244739;
-      --line-2: #325c49;
-      --green: #22d176;
-      --green-soft: rgba(34, 209, 118, 0.14);
-      --teal: #52d2df;
-      --teal-soft: rgba(82, 210, 223, 0.14);
-      --amber: #f4b74d;
-      --amber-soft: rgba(244, 183, 77, 0.14);
-      --text: #f5fbf7;
-      --muted: #a7c4b4;
-      --dim: #7fa08e;
-      --ink: #07130f;
-      --danger: #ff8071;
-      --shadow: 0 24px 70px rgba(0, 0, 0, 0.28);
-      --radius: 8px;
-      --font-body: 'Plus Jakarta Sans', Arial, sans-serif;
-      --font-display: 'Syne', Arial, sans-serif;
+      --navy: #1A2F5A;
+      --navy-soft: #243D72;
+      --blue: #1D4ED8;
+      --blue-soft: #DBEAFE;
+      --blue-edge: #B8CCF7;
+      --teal: #0F6B78;
+      --teal-strong: #155E75;
+      --teal-soft: #E7F4F6;
+      --green: #1B8A4C;
+      --green-soft: #ECFDF5;
+      --amber: #B45309;
+      --amber-soft: #FEF3C7;
+      --red: #C93030;
+      --red-soft: #FDF1F1;
+      --bg: #F5F7FA;
+      --bg-warm: #F7F8F6;
+      --surface: #FFFFFF;
+      --surface-soft: #FAFBFC;
+      --border: #DDE3ED;
+      --border-strong: #BCC8DC;
+      --text: #111827;
+      --text-soft: #1F2937;
+      --text-muted: #4B5563;
+      --text-light: #6B7280;
+      --shadow-sm: 0 1px 4px rgba(15, 23, 42, 0.08), 0 1px 2px rgba(15, 23, 42, 0.05);
+      --shadow-md: 0 4px 14px rgba(15, 23, 42, 0.10), 0 2px 4px rgba(15, 23, 42, 0.05);
+      --shadow-lg: 0 18px 44px rgba(15, 23, 42, 0.12);
+      --radius: 14px;
+      --font-sans: "Inter", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      --font-display: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
     }
 
     html { scroll-behavior: smooth; }
@@ -41,27 +49,25 @@
     body {
       min-height: 100vh;
       background:
-        linear-gradient(90deg, rgba(82, 210, 223, 0.055) 0 1px, transparent 1px 100%),
-        linear-gradient(180deg, rgba(34, 209, 118, 0.04) 0 1px, transparent 1px 100%),
-        var(--bg);
-      background-size: 82px 82px;
+        radial-gradient(circle at 8% 0%, rgba(29, 78, 216, 0.08), transparent 32%),
+        linear-gradient(180deg, #FFFFFF 0%, var(--bg) 48%, #EEF3F7 100%);
       color: var(--text);
-      font-family: var(--font-body);
+      font-family: var(--font-sans);
       overflow-x: hidden;
     }
 
-    a { color: inherit; }
-
-    button,
-    input,
-    textarea,
-    select {
+    button, input, textarea {
       font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
     }
 
     .page {
       min-height: 100vh;
-      padding: 28px 22px 44px;
+      padding: 18px 18px 34px;
     }
 
     .shell {
@@ -70,30 +76,39 @@
     }
 
     .topbar {
+      min-height: 72px;
+      position: sticky;
+      top: 12px;
+      z-index: 40;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 18px;
-      margin-bottom: 58px;
+      gap: 16px;
+      padding: 12px 14px;
+      border: 1px solid rgba(221, 227, 237, 0.92);
+      border-radius: 18px;
+      background: rgba(255, 255, 255, 0.92);
+      box-shadow: var(--shadow-sm);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
     }
 
     .brand {
       display: inline-flex;
       align-items: center;
       gap: 12px;
-      text-decoration: none;
       min-width: 0;
     }
 
     .brand-mark {
-      width: 48px;
-      height: 48px;
-      border-radius: var(--radius);
+      width: 46px;
+      height: 46px;
+      border-radius: 14px;
       display: grid;
       place-items: center;
-      background: var(--green);
-      box-shadow: 0 16px 36px rgba(34, 209, 118, 0.24);
-      color: var(--ink);
+      background: linear-gradient(135deg, var(--teal) 0%, var(--green) 100%);
+      color: #FFFFFF;
+      box-shadow: 0 10px 22px rgba(15, 107, 120, 0.22);
       flex: 0 0 auto;
     }
 
@@ -104,110 +119,201 @@
       line-height: 1;
     }
 
-    .brand-text {
-      display: grid;
-      gap: 3px;
-      min-width: 0;
-    }
-
     .brand-name {
       font-family: var(--font-display);
-      font-size: 1.18rem;
+      font-size: 1.08rem;
       font-weight: 800;
-      line-height: 1;
       letter-spacing: 0;
+      color: var(--text);
       white-space: nowrap;
+      line-height: 1.1;
     }
 
-    .brand-tagline {
-      color: var(--dim);
+    .brand-sub {
+      color: var(--text-light);
       font-size: 0.78rem;
       font-weight: 700;
+      margin-top: 2px;
       white-space: nowrap;
     }
 
-    .top-actions {
+    .nav {
       display: flex;
       align-items: center;
       justify-content: flex-end;
-      flex-wrap: wrap;
-      gap: 10px;
+      gap: 8px;
     }
 
     .nav-link,
-    .login-chip {
-      min-height: 40px;
+    .login-button {
+      min-height: 42px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      border-radius: var(--radius);
-      padding: 0 13px;
-      text-decoration: none;
-      color: var(--muted);
-      font-size: 0.84rem;
-      font-weight: 800;
+      gap: 8px;
+      border-radius: 12px;
       border: 1px solid transparent;
       background: transparent;
+      color: var(--text-muted);
+      padding: 0 13px;
+      font-size: 0.9rem;
+      font-weight: 800;
+      cursor: pointer;
+      transition: border-color 0.15s ease, background 0.15s ease, color 0.15s ease;
     }
 
     .nav-link:hover,
-    .login-chip:hover {
+    .login-button:hover,
+    .login-button[aria-expanded="true"] {
+      border-color: var(--border);
+      background: var(--bg);
       color: var(--text);
-      border-color: rgba(167, 196, 180, 0.28);
-      background: rgba(16, 37, 29, 0.76);
     }
 
-    .login-chip {
+    .login-wrap {
+      position: relative;
+    }
+
+    .login-button {
+      background: var(--navy);
+      color: #FFFFFF;
+      border-color: var(--navy);
+      box-shadow: var(--shadow-sm);
+    }
+
+    .login-button:hover,
+    .login-button[aria-expanded="true"] {
+      background: var(--navy-soft);
+      color: #FFFFFF;
+      border-color: var(--navy-soft);
+    }
+
+    .login-menu {
+      position: absolute;
+      top: calc(100% + 10px);
+      right: 0;
+      width: min(330px, calc(100vw - 34px));
+      display: none;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
+      padding: 8px;
+      z-index: 50;
+    }
+
+    .login-menu.open {
+      display: grid;
+      gap: 4px;
+    }
+
+    .login-menu a {
+      display: grid;
+      grid-template-columns: 34px 1fr;
+      gap: 10px;
+      align-items: center;
+      min-height: 58px;
+      border-radius: 12px;
+      padding: 10px;
       color: var(--text);
-      border-color: rgba(34, 209, 118, 0.38);
-      background: rgba(34, 209, 118, 0.09);
+    }
+
+    .login-menu a:hover {
+      background: var(--bg);
+    }
+
+    .login-menu .mini-icon {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 0.78rem;
+      font-weight: 900;
+    }
+
+    .login-menu .class-icon {
+      background: var(--teal-soft);
+      color: var(--teal);
+    }
+
+    .login-menu .test-icon {
+      background: #ECFEFF;
+      color: #0891B2;
+    }
+
+    .login-menu .admin-icon {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .login-menu strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .login-menu span {
+      display: block;
+      color: var(--text-light);
+      font-size: 0.76rem;
+      font-weight: 650;
+      margin-top: 3px;
     }
 
     .hero {
-      min-height: 680px;
       display: grid;
-      align-content: start;
-      gap: 34px;
-      padding-bottom: 56px;
-      border-bottom: 1px solid rgba(167, 196, 180, 0.14);
-    }
-
-    .hero-copy-wrap {
-      width: min(900px, 100%);
+      grid-template-columns: minmax(0, 0.86fr) minmax(420px, 1fr);
+      gap: 28px;
+      align-items: center;
+      padding: 56px 0 42px;
     }
 
     .eyebrow {
-      color: var(--green);
-      font-size: 0.76rem;
-      font-weight: 800;
-      letter-spacing: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--teal);
+      background: var(--teal-soft);
+      border: 1px solid #C7E7EC;
+      border-radius: 999px;
+      padding: 7px 11px;
+      font-size: 0.75rem;
+      font-weight: 900;
       text-transform: uppercase;
-      margin-bottom: 18px;
     }
 
-    h1,
-    h2,
-    h3 {
+    .eyebrow::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--green);
+    }
+
+    h1, h2, h3 {
       font-family: var(--font-display);
       letter-spacing: 0;
-      overflow-wrap: break-word;
+      color: var(--text);
     }
 
     h1 {
-      font-size: 5.7rem;
-      line-height: 0.95;
+      max-width: 720px;
+      margin-top: 18px;
+      font-size: clamp(2.65rem, 5vw, 4.75rem);
+      line-height: 1.02;
       font-weight: 800;
-      max-width: 980px;
-      overflow-wrap: break-word;
     }
 
     .hero-copy {
-      margin-top: 24px;
-      max-width: 760px;
-      color: var(--muted);
-      font-size: 1.16rem;
-      line-height: 1.72;
-      overflow-wrap: break-word;
+      max-width: 650px;
+      margin-top: 18px;
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      line-height: 1.75;
     }
 
     .hero-actions {
@@ -215,209 +321,362 @@
       align-items: center;
       flex-wrap: wrap;
       gap: 12px;
-      margin-top: 30px;
+      margin-top: 26px;
     }
 
-    .btn {
+    .button {
       min-height: 48px;
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      gap: 9px;
-      border-radius: var(--radius);
-      padding: 0 18px;
+      gap: 8px;
+      border-radius: 12px;
       border: 1px solid transparent;
-      text-decoration: none;
-      font-size: 0.94rem;
-      font-weight: 800;
+      padding: 0 16px;
+      font-size: 0.95rem;
+      font-weight: 850;
       cursor: pointer;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-      white-space: nowrap;
+      transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
     }
 
-    .btn:hover { transform: translateY(-1px); }
+    .button:hover {
+      transform: translateY(-1px);
+    }
 
-    .btn-primary {
-      color: var(--ink);
+    .button-primary {
       background: var(--green);
+      color: #FFFFFF;
+      box-shadow: 0 12px 22px rgba(27, 138, 76, 0.18);
     }
 
-    .btn-secondary {
+    .button-primary:hover {
+      background: #15703F;
+    }
+
+    .button-secondary {
+      background: var(--surface);
       color: var(--text);
-      border-color: rgba(167, 196, 180, 0.28);
-      background: rgba(16, 37, 29, 0.78);
+      border-color: var(--border);
+      box-shadow: var(--shadow-sm);
     }
 
-    .btn-quiet {
-      color: var(--muted);
-      border-color: transparent;
-      background: transparent;
+    .button-secondary:hover {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow-md);
     }
 
-    .hero-dashboard {
-      border: 1px solid rgba(167, 196, 180, 0.18);
-      border-radius: var(--radius);
-      background: rgba(11, 26, 21, 0.88);
-      box-shadow: var(--shadow);
+    .hero-proof {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 26px;
+      max-width: 640px;
+    }
+
+    .proof-item {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface);
+      padding: 12px 13px;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .proof-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 1.08rem;
+      font-weight: 900;
+      line-height: 1.1;
+    }
+
+    .proof-item span {
+      display: block;
+      color: var(--text-light);
+      font-size: 0.78rem;
+      font-weight: 700;
+      line-height: 1.4;
+      margin-top: 5px;
+    }
+
+    .dashboard {
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: var(--shadow-lg);
       overflow: hidden;
     }
 
-    .dashboard-head {
+    .dash-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 14px;
+      align-items: flex-start;
+      padding: 18px 18px 14px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FBFF 100%);
+    }
+
+    .dash-title {
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      gap: 18px;
-      padding: 20px 22px;
-      border-bottom: 1px solid rgba(167, 196, 180, 0.14);
-      background: rgba(7, 19, 15, 0.56);
+      gap: 12px;
+      min-width: 0;
     }
 
-    .dashboard-title {
+    .dash-icon {
+      width: 40px;
+      height: 40px;
+      border-radius: 12px;
       display: grid;
-      gap: 5px;
+      place-items: center;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 900;
+      flex: 0 0 auto;
     }
 
-    .dashboard-title strong {
+    .dash-title strong {
+      display: block;
       font-size: 1rem;
-      font-weight: 800;
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.2;
     }
 
-    .dashboard-title span,
-    .dashboard-date {
-      color: var(--dim);
-      font-size: 0.82rem;
-      font-weight: 700;
-    }
-
-    .dashboard-grid {
-      display: grid;
-      grid-template-columns: 1.05fr 0.95fr;
-      gap: 0;
-    }
-
-    .dashboard-panel {
-      padding: 22px;
-      border-right: 1px solid rgba(167, 196, 180, 0.14);
-    }
-
-    .dashboard-panel:last-child { border-right: 0; }
-
-    .kpi-grid {
-      display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .kpi {
-      min-height: 112px;
-      border: 1px solid rgba(167, 196, 180, 0.16);
-      border-radius: var(--radius);
-      background: rgba(16, 37, 29, 0.74);
-      padding: 16px;
-      display: grid;
-      align-content: space-between;
-      gap: 12px;
-    }
-
-    .kpi span {
-      color: var(--dim);
-      font-size: 0.74rem;
-      font-weight: 800;
-      text-transform: uppercase;
-    }
-
-    .kpi strong {
-      font-family: var(--font-display);
-      font-size: 2rem;
-      line-height: 1;
-      letter-spacing: 0;
-    }
-
-    .kpi small {
-      color: var(--muted);
+    .dash-title span {
+      display: block;
+      color: var(--text-light);
       font-size: 0.78rem;
-      line-height: 1.4;
+      font-weight: 700;
+      margin-top: 3px;
     }
 
-    .worklist {
-      display: grid;
-      gap: 10px;
-    }
-
-    .work-row {
-      min-height: 52px;
-      display: grid;
-      grid-template-columns: 1fr auto;
-      align-items: center;
-      gap: 14px;
-      border: 1px solid rgba(167, 196, 180, 0.14);
-      border-radius: var(--radius);
-      background: rgba(7, 19, 15, 0.36);
-      padding: 12px 14px;
-    }
-
-    .work-row strong {
-      display: block;
-      font-size: 0.92rem;
-      margin-bottom: 4px;
-    }
-
-    .work-row span {
-      display: block;
-      color: var(--dim);
-      font-size: 0.8rem;
-      line-height: 1.45;
-    }
-
-    .pill {
-      min-height: 30px;
+    .status-pill {
+      min-height: 32px;
       display: inline-flex;
       align-items: center;
-      justify-content: center;
+      gap: 7px;
       border-radius: 999px;
-      padding: 0 10px;
-      color: var(--green);
       background: var(--green-soft);
-      font-size: 0.72rem;
-      font-weight: 800;
+      color: var(--green);
+      padding: 0 11px;
+      font-size: 0.76rem;
+      font-weight: 900;
       white-space: nowrap;
     }
 
-    .pill.teal {
-      color: var(--teal);
+    .status-pill::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .dash-body {
+      padding: 16px;
+      display: grid;
+      gap: 14px;
+    }
+
+    .health-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+
+    .health-card {
+      min-height: 104px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-soft);
+      padding: 13px;
+      display: grid;
+      align-content: space-between;
+      gap: 10px;
+    }
+
+    .health-card span {
+      color: var(--text-light);
+      font-size: 0.72rem;
+      font-weight: 850;
+      text-transform: uppercase;
+      line-height: 1.3;
+    }
+
+    .health-card strong {
+      font-family: var(--font-display);
+      font-size: 1.78rem;
+      line-height: 1;
+      color: var(--text);
+    }
+
+    .health-card small {
+      color: var(--text-light);
+      font-size: 0.76rem;
+      font-weight: 650;
+      line-height: 1.35;
+    }
+
+    .health-card.hot {
+      background: var(--red-soft);
+      border-color: #F5C7C7;
+    }
+
+    .health-card.hot strong,
+    .health-card.hot span {
+      color: var(--red);
+    }
+
+    .health-card.teal {
       background: var(--teal-soft);
+      border-color: #C7E7EC;
     }
 
-    .pill.amber {
-      color: var(--amber);
-      background: var(--amber-soft);
+    .health-card.teal strong,
+    .health-card.teal span {
+      color: var(--teal);
     }
 
-    .flow-list {
+    .dash-split {
       display: grid;
-      gap: 16px;
+      grid-template-columns: 1.1fr 0.9fr;
+      gap: 14px;
     }
 
-    .flow-item {
-      display: grid;
-      gap: 9px;
+    .panel {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      overflow: hidden;
     }
 
-    .flow-top {
+    .panel-head {
       display: flex;
       align-items: center;
       justify-content: space-between;
       gap: 12px;
-      color: var(--muted);
-      font-size: 0.84rem;
+      padding: 12px 14px;
+      border-bottom: 1px solid var(--border);
+      background: #F8FAFC;
+    }
+
+    .panel-head strong {
+      font-size: 0.88rem;
+      font-weight: 900;
+      color: var(--text);
+    }
+
+    .panel-head span {
+      color: var(--text-light);
+      font-size: 0.76rem;
       font-weight: 800;
     }
 
-    .bar {
-      height: 10px;
+    .institute-list {
+      display: grid;
+    }
+
+    .institute-row {
+      display: grid;
+      grid-template-columns: 34px 1fr auto;
+      gap: 10px;
+      align-items: center;
+      min-height: 64px;
+      padding: 11px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .institute-row:last-child {
+      border-bottom: 0;
+    }
+
+    .row-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 10px;
+      display: grid;
+      place-items: center;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-size: 0.76rem;
+      font-weight: 900;
+    }
+
+    .row-badge.teal {
+      background: var(--teal-soft);
+      color: var(--teal);
+    }
+
+    .row-badge.amber {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .institute-row strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.9rem;
+      font-weight: 850;
+      line-height: 1.2;
+    }
+
+    .institute-row span {
+      display: block;
+      color: var(--text-light);
+      font-size: 0.76rem;
+      font-weight: 650;
+      margin-top: 4px;
+    }
+
+    .mini-pill {
+      min-height: 28px;
+      display: inline-flex;
+      align-items: center;
       border-radius: 999px;
-      background: rgba(167, 196, 180, 0.15);
+      padding: 0 9px;
+      background: var(--green-soft);
+      color: var(--green);
+      font-size: 0.72rem;
+      font-weight: 900;
+      white-space: nowrap;
+    }
+
+    .mini-pill.warn {
+      background: var(--amber-soft);
+      color: var(--amber);
+    }
+
+    .mini-pill.hot {
+      background: var(--red-soft);
+      color: var(--red);
+    }
+
+    .progress-list {
+      display: grid;
+      gap: 14px;
+      padding: 14px;
+    }
+
+    .progress-item {
+      display: grid;
+      gap: 8px;
+    }
+
+    .progress-top {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      color: var(--text-muted);
+      font-size: 0.8rem;
+      font-weight: 850;
+    }
+
+    .bar {
+      height: 9px;
+      border-radius: 999px;
+      background: #E8EEF5;
       overflow: hidden;
     }
 
@@ -425,305 +684,390 @@
       display: block;
       height: 100%;
       border-radius: inherit;
+      background: var(--teal);
+    }
+
+    .bar.blue span {
+      background: var(--blue);
+    }
+
+    .bar.green span {
       background: var(--green);
     }
 
-    .bar.teal span { background: var(--teal); }
-    .bar.amber span { background: var(--amber); }
-
     .section {
-      padding: 74px 0;
-      border-bottom: 1px solid rgba(167, 196, 180, 0.13);
+      padding: 42px 0;
+      border-top: 1px solid rgba(221, 227, 237, 0.86);
     }
 
     .section-head {
       display: grid;
-      grid-template-columns: minmax(0, 0.88fr) minmax(280px, 0.52fr);
-      gap: 38px;
+      grid-template-columns: minmax(0, 0.82fr) minmax(260px, 0.54fr);
       align-items: end;
-      margin-bottom: 28px;
-    }
-
-    .section-head > * {
-      min-width: 0;
+      gap: 30px;
+      margin-bottom: 20px;
     }
 
     .section-head h2 {
-      font-size: 3.4rem;
-      line-height: 1.02;
+      font-size: clamp(2rem, 4vw, 3.1rem);
+      line-height: 1.07;
       font-weight: 800;
       max-width: 760px;
     }
 
     .section-head p {
-      color: var(--muted);
+      color: var(--text-muted);
+      line-height: 1.7;
       font-size: 1rem;
-      line-height: 1.72;
     }
 
-    .outcome-grid,
-    .feature-grid,
-    .people-grid,
-    .login-grid {
+    .card-grid {
       display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       gap: 14px;
     }
 
-    .outcome-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
     .feature-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .people-grid {
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-    }
-
-    .login-grid {
-      grid-template-columns: repeat(5, minmax(0, 1fr));
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 14px;
     }
 
     .card {
       min-width: 0;
-      border: 1px solid rgba(167, 196, 180, 0.16);
-      border-radius: var(--radius);
-      background: rgba(16, 37, 29, 0.78);
-      padding: 20px;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      background: var(--surface);
+      padding: 18px;
+      box-shadow: var(--shadow-sm);
     }
 
-    .card-strong {
-      border-color: rgba(34, 209, 118, 0.36);
-      background: rgba(20, 48, 37, 0.84);
+    .card.featured {
+      border-color: #BBDDE4;
+      background: linear-gradient(180deg, #FFFFFF 0%, #F3FBFC 100%);
+    }
+
+    .icon-box {
+      width: 40px;
+      height: 40px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: var(--blue-soft);
+      color: var(--blue);
+      font-weight: 900;
+      margin-bottom: 16px;
+    }
+
+    .icon-box.teal {
+      background: var(--teal-soft);
+      color: var(--teal);
+    }
+
+    .icon-box.green {
+      background: var(--green-soft);
+      color: var(--green);
+    }
+
+    .icon-box.amber {
+      background: var(--amber-soft);
+      color: var(--amber);
     }
 
     .card strong {
       display: block;
-      font-family: var(--font-display);
-      font-size: 1.18rem;
+      color: var(--text);
+      font-size: 1.02rem;
+      font-weight: 900;
       line-height: 1.25;
-      letter-spacing: 0;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
     }
 
     .card p {
-      color: var(--muted);
-      font-size: 0.94rem;
-      line-height: 1.65;
+      color: var(--text-muted);
+      font-size: 0.92rem;
+      line-height: 1.62;
     }
 
-    .accent {
-      width: 38px;
-      height: 38px;
-      border-radius: var(--radius);
+    .classlog-panel {
       display: grid;
-      place-items: center;
-      color: var(--green);
-      background: var(--green-soft);
-      font-weight: 800;
-      margin-bottom: 18px;
-    }
-
-    .accent.teal {
-      color: var(--teal);
-      background: var(--teal-soft);
-    }
-
-    .accent.amber {
-      color: var(--amber);
-      background: var(--amber-soft);
-    }
-
-    .product-layout {
-      display: grid;
-      grid-template-columns: minmax(0, 0.82fr) minmax(320px, 0.58fr);
-      gap: 18px;
+      grid-template-columns: minmax(0, 0.95fr) minmax(320px, 0.72fr);
+      gap: 14px;
       align-items: stretch;
     }
 
-    .product-story {
-      border: 1px solid rgba(167, 196, 180, 0.16);
-      border-radius: var(--radius);
-      background: rgba(16, 37, 29, 0.78);
-      padding: 28px;
-      display: grid;
-      align-content: space-between;
-      gap: 28px;
-      min-height: 370px;
+    .workflow {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
     }
 
-    .product-story h3 {
-      font-size: 2.2rem;
-      line-height: 1.05;
-      font-weight: 800;
-      max-width: 560px;
-    }
-
-    .product-story p {
-      color: var(--muted);
-      font-size: 1.02rem;
-      line-height: 1.72;
-      max-width: 650px;
-    }
-
-    .story-list {
-      display: grid;
-      gap: 10px;
-      margin-top: 18px;
-    }
-
-    .story-list li {
-      list-style: none;
-      color: var(--muted);
-      line-height: 1.55;
-      display: grid;
-      grid-template-columns: 22px 1fr;
-      gap: 8px;
-    }
-
-    .story-list li::before {
-      content: "";
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--green);
-      margin-top: 9px;
-    }
-
-    .side-stack {
-      display: grid;
-      gap: 14px;
-    }
-
-    .mini-metric {
-      border: 1px solid rgba(167, 196, 180, 0.16);
-      border-radius: var(--radius);
-      background: rgba(7, 19, 15, 0.38);
-      padding: 18px;
-    }
-
-    .mini-metric span {
-      display: block;
-      color: var(--dim);
-      font-size: 0.74rem;
-      font-weight: 800;
-      text-transform: uppercase;
+    .workflow h3 {
+      font-size: 1.5rem;
+      line-height: 1.2;
       margin-bottom: 10px;
     }
 
-    .mini-metric strong {
-      font-family: var(--font-display);
-      font-size: 1.62rem;
-      line-height: 1.1;
-      letter-spacing: 0;
+    .workflow p {
+      color: var(--text-muted);
+      line-height: 1.7;
+      max-width: 680px;
     }
 
-    .contact-layout {
+    .step-list {
       display: grid;
-      grid-template-columns: minmax(0, 0.72fr) minmax(360px, 0.68fr);
-      gap: 24px;
-      align-items: start;
-    }
-
-    .contact-copy {
-      padding-top: 6px;
-    }
-
-    .contact-copy h2 {
-      font-size: 3.2rem;
-      line-height: 1.03;
-      max-width: 640px;
-    }
-
-    .contact-copy p {
-      color: var(--muted);
-      font-size: 1rem;
-      line-height: 1.72;
+      gap: 11px;
       margin-top: 18px;
-      max-width: 560px;
     }
 
-    .contact-points {
+    .step {
       display: grid;
-      gap: 12px;
-      margin-top: 26px;
-    }
-
-    .contact-point {
-      display: grid;
-      grid-template-columns: 34px 1fr;
+      grid-template-columns: 38px 1fr;
       gap: 12px;
       align-items: start;
-      color: var(--muted);
-      line-height: 1.55;
+      padding: 13px;
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      background: var(--surface-soft);
     }
 
-    .contact-point span:first-child {
-      width: 34px;
-      height: 34px;
-      border-radius: var(--radius);
+    .step-number {
+      width: 38px;
+      height: 38px;
       display: grid;
       place-items: center;
-      color: var(--ink);
-      background: var(--green);
-      font-weight: 800;
+      border-radius: 12px;
+      background: var(--teal);
+      color: #FFFFFF;
+      font-size: 0.86rem;
+      font-weight: 900;
     }
 
-    .form-panel {
-      border: 1px solid rgba(167, 196, 180, 0.18);
-      border-radius: var(--radius);
-      background: rgba(16, 37, 29, 0.86);
-      padding: 22px;
-      box-shadow: var(--shadow);
+    .step strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.96rem;
+      font-weight: 900;
+      margin-bottom: 4px;
     }
 
-    .form-grid {
+    .step span {
+      display: block;
+      color: var(--text-muted);
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+
+    .report-card {
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      background: var(--surface);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
+    }
+
+    .report-card .panel-head {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: #FFFFFF;
+    }
+
+    .report-card .panel-head strong,
+    .report-card .panel-head span {
+      color: #FFFFFF;
+    }
+
+    .report-body {
+      padding: 16px;
       display: grid;
-      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+    }
+
+    .report-row {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px;
+      align-items: center;
+      padding: 12px;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface-soft);
+    }
+
+    .report-row strong {
+      display: block;
+      font-size: 0.9rem;
+      font-weight: 900;
+    }
+
+    .report-row span {
+      display: block;
+      margin-top: 3px;
+      color: var(--text-light);
+      font-size: 0.76rem;
+      font-weight: 700;
+    }
+
+    .mock-module {
+      border: 1px solid #BFE9F0;
+      border-radius: 20px;
+      background: linear-gradient(135deg, #FFFFFF 0%, #F0FBFC 100%);
+      box-shadow: var(--shadow-sm);
+      padding: 20px;
+    }
+
+    .mock-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
       gap: 14px;
+      margin-top: 18px;
+    }
+
+    .cta-band {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      align-items: center;
+      gap: 18px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: var(--surface);
+      box-shadow: var(--shadow-md);
+      padding: 24px;
+    }
+
+    .cta-band h2 {
+      font-size: clamp(1.7rem, 3vw, 2.35rem);
+      line-height: 1.12;
+      margin-bottom: 8px;
+    }
+
+    .cta-band p {
+      color: var(--text-muted);
+      line-height: 1.65;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      padding: 24px 0 0;
+      color: var(--text-light);
+      font-size: 0.86rem;
+      font-weight: 700;
+    }
+
+    .footer-links {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    .modal {
+      position: fixed;
+      inset: 0;
+      z-index: 100;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 18px;
+      background: rgba(15, 23, 42, 0.42);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+    }
+
+    .modal.open {
+      display: flex;
+    }
+
+    .modal-panel {
+      width: min(460px, 100%);
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      box-shadow: 0 28px 70px rgba(15, 23, 42, 0.26);
+      overflow: hidden;
+    }
+
+    .modal-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 20px 20px 14px;
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, #FFFFFF 0%, #F8FAFC 100%);
+    }
+
+    .modal-head h2 {
+      font-size: 1.42rem;
+      line-height: 1.18;
+    }
+
+    .modal-head p {
+      color: var(--text-muted);
+      font-size: 0.9rem;
+      line-height: 1.55;
+      margin-top: 6px;
+    }
+
+    .close-button {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text-muted);
+      font-size: 1.4rem;
+      line-height: 1;
+      cursor: pointer;
+      flex: 0 0 auto;
+    }
+
+    .lead-form {
+      padding: 18px 20px 20px;
+      display: grid;
+      gap: 13px;
     }
 
     .field {
       display: grid;
-      gap: 7px;
-    }
-
-    .field.full {
-      grid-column: 1 / -1;
+      gap: 6px;
     }
 
     .field label {
-      color: var(--muted);
-      font-size: 0.8rem;
-      font-weight: 800;
+      color: var(--text-muted);
+      font-size: 0.78rem;
+      font-weight: 850;
+      text-transform: uppercase;
     }
 
     .field input,
-    .field textarea,
-    .field select {
+    .field textarea {
       width: 100%;
-      min-height: 46px;
-      border-radius: var(--radius);
-      border: 1px solid rgba(167, 196, 180, 0.18);
-      background: rgba(7, 19, 15, 0.66);
+      min-height: 48px;
+      border: 1.5px solid var(--border);
+      border-radius: 12px;
+      background: var(--surface);
       color: var(--text);
-      padding: 0 12px;
+      padding: 0 13px;
       outline: none;
+      transition: border-color 0.15s ease, box-shadow 0.15s ease;
     }
 
     .field textarea {
-      min-height: 106px;
-      resize: vertical;
+      min-height: 104px;
       padding-top: 12px;
       line-height: 1.55;
+      resize: vertical;
     }
 
     .field input:focus,
-    .field textarea:focus,
-    .field select:focus {
-      border-color: rgba(34, 209, 118, 0.7);
-      box-shadow: 0 0 0 3px rgba(34, 209, 118, 0.12);
+    .field textarea:focus {
+      border-color: var(--teal);
+      box-shadow: 0 0 0 4px rgba(15, 107, 120, 0.12);
     }
 
     .hidden-field {
@@ -740,140 +1084,58 @@
     }
 
     .form-actions {
-      display: flex;
-      align-items: center;
-      gap: 14px;
-      margin-top: 16px;
-      flex-wrap: wrap;
+      display: grid;
+      gap: 10px;
+      margin-top: 4px;
     }
 
     .form-status {
-      color: var(--muted);
-      font-size: 0.86rem;
+      min-height: 20px;
+      color: var(--text-light);
+      font-size: 0.84rem;
       line-height: 1.45;
-      min-height: 22px;
-    }
-
-    .form-status.success { color: var(--green); }
-    .form-status.error { color: var(--danger); }
-
-    .login-section {
-      padding-bottom: 36px;
-    }
-
-    .login-card {
-      display: grid;
-      align-content: space-between;
-      min-height: 194px;
-      text-decoration: none;
-      transition: transform 0.18s ease, border-color 0.18s ease, background 0.18s ease;
-    }
-
-    .login-card:hover {
-      transform: translateY(-2px);
-      border-color: rgba(34, 209, 118, 0.52);
-      background: rgba(20, 48, 37, 0.88);
-    }
-
-    .login-card.test:hover {
-      border-color: rgba(82, 210, 223, 0.58);
-    }
-
-    .login-card.admin:hover {
-      border-color: rgba(244, 183, 77, 0.58);
-    }
-
-    .login-label {
-      color: var(--green);
-      font-size: 0.73rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      margin-bottom: 8px;
-    }
-
-    .login-card.test .login-label { color: var(--teal); }
-    .login-card.admin .login-label { color: var(--amber); }
-
-    .login-card strong {
-      font-size: 1.15rem;
-    }
-
-    .login-action {
-      color: var(--text);
-      font-size: 0.9rem;
-      font-weight: 800;
-      margin-top: 22px;
-    }
-
-    .footer {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      gap: 18px;
-      color: var(--dim);
-      font-size: 0.86rem;
-      padding-top: 28px;
-    }
-
-    .footer-links {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-    }
-
-    .footer-links a {
-      text-decoration: none;
-      color: var(--muted);
       font-weight: 700;
     }
 
+    .form-status.success { color: var(--green); }
+    .form-status.error { color: var(--red); }
+
+    body.modal-open {
+      overflow: hidden;
+    }
+
     @media (max-width: 1020px) {
-      .topbar {
-        align-items: flex-start;
-        flex-direction: column;
-        margin-bottom: 48px;
+      .nav-link {
+        display: none;
       }
 
-      .top-actions {
-        justify-content: flex-start;
-      }
-
-      h1 {
-        font-size: 4.2rem;
-      }
-
-      .hero {
-        min-height: auto;
-      }
-
-      .dashboard-grid,
+      .hero,
       .section-head,
-      .product-layout,
-      .contact-layout {
+      .classlog-panel,
+      .cta-band {
         grid-template-columns: 1fr;
       }
 
-      .dashboard-panel {
-        border-right: 0;
-        border-bottom: 1px solid rgba(167, 196, 180, 0.14);
+      .hero {
+        padding-top: 44px;
       }
 
-      .dashboard-panel:last-child { border-bottom: 0; }
-
-      .outcome-grid,
+      .card-grid,
       .feature-grid,
-      .people-grid {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-      }
-
-      .login-grid {
+      .mock-grid {
         grid-template-columns: repeat(2, minmax(0, 1fr));
       }
     }
 
-    @media (max-width: 700px) {
+    @media (max-width: 760px) {
       .page {
-        padding: 20px 14px 34px;
+        padding: 12px 12px 28px;
+      }
+
+      .topbar {
+        top: 8px;
+        padding: 10px;
+        border-radius: 16px;
       }
 
       .brand-mark {
@@ -882,70 +1144,80 @@
       }
 
       .brand-name {
-        font-size: 1rem;
+        font-size: 0.98rem;
       }
 
-      .brand-tagline {
-        font-size: 0.7rem;
-      }
-
-      .nav-link {
+      .brand-sub {
         display: none;
       }
 
-      .login-chip {
-        min-height: 38px;
+      .topbar > .nav > .open-demo {
+        display: none;
+      }
+
+      .login-button {
+        min-height: 40px;
+        padding: 0 12px;
+      }
+
+      .hero {
+        gap: 22px;
+        padding: 34px 0;
       }
 
       h1 {
-        font-size: 2.48rem;
-        line-height: 1.06;
+        font-size: 2.42rem;
       }
 
       .hero-copy {
-        font-size: 1rem;
-        line-height: 1.65;
+        font-size: 0.98rem;
       }
 
-      .hero-actions .btn {
+      .hero-actions .button {
         width: 100%;
       }
 
-      .dashboard-head,
-      .dashboard-panel,
-      .product-story,
-      .form-panel,
-      .card {
-        padding: 16px;
-      }
-
-      .dashboard-head,
-      .work-row,
-      .footer {
-        align-items: flex-start;
-        flex-direction: column;
-      }
-
-      .kpi-grid,
-      .outcome-grid,
+      .hero-proof,
+      .health-grid,
+      .dash-split,
+      .card-grid,
       .feature-grid,
-      .people-grid,
-      .login-grid,
-      .form-grid {
+      .mock-grid {
         grid-template-columns: 1fr;
       }
 
+      .dash-top {
+        flex-direction: column;
+      }
+
+      .institute-row {
+        grid-template-columns: 34px 1fr;
+      }
+
+      .institute-row .mini-pill {
+        grid-column: 2;
+        justify-self: start;
+      }
+
       .section {
-        padding: 54px 0;
+        padding: 34px 0;
       }
 
-      .section-head h2,
-      .contact-copy h2 {
-        font-size: 2.04rem;
+      .section-head h2 {
+        font-size: 2rem;
       }
 
-      .product-story h3 {
-        font-size: 1.85rem;
+      .cta-band {
+        padding: 18px;
+      }
+
+      .cta-band .button {
+        width: 100%;
+      }
+
+      .footer {
+        flex-direction: column;
+        align-items: flex-start;
       }
     }
   </style>
@@ -956,106 +1228,126 @@
       <header class="topbar">
         <a class="brand" href="https://ledgrclasses.com/" aria-label="Ledgr Classes home">
           <span class="brand-mark"><span>L</span></span>
-          <span class="brand-text">
+          <span>
             <span class="brand-name">Ledgr Classes</span>
-            <span class="brand-tagline">Academic operations</span>
+            <span class="brand-sub">ClassLog academic control centre</span>
           </span>
         </a>
-        <nav class="top-actions" aria-label="Primary navigation">
-          <a class="nav-link" href="#product">Product</a>
-          <a class="nav-link" href="#classlogging">Class Logging</a>
+
+        <nav class="nav" aria-label="Primary navigation">
+          <a class="nav-link" href="#outcomes">Outcomes</a>
+          <a class="nav-link" href="#classlog">ClassLog</a>
           <a class="nav-link" href="#mocktest">Mock Tests</a>
-          <a class="nav-link" href="#contact">Contact</a>
-          <a class="login-chip" href="#login">Login</a>
+          <button class="button button-primary open-demo" type="button">Book demo</button>
+          <div class="login-wrap">
+            <button class="login-button" id="loginButton" type="button" aria-expanded="false" aria-controls="loginMenu">Login</button>
+            <div class="login-menu" id="loginMenu" role="menu" aria-labelledby="loginButton">
+              <a href="https://teacher.ledgrclasses.com/" role="menuitem">
+                <span class="mini-icon class-icon">T</span>
+                <span><strong>Teacher App</strong><span>Class logging workspace</span></span>
+              </a>
+              <a href="https://admin.ledgrclasses.com/" role="menuitem">
+                <span class="mini-icon admin-icon">A</span>
+                <span><strong>Admin Panel</strong><span>Institute control centre</span></span>
+              </a>
+              <a href="https://student.test.ledgrclasses.com/student-login" role="menuitem">
+                <span class="mini-icon test-icon">S</span>
+                <span><strong>Student Portal</strong><span>Mock-test attempts</span></span>
+              </a>
+              <a href="https://teacher.test.ledgrclasses.com/teacher-login" role="menuitem">
+                <span class="mini-icon test-icon">Q</span>
+                <span><strong>Test Teacher Workspace</strong><span>Question import and review</span></span>
+              </a>
+              <a href="https://admin.test.ledgrclasses.com/admin-login" role="menuitem">
+                <span class="mini-icon admin-icon">M</span>
+                <span><strong>Test Admin Console</strong><span>Tests, users and results</span></span>
+              </a>
+            </div>
+          </div>
         </nav>
       </header>
 
-      <section class="hero" aria-labelledby="main-heading">
-        <div class="hero-copy-wrap">
-          <p class="eyebrow">For coaching centre owners and academic directors</p>
-          <h1 id="main-heading">Run your coaching centre with live academic visibility.</h1>
+      <section class="hero" aria-labelledby="hero-title">
+        <div>
+          <span class="eyebrow">For coaching centre owners</span>
+          <h1 id="hero-title">Know every class. Catch every gap.</h1>
           <p class="hero-copy">
-            Ledgr turns daily academic work into a visible operating system:
-            teachers log what happened, admins see pending work, directors review
-            reports, and students complete assigned test practice without
-            spreadsheet cleanup.
+            Ledgr ClassLog gives directors a live academic control centre:
+            teacher logs, pending follow-ups, cold classes, syllabus coverage
+            and report readiness in one app-style workspace.
           </p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="#contact">Book a demo</a>
-            <a class="btn btn-secondary" href="#product">Explore product</a>
-            <a class="btn btn-quiet" href="#login">Already using Ledgr?</a>
+            <button class="button button-primary open-demo" type="button">Book a demo</button>
+            <a class="button button-secondary" href="#classlog">See ClassLog flow</a>
+          </div>
+          <div class="hero-proof" aria-label="ClassLog highlights">
+            <div class="proof-item"><strong>Daily</strong><span>Teacher logs without WhatsApp chasing</span></div>
+            <div class="proof-item"><strong>Live</strong><span>Pending and cold classes visible early</span></div>
+            <div class="proof-item"><strong>Ready</strong><span>Reports and exports for review</span></div>
           </div>
         </div>
 
-        <div class="hero-dashboard" aria-label="Ledgr product snapshot">
-          <div class="dashboard-head">
-            <div class="dashboard-title">
-              <strong>Director snapshot</strong>
-              <span>Live view across classes, syllabus, tests and reports</span>
+        <div class="dashboard" aria-label="Sample Ledgr institute health dashboard">
+          <div class="dash-top">
+            <div class="dash-title">
+              <div class="dash-icon">IH</div>
+              <div>
+                <strong>Institute Health</strong>
+                <span>Sample view for a coaching centre</span>
+              </div>
             </div>
-            <span class="dashboard-date">Today</span>
+            <span class="status-pill">Live today</span>
           </div>
-          <div class="dashboard-grid">
-            <div class="dashboard-panel">
-              <div class="kpi-grid">
-                <div class="kpi">
-                  <span>Classes logged</span>
-                  <strong>86%</strong>
-                  <small>Teacher entries synced today</small>
-                </div>
-                <div class="kpi">
-                  <span>Pending follow-up</span>
-                  <strong>14</strong>
-                  <small>Teachers or sections needing attention</small>
-                </div>
-                <div class="kpi">
-                  <span>Syllabus coverage</span>
-                  <strong>72%</strong>
-                  <small>Across active batches</small>
-                </div>
-                <div class="kpi">
-                  <span>Reports ready</span>
-                  <strong>9</strong>
-                  <small>Institute summaries prepared</small>
-                </div>
-              </div>
-              <div class="worklist">
-                <div class="work-row">
-                  <div>
-                    <strong>Science Wing</strong>
-                    <span>2 cold classes, 18 teacher logs, syllabus updated</span>
-                  </div>
-                  <span class="pill amber">Review</span>
-                </div>
-                <div class="work-row">
-                  <div>
-                    <strong>NDA Morning Batch</strong>
-                    <span>Mock test attempts submitted and results ready</span>
-                  </div>
-                  <span class="pill teal">Ready</span>
-                </div>
-              </div>
+          <div class="dash-body">
+            <div class="health-grid">
+              <div class="health-card teal"><span>Logged today</span><strong>86%</strong><small>38 of 44 teachers updated</small></div>
+              <div class="health-card"><span>Pending teachers</span><strong>6</strong><small>Follow-up before closing</small></div>
+              <div class="health-card hot"><span>Cold classes</span><strong>3</strong><small>No entry for 3+ days</small></div>
+              <div class="health-card"><span>Syllabus</span><strong>72%</strong><small>Coverage across active batches</small></div>
+              <div class="health-card"><span>Reports ready</span><strong>9</strong><small>Institute summaries prepared</small></div>
+              <div class="health-card teal"><span>Teaching time</span><strong>184h</strong><small>This week across sections</small></div>
             </div>
-            <div class="dashboard-panel">
-              <div class="flow-list">
-                <div class="flow-item">
-                  <div class="flow-top"><span>Daily class logs</span><span>86%</span></div>
-                  <div class="bar"><span style="width: 86%"></span></div>
-                </div>
-                <div class="flow-item">
-                  <div class="flow-top"><span>Test participation</span><span>68%</span></div>
-                  <div class="bar teal"><span style="width: 68%"></span></div>
-                </div>
-                <div class="flow-item">
-                  <div class="flow-top"><span>Admin review complete</span><span>91%</span></div>
-                  <div class="bar amber"><span style="width: 91%"></span></div>
-                </div>
-                <div class="work-row">
-                  <div>
-                    <strong>Next action</strong>
-                    <span>Send pending teacher follow-up and export institute PDFs.</span>
+
+            <div class="dash-split">
+              <div class="panel">
+                <div class="panel-head"><strong>Institutes needing attention</strong><span>Today</span></div>
+                <div class="institute-list">
+                  <div class="institute-row">
+                    <span class="row-badge teal">K9</span>
+                    <span><strong>Kalyanpur Main Centre</strong><span>2 cold classes, 18 logs, syllabus updated</span></span>
+                    <span class="mini-pill warn">Review</span>
                   </div>
-                  <span class="pill">Live</span>
+                  <div class="institute-row">
+                    <span class="row-badge amber">NDA</span>
+                    <span><strong>NDA Morning Batch</strong><span>Results released, 4 pending teacher logs</span></span>
+                    <span class="mini-pill">On track</span>
+                  </div>
+                  <div class="institute-row">
+                    <span class="row-badge">10A</span>
+                    <span><strong>Class 10 Foundation</strong><span>Report export and parent summary ready</span></span>
+                    <span class="mini-pill">Ready</span>
+                  </div>
+                </div>
+              </div>
+              <div class="panel">
+                <div class="panel-head"><strong>Academic signals</strong><span>Week</span></div>
+                <div class="progress-list">
+                  <div class="progress-item">
+                    <div class="progress-top"><span>Daily class logs</span><span>86%</span></div>
+                    <div class="bar"><span style="width:86%"></span></div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-top"><span>Syllabus coverage</span><span>72%</span></div>
+                    <div class="bar blue"><span style="width:72%"></span></div>
+                  </div>
+                  <div class="progress-item">
+                    <div class="progress-top"><span>Reports reviewed</span><span>91%</span></div>
+                    <div class="bar green"><span style="width:91%"></span></div>
+                  </div>
+                  <div class="report-row">
+                    <span><strong>Next action</strong><span>Follow up 6 teachers, export centre PDFs</span></span>
+                    <span class="mini-pill warn">12 min</span>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1063,305 +1355,235 @@
         </div>
       </section>
 
-      <section id="product" class="section" aria-labelledby="product-title">
+      <section id="outcomes" class="section" aria-labelledby="outcomes-title">
         <div class="section-head">
           <div>
-            <p class="eyebrow">What Ledgr replaces</p>
-            <h2 id="product-title">Less chasing. More control over academic delivery.</h2>
+            <span class="eyebrow">What changes</span>
+            <h2 id="outcomes-title">Replace academic guesswork with daily evidence.</h2>
           </div>
           <p>
-            Coaching centres run on many small daily signals. Ledgr collects
-            those signals while the work is happening, so management can act
-            before the month is over.
+            ClassLog is built for the daily rhythm of coaching centres: many
+            teachers, many sections, constant follow-up and reports that should
+            not wait until month end.
           </p>
         </div>
-        <div class="outcome-grid">
-          <div class="card card-strong">
-            <div class="accent">1</div>
+        <div class="card-grid">
+          <div class="card featured">
+            <div class="icon-box teal">01</div>
             <strong>No WhatsApp chasing</strong>
-            <p>Teachers record class topic, time, status and progress in a structured flow.</p>
+            <p>Teachers submit structured class logs instead of scattered messages.</p>
           </div>
           <div class="card">
-            <div class="accent teal">2</div>
-            <strong>No blind spots</strong>
-            <p>Admins see logged, pending, low activity and cold classes across institutes.</p>
+            <div class="icon-box amber">02</div>
+            <strong>No missed-class blind spots</strong>
+            <p>Pending teachers and cold classes become visible while action is still possible.</p>
           </div>
           <div class="card">
-            <div class="accent amber">3</div>
-            <strong>No monthly Excel cleanup</strong>
-            <p>Daily entries turn into reports and exports without rebuilding the story later.</p>
+            <div class="icon-box green">03</div>
+            <strong>No syllabus drift</strong>
+            <p>Progress is tied to teachers, subjects, sections and institutes.</p>
           </div>
           <div class="card">
-            <div class="accent">4</div>
-            <strong>No test-series chaos</strong>
-            <p>Question banks, test publishing, attempts, approvals and results stay organized.</p>
+            <div class="icon-box">04</div>
+            <strong>No report cleanup scramble</strong>
+            <p>Daily entries turn into Ledgr Report summaries and exports.</p>
           </div>
         </div>
       </section>
 
-      <section id="classlogging" class="section" aria-labelledby="classlogging-title">
+      <section id="classlog" class="section" aria-labelledby="classlog-title">
         <div class="section-head">
           <div>
-            <p class="eyebrow">Class logging</p>
-            <h2 id="classlogging-title">A live academic record for every classroom.</h2>
+            <span class="eyebrow">ClassLog first</span>
+            <h2 id="classlog-title">From teacher log to director review.</h2>
           </div>
           <p>
-            Teachers get a fast daily logging workflow. Directors get a control
-            centre that shows what happened, what is pending, and where the
-            institute needs follow-up.
+            The teacher app keeps entries fast. The admin control centre turns
+            them into institute visibility, syllabus tracking and export-ready
+            reports.
           </p>
         </div>
-        <div class="product-layout">
-          <div class="product-story">
-            <div>
-              <h3>From teacher entry to institute report.</h3>
-              <p>
-                Ledgr captures class activity at the source, connects it to
-                institutes, sections, subjects and syllabus progress, then turns
-                the work into operational visibility for admins.
-              </p>
-              <ul class="story-list">
-                <li>Teachers log class topic, timing, status, notes and syllabus progress.</li>
-                <li>Admins manage teachers, institutes, sections, syllabus and access.</li>
-                <li>Ledgr Report creates daily and institute-wise summaries for review.</li>
-                <li>Feedback and follow-up loops keep teachers and admins aligned.</li>
-              </ul>
+        <div class="classlog-panel">
+          <div class="workflow">
+            <h3>A daily operating loop for academic teams.</h3>
+            <p>Each class record moves through the same clean path, so directors know what happened without rebuilding the story later.</p>
+            <div class="step-list">
+              <div class="step">
+                <span class="step-number">1</span>
+                <span><strong>Teacher logs the class</strong><span>Topic, timing, status, notes and syllabus progress from phone or desktop.</span></span>
+              </div>
+              <div class="step">
+                <span class="step-number">2</span>
+                <span><strong>Admin sees exceptions</strong><span>Pending teachers, inactive sections and cold classes surface automatically.</span></span>
+              </div>
+              <div class="step">
+                <span class="step-number">3</span>
+                <span><strong>Director reviews reports</strong><span>Daily and institute-wise summaries are ready for academic follow-up.</span></span>
+              </div>
             </div>
-            <a class="btn btn-secondary" href="#contact">Discuss class logging</a>
           </div>
-          <div class="side-stack">
-            <div class="mini-metric">
-              <span>For teachers</span>
-              <strong>Fast class entries from phone or desktop</strong>
-            </div>
-            <div class="mini-metric">
-              <span>For admins</span>
-              <strong>Institute, section and teacher control centre</strong>
-            </div>
-            <div class="mini-metric">
-              <span>For directors</span>
-              <strong>Reports, exports and pending-work visibility</strong>
+          <div class="report-card">
+            <div class="panel-head"><strong>Ledgr Report preview</strong><span>Centre PDF</span></div>
+            <div class="report-body">
+              <div class="report-row"><span><strong>Institute summary</strong><span>Logs, time, subjects and pending follow-up</span></span><span class="mini-pill">Ready</span></div>
+              <div class="report-row"><span><strong>Teacher activity</strong><span>Daily tables with class and subject correctness</span></span><span class="mini-pill">Live</span></div>
+              <div class="report-row"><span><strong>Syllabus tracker</strong><span>Covered rows for published syllabus targets</span></span><span class="mini-pill warn">Review</span></div>
+              <div class="report-row"><span><strong>Messenger follow-up</strong><span>Routes and delivery state for academic updates</span></span><span class="mini-pill">Mapped</span></div>
             </div>
           </div>
         </div>
       </section>
 
       <section id="mocktest" class="section" aria-labelledby="mocktest-title">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Mock test series</p>
-            <h2 id="mocktest-title">Competitive-exam practice with clean review loops.</h2>
-          </div>
-          <p>
-            Ledgr Test supports students, teachers and admins without mixing
-            their responsibilities. Students attempt tests, teachers prepare
-            questions, and admins control publishing and results.
-          </p>
-        </div>
-        <div class="feature-grid">
-          <div class="card">
-            <div class="accent teal">S</div>
-            <strong>Student attempts</strong>
-            <p>Students take assigned timed tests, save progress, submit attempts and review released results.</p>
-          </div>
-          <div class="card card-strong">
-            <div class="accent teal">Q</div>
-            <strong>Question bank import</strong>
-            <p>Teachers import, edit, preview and publish questions after account approval.</p>
-          </div>
-          <div class="card">
-            <div class="accent amber">A</div>
-            <strong>Admin publishing</strong>
-            <p>Admins manage tests, users, batches, approvals, attempts and result policies.</p>
-          </div>
-          <div class="card">
-            <div class="accent">R</div>
-            <strong>Results and exports</strong>
-            <p>Scores, analytics and CSV exports help the institute review performance at scale.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section" aria-labelledby="people-title">
-        <div class="section-head">
-          <div>
-            <p class="eyebrow">Built for coaching centres</p>
-            <h2 id="people-title">Every role gets the right amount of control.</h2>
-          </div>
-          <p>
-            Ledgr is not just a login page. It is a working rhythm for the
-            people who run, teach, review and learn inside a coaching centre.
-          </p>
-        </div>
-        <div class="people-grid">
-          <div class="card">
-            <strong>Institute owners</strong>
-            <p>See whether classes happened, who is pending, and which reports need attention.</p>
-          </div>
-          <div class="card">
-            <strong>Academic admins</strong>
-            <p>Manage teachers, sections, syllabus, access, feedback and institute reporting.</p>
-          </div>
-          <div class="card">
-            <strong>Teachers</strong>
-            <p>Log daily work quickly and keep class progress visible without extra paperwork.</p>
-          </div>
-          <div class="card">
-            <strong>Students</strong>
-            <p>Attempt assigned test practice and review results when the institute releases them.</p>
-          </div>
-        </div>
-      </section>
-
-      <section id="contact" class="section" aria-labelledby="contact-title">
-        <div class="contact-layout">
-          <div class="contact-copy">
-            <p class="eyebrow">Contact us</p>
-            <h2 id="contact-title">Book a Ledgr demo for your institute.</h2>
+        <div class="mock-module">
+          <div class="section-head">
+            <div>
+              <span class="eyebrow">Secondary module</span>
+              <h2 id="mocktest-title">Mock tests stay connected, not mixed up.</h2>
+            </div>
             <p>
-              Share a few details about your coaching centre. We will send the
-              request to the Ledgr team and get back with the right next step.
+              Ledgr Test supports competitive-exam practice while keeping
+              student attempts, teacher question work and admin controls in
+              their own clear flows.
             </p>
-            <div class="contact-points">
-              <div class="contact-point">
-                <span>1</span>
-                <p>Tell us your institute, city and role.</p>
-              </div>
-              <div class="contact-point">
-                <span>2</span>
-                <p>Choose whether you want class logging, mock tests or both.</p>
-              </div>
-              <div class="contact-point">
-                <span>3</span>
-                <p>We review the request and reply from the registered Ledgr email.</p>
-              </div>
+          </div>
+          <div class="mock-grid">
+            <div class="card">
+              <div class="icon-box teal">S</div>
+              <strong>Student attempts</strong>
+              <p>Assigned timed tests, saved progress, submitted attempts and released results.</p>
+            </div>
+            <div class="card">
+              <div class="icon-box">Q</div>
+              <strong>Teacher question import</strong>
+              <p>Approved teachers import, edit, preview and publish question-bank material.</p>
+            </div>
+            <div class="card">
+              <div class="icon-box amber">A</div>
+              <strong>Admin publishing</strong>
+              <p>Tests, users, batches, approvals, result policies and CSV exports stay controlled.</p>
             </div>
           </div>
-
-          <form class="form-panel" id="leadForm" action="/api/contact" method="post">
-            <div class="form-grid">
-              <div class="field">
-                <label for="name">Name</label>
-                <input id="name" name="name" autocomplete="name" required />
-              </div>
-              <div class="field">
-                <label for="role">Your role</label>
-                <input id="role" name="role" placeholder="Owner, director, admin" required />
-              </div>
-              <div class="field">
-                <label for="instituteName">Institute name</label>
-                <input id="instituteName" name="instituteName" autocomplete="organization" required />
-              </div>
-              <div class="field">
-                <label for="city">City</label>
-                <input id="city" name="city" autocomplete="address-level2" required />
-              </div>
-              <div class="field">
-                <label for="phone">Phone</label>
-                <input id="phone" name="phone" autocomplete="tel" required />
-              </div>
-              <div class="field">
-                <label for="email">Email</label>
-                <input id="email" name="email" type="email" autocomplete="email" required />
-              </div>
-              <div class="field full">
-                <label for="interest">Interest</label>
-                <select id="interest" name="interest" required>
-                  <option value="">Select one</option>
-                  <option value="Class logging and mock tests">Class logging and mock tests</option>
-                  <option value="Class logging">Class logging</option>
-                  <option value="Mock test series">Mock test series</option>
-                </select>
-              </div>
-              <div class="field full">
-                <label for="message">Message</label>
-                <textarea id="message" name="message" placeholder="Tell us about your institute size, current process or what you want to improve."></textarea>
-              </div>
-              <div class="hidden-field" aria-hidden="true">
-                <label for="website">Website</label>
-                <input id="website" name="website" tabindex="-1" autocomplete="off" />
-              </div>
-            </div>
-            <div class="form-actions">
-              <button class="btn btn-primary" type="submit" id="submitLead">Send request</button>
-              <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
-            </div>
-          </form>
         </div>
       </section>
 
-      <section id="login" class="section login-section" aria-labelledby="login-title">
-        <div class="section-head">
+      <section class="section" aria-labelledby="demo-title">
+        <div class="cta-band">
           <div>
-            <p class="eyebrow">Already using Ledgr?</p>
-            <h2 id="login-title">Login to your workspace.</h2>
+            <h2 id="demo-title">See how Ledgr fits your institute.</h2>
+            <p>Share your name, phone and institute. We will review the request and get back with the right setup path.</p>
           </div>
-          <p>
-            These links are for existing teachers, admins and students. New
-            institutes should use the demo form above so we can set up the right
-            access flow.
-          </p>
-        </div>
-        <div class="login-grid">
-          <a class="card login-card" href="https://teacher.ledgrclasses.com/">
-            <div>
-              <div class="login-label">Class logging</div>
-              <strong>Teacher App</strong>
-              <p>Daily class entries and progress logs.</p>
-            </div>
-            <span class="login-action">Open teacher app -></span>
-          </a>
-          <a class="card login-card admin" href="https://admin.ledgrclasses.com/">
-            <div>
-              <div class="login-label">Class logging</div>
-              <strong>Admin Panel</strong>
-              <p>Institute control centre and reports.</p>
-            </div>
-            <span class="login-action">Open admin panel -></span>
-          </a>
-          <a class="card login-card test" href="https://student.test.ledgrclasses.com/student-login">
-            <div>
-              <div class="login-label">Mock tests</div>
-              <strong>Student Portal</strong>
-              <p>Assigned tests, attempts and results.</p>
-            </div>
-            <span class="login-action">Open student login -></span>
-          </a>
-          <a class="card login-card test" href="https://teacher.test.ledgrclasses.com/teacher-login">
-            <div>
-              <div class="login-label">Mock tests</div>
-              <strong>Teacher Workspace</strong>
-              <p>Question imports and publishing.</p>
-            </div>
-            <span class="login-action">Open teacher login -></span>
-          </a>
-          <a class="card login-card admin" href="https://admin.test.ledgrclasses.com/admin-login">
-            <div>
-              <div class="login-label">Mock tests</div>
-              <strong>Admin Console</strong>
-              <p>Tests, users, batches and exports.</p>
-            </div>
-            <span class="login-action">Open admin login -></span>
-          </a>
+          <button class="button button-primary open-demo" type="button">Book a demo</button>
         </div>
       </section>
 
       <footer class="footer">
         <span>Ledgr Classes</span>
-        <div class="footer-links">
-          <a href="#contact">Contact</a>
-          <a href="#classlogging">Class Logging</a>
+        <span class="footer-links">
+          <a href="#outcomes">Outcomes</a>
+          <a href="#classlog">ClassLog</a>
           <a href="#mocktest">Mock Tests</a>
-          <a href="#login">Login</a>
-        </div>
+        </span>
       </footer>
     </div>
   </main>
 
+  <div class="modal" id="demoModal" role="dialog" aria-modal="true" aria-labelledby="demoModalTitle" aria-hidden="true">
+    <div class="modal-panel">
+      <div class="modal-head">
+        <div>
+          <h2 id="demoModalTitle">Book a Ledgr demo</h2>
+          <p>Tell us where to reach you. The Ledgr team will follow up for your institute setup.</p>
+        </div>
+        <button class="close-button" id="closeDemo" type="button" aria-label="Close demo form">x</button>
+      </div>
+      <form class="lead-form" id="leadForm" action="/api/contact" method="post">
+        <div class="field">
+          <label for="name">Name</label>
+          <input id="name" name="name" autocomplete="name" required />
+        </div>
+        <div class="field">
+          <label for="phone">Phone</label>
+          <input id="phone" name="phone" autocomplete="tel" required />
+        </div>
+        <div class="field">
+          <label for="instituteName">Institute name</label>
+          <input id="instituteName" name="instituteName" autocomplete="organization" required />
+        </div>
+        <div class="field">
+          <label for="message">Message</label>
+          <textarea id="message" name="message" placeholder="Optional: tell us your city, number of teachers, or whether you want ClassLog, Mock Tests, or both."></textarea>
+        </div>
+        <div class="hidden-field" aria-hidden="true">
+          <label for="website">Website</label>
+          <input id="website" name="website" tabindex="-1" autocomplete="off" />
+        </div>
+        <div class="form-actions">
+          <button class="button button-primary" type="submit" id="submitLead">Send request</button>
+          <p class="form-status" id="formStatus" role="status" aria-live="polite"></p>
+        </div>
+      </form>
+    </div>
+  </div>
+
   <script>
+    const loginButton = document.querySelector("#loginButton");
+    const loginMenu = document.querySelector("#loginMenu");
+    const demoModal = document.querySelector("#demoModal");
+    const openDemoButtons = document.querySelectorAll(".open-demo");
+    const closeDemoButton = document.querySelector("#closeDemo");
     const leadForm = document.querySelector("#leadForm");
     const statusEl = document.querySelector("#formStatus");
     const submitButton = document.querySelector("#submitLead");
+
+    function setLoginOpen(open) {
+      loginMenu.classList.toggle("open", open);
+      loginButton.setAttribute("aria-expanded", String(open));
+    }
+
+    loginButton.addEventListener("click", () => {
+      setLoginOpen(!loginMenu.classList.contains("open"));
+    });
+
+    document.addEventListener("click", (event) => {
+      if (!event.target.closest(".login-wrap")) {
+        setLoginOpen(false);
+      }
+    });
+
+    function setModalOpen(open) {
+      demoModal.classList.toggle("open", open);
+      demoModal.setAttribute("aria-hidden", String(!open));
+      document.body.classList.toggle("modal-open", open);
+      if (open) {
+        setLoginOpen(false);
+        window.setTimeout(() => document.querySelector("#name").focus(), 0);
+      } else {
+        statusEl.textContent = "";
+        statusEl.className = "form-status";
+      }
+    }
+
+    openDemoButtons.forEach((button) => {
+      button.addEventListener("click", () => setModalOpen(true));
+    });
+
+    closeDemoButton.addEventListener("click", () => setModalOpen(false));
+
+    demoModal.addEventListener("click", (event) => {
+      if (event.target === demoModal) {
+        setModalOpen(false);
+      }
+    });
+
+    document.addEventListener("keydown", (event) => {
+      if (event.key === "Escape") {
+        setLoginOpen(false);
+        if (demoModal.classList.contains("open")) {
+          setModalOpen(false);
+        }
+      }
+    });
 
     function setStatus(message, type) {
       statusEl.textContent = message || "";
@@ -1372,12 +1594,8 @@
       const data = new FormData(form);
       return {
         name: String(data.get("name") || "").trim(),
-        role: String(data.get("role") || "").trim(),
-        instituteName: String(data.get("instituteName") || "").trim(),
-        city: String(data.get("city") || "").trim(),
         phone: String(data.get("phone") || "").trim(),
-        email: String(data.get("email") || "").trim(),
-        interest: String(data.get("interest") || "").trim(),
+        instituteName: String(data.get("instituteName") || "").trim(),
         message: String(data.get("message") || "").trim(),
         website: String(data.get("website") || "").trim()
       };
@@ -1403,7 +1621,6 @@
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload)
         });
-
         const result = await response.json().catch(() => ({}));
 
         if (!response.ok) {

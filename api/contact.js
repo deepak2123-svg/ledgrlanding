@@ -19,16 +19,13 @@ function escapeHtml(value) {
     .replace(/'/g, "&#039;");
 }
 
-function isEmail(value) {
-  return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value);
-}
-
 async function readBody(req) {
   if (req.body && typeof req.body === "object") return req.body;
   if (typeof req.body === "string") return parseBody(req.body, req.headers["content-type"] || "");
 
   let size = 0;
   const chunks = [];
+
   for await (const chunk of req) {
     size += chunk.length;
     if (size > MAX_BODY_BYTES) {
@@ -54,30 +51,19 @@ function parseBody(raw, contentType) {
 function normalizeLead(body) {
   return {
     name: clean(body.name, 120),
-    role: clean(body.role, 120),
+    phone: clean(body.phone, 80),
     instituteName: clean(body.instituteName, 180),
-    city: clean(body.city, 120),
-    phone: clean(body.phone, 60),
-    email: clean(body.email, 180).toLowerCase(),
-    interest: clean(body.interest, 180),
     message: clean(body.message, 2000),
     website: clean(body.website, 200)
   };
 }
 
 function validateLead(lead) {
-  const required = ["name", "role", "instituteName", "city", "phone", "email", "interest"];
-  const missing = required.filter((field) => !lead[field]);
-
-  if (missing.length > 0) {
-    return "Please fill all required fields.";
+  if (!lead.name || !lead.phone || !lead.instituteName) {
+    return "Please add your name, phone and institute name.";
   }
 
-  if (!isEmail(lead.email)) {
-    return "Please enter a valid email address.";
-  }
-
-  if (lead.phone.length < 7) {
+  if (lead.phone.replace(/\D/g, "").length < 7) {
     return "Please enter a valid phone number.";
   }
 
@@ -87,12 +73,8 @@ function validateLead(lead) {
 function buildLeadEmail(lead) {
   const rows = [
     ["Name", lead.name],
-    ["Role", lead.role],
-    ["Institute", lead.instituteName],
-    ["City", lead.city],
     ["Phone", lead.phone],
-    ["Email", lead.email],
-    ["Interest", lead.interest],
+    ["Institute", lead.instituteName],
     ["Message", lead.message || "No message added"]
   ];
 
@@ -100,8 +82,8 @@ function buildLeadEmail(lead) {
   const htmlRows = rows
     .map(([label, value]) => `
       <tr>
-        <td style="padding:10px 12px;border:1px solid #d8e7df;font-weight:700;background:#f3faf6;">${escapeHtml(label)}</td>
-        <td style="padding:10px 12px;border:1px solid #d8e7df;">${escapeHtml(value)}</td>
+        <td style="padding:10px 12px;border:1px solid #DDE3ED;font-weight:700;background:#F5F7FA;">${escapeHtml(label)}</td>
+        <td style="padding:10px 12px;border:1px solid #DDE3ED;">${escapeHtml(value)}</td>
       </tr>
     `)
     .join("");
@@ -110,8 +92,8 @@ function buildLeadEmail(lead) {
     subject: `Ledgr demo request - ${lead.instituteName}`,
     text,
     html: `
-      <div style="font-family:Arial,sans-serif;color:#10251d;line-height:1.5;">
-        <h2 style="margin:0 0 14px;">New Ledgr Classes demo request</h2>
+      <div style="font-family:Inter,Arial,sans-serif;color:#111827;line-height:1.5;">
+        <h2 style="margin:0 0 14px;font-family:Poppins,Arial,sans-serif;">New Ledgr Classes demo request</h2>
         <table style="border-collapse:collapse;width:100%;max-width:720px;">${htmlRows}</table>
       </div>
     `
@@ -166,7 +148,6 @@ module.exports = async function handler(req, res) {
       body: JSON.stringify({
         from: fromEmail,
         to: [toEmail],
-        reply_to: lead.email,
         subject: email.subject,
         text: email.text,
         html: email.html
