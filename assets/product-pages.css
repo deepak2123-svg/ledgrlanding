@@ -36,15 +36,7 @@ html {
 body {
   min-height: 100vh;
   margin: 0;
-  background:
-    repeating-linear-gradient(
-      180deg,
-      rgba(174, 187, 153, 0.16) 0,
-      rgba(174, 187, 153, 0.16) 1px,
-      transparent 1px,
-      transparent 42px
-    ),
-    linear-gradient(180deg, #f4f6ec 0%, var(--paper) 46%, var(--paper-deep) 100%);
+  background: linear-gradient(180deg, #f8faf4 0%, var(--paper) 54%, var(--paper-deep) 100%);
   color: var(--ink);
   font-family: var(--font-sans);
   overflow-x: hidden;
@@ -226,7 +218,7 @@ img {
 .portal-group + .portal-group {
   margin-top: 10px;
   padding-top: 10px;
-  border-top: 1px dashed var(--rule);
+  border-top: 1px solid var(--rule);
 }
 
 .portal-group-label {
@@ -384,7 +376,7 @@ img {
 
 .section {
   padding: 46px 0;
-  border-top: 1px dashed var(--rule-strong);
+  border-top: 1px solid var(--rule-strong);
 }
 
 .section-head {
@@ -547,6 +539,72 @@ img {
   color: var(--pen-red);
 }
 
+.step-grid {
+  display: grid;
+  gap: 14px;
+  counter-reset: mock-step;
+}
+
+.step-card {
+  counter-increment: mock-step;
+  display: grid;
+  grid-template-columns: 104px minmax(0, 1fr) auto;
+  gap: 18px;
+  align-items: center;
+  border: 1px solid var(--rule-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  box-shadow: var(--shadow-sm);
+  padding: 18px;
+}
+
+.step-number {
+  display: grid;
+  gap: 4px;
+  color: var(--pen-red);
+  font-family: var(--font-mono);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.step-number::after {
+  content: counter(mock-step, decimal-leading-zero);
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 2.15rem;
+  font-weight: 700;
+  letter-spacing: 0;
+  line-height: 1;
+}
+
+.step-card h3 {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 650;
+  letter-spacing: 0;
+}
+
+.step-card p {
+  margin: 6px 0 0;
+  color: var(--ink-soft);
+  line-height: 1.55;
+}
+
+.step-card a {
+  color: var(--pen-red);
+  font-weight: 800;
+  white-space: nowrap;
+}
+
+.step-card .button {
+  width: fit-content;
+  white-space: nowrap;
+}
+
 .cta-band {
   display: flex;
   align-items: center;
@@ -641,7 +699,7 @@ img {
   justify-content: space-between;
   gap: 16px;
   padding: 22px 22px 14px;
-  border-bottom: 1px dashed var(--rule-strong);
+  border-bottom: 1px solid var(--rule-strong);
 }
 
 .modal-head h2 {
@@ -763,8 +821,14 @@ body.modal-open {
   }
 
   .feature-grid,
-  .gateway-grid {
+  .gateway-grid,
+  .step-card {
     grid-template-columns: 1fr;
+  }
+
+  .step-card a,
+  .step-card .button {
+    width: fit-content;
   }
 }
 
