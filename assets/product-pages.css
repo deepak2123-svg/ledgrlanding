@@ -272,13 +272,6 @@ img {
   margin-top: 26px;
 }
 
-.hero-note {
-  margin: 16px 0 0;
-  color: var(--ink-faint);
-  font-size: 0.84rem;
-  font-weight: 600;
-}
-
 .hero-visual {
   min-width: 0;
   border: 1px solid var(--rule-strong);
@@ -840,8 +833,7 @@ body.modal-open {
     max-width: calc(100vw - 28px);
   }
 
-  .hero-copy,
-  .hero-note {
+  .hero-copy {
     max-width: 100%;
   }
 
