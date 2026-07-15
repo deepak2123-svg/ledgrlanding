@@ -54,13 +54,39 @@
 
     @media (prefers-reduced-motion: reduce) {
       html { scroll-behavior: auto; }
-      * { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+      * { animation-duration: 0.001ms !important; animation-iteration-count: 1 !important; transition-duration: 0.001ms !important; }
     }
 
     :focus-visible { outline: 2px solid var(--stamp); outline-offset: 2px; }
 
+    @keyframes rise-in {
+      from { opacity: 0; transform: translateY(14px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes soft-float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-5px); }
+    }
+
+    @keyframes glow-sweep {
+      0%, 58% { transform: translateX(-120%); opacity: 0; }
+      68% { opacity: 0.45; }
+      82%, 100% { transform: translateX(120%); opacity: 0; }
+    }
+
+    @keyframes status-pulse {
+      0%, 100% { box-shadow: 0 0 0 0 rgba(28, 104, 69, 0.28); }
+      50% { box-shadow: 0 0 0 5px rgba(28, 104, 69, 0); }
+    }
+
+    @keyframes bar-breathe {
+      0%, 100% { transform: scaleX(0.82); }
+      50% { transform: scaleX(1); }
+    }
+
     .page { min-height: 100vh; padding: 20px 20px 32px; }
-    .shell { width: min(1080px, 100%); margin: 0 auto; }
+    .shell { width: min(1180px, 100%); margin: 0 auto; }
 
     /* ---------- Topbar ---------- */
     .topbar {
@@ -79,6 +105,7 @@
       box-shadow: var(--shadow-sm);
       backdrop-filter: blur(14px);
       -webkit-backdrop-filter: blur(14px);
+      animation: rise-in 0.55s ease both;
     }
 
     .brand { display: inline-flex; align-items: center; gap: 10px; min-width: 0; }
@@ -153,13 +180,13 @@
     /* ---------- Hero ---------- */
     .hero {
       display: grid;
-      grid-template-columns: minmax(0, 1.2fr) minmax(260px, 0.8fr);
-      gap: 40px;
+      grid-template-columns: minmax(0, 0.9fr) minmax(460px, 1.1fr);
+      gap: 48px;
       align-items: center;
       padding: 52px 0 40px;
     }
 
-    .hero-intro { animation: none; }
+    .hero-intro { animation: rise-in 0.65s 0.08s ease both; }
 
     h1 {
       max-width: 620px;
@@ -179,21 +206,15 @@
 
     .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
 
-    .hero-note {
-      margin-top: 18px;
-      color: var(--ink-faint);
-      font-size: 0.82rem;
-      font-weight: 500;
-    }
-
     .hero-showcase {
       position: relative;
       border: 1px solid var(--rule-strong);
       border-radius: 8px;
       background: linear-gradient(180deg, rgba(255, 255, 255, 0.72), rgba(255, 253, 245, 0.96));
       box-shadow: var(--shadow-lg);
-      padding: 15px;
+      padding: 16px;
       overflow: hidden;
+      animation: rise-in 0.72s 0.16s ease both, soft-float 7s 1.1s ease-in-out infinite;
     }
 
     .hero-showcase::before {
@@ -226,44 +247,362 @@
       text-transform: uppercase;
     }
 
-    .showcase-grid {
+    .screen-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
+      gap: 12px;
     }
 
-    .showcase-item {
+    .screen-card {
+      position: relative;
       min-width: 0;
       border: 1px solid var(--rule);
       border-radius: 6px;
       background: var(--surface-white);
       box-shadow: var(--shadow-sm);
       overflow: hidden;
+      animation: rise-in 0.52s ease both;
       transition: border-color 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
     }
 
-    .showcase-item:hover {
+    .screen-card:nth-child(1) { animation-delay: 0.28s; }
+    .screen-card:nth-child(2) { animation-delay: 0.36s; }
+    .screen-card:nth-child(3) { animation-delay: 0.44s; }
+    .screen-card:nth-child(4) { animation-delay: 0.52s; }
+
+    .screen-card::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(110deg, transparent 0%, rgba(255, 255, 255, 0.72) 42%, transparent 68%);
+      pointer-events: none;
+      animation: glow-sweep 8s ease-in-out infinite;
+    }
+
+    .screen-card:hover {
       border-color: var(--rule-strong);
       box-shadow: var(--shadow-md);
       transform: translateY(-2px);
     }
 
-    .showcase-item img {
-      width: 100%;
-      aspect-ratio: 16 / 10;
-      object-fit: cover;
-      object-position: top left;
+    .screen-top {
+      min-height: 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
       border-bottom: 1px solid var(--rule);
-      background: var(--paper);
+      padding: 0 9px;
+      background: linear-gradient(180deg, #ffffff, var(--surface));
+      color: var(--ink-soft);
+      font-size: 0.62rem;
+      font-weight: 800;
+      text-transform: uppercase;
     }
 
-    .showcase-item span {
+    .screen-top em {
+      border-radius: 999px;
+      background: var(--stamp-soft);
+      color: var(--stamp);
+      padding: 3px 6px;
+      font-style: normal;
+    }
+
+    .mock-screen {
+      min-height: 178px;
+      padding: 10px;
+      background: #f8faf6;
+      font-size: 0.62rem;
+    }
+
+    .screen-caption {
       display: block;
-      padding: 8px 10px;
+      border-top: 1px solid var(--rule);
+      padding: 9px 10px;
       background: linear-gradient(180deg, #ffffff, var(--surface));
       color: var(--ink);
-      font-size: 0.78rem;
+      font-size: 0.82rem;
+      font-weight: 800;
+    }
+
+    .teacher-screen {
+      display: grid;
+      grid-template-columns: 84px minmax(0, 1fr);
+      gap: 9px;
+    }
+
+    .mini-sidebar,
+    .mini-panel,
+    .mini-block,
+    .mini-table {
+      border: 1px solid #dfe6d8;
+      border-radius: 6px;
+      background: #ffffff;
+    }
+
+    .mini-sidebar { display: grid; gap: 6px; padding: 7px; }
+    .side-pill {
+      display: grid;
+      gap: 2px;
+      border-radius: 5px;
+      padding: 6px;
+      color: var(--pen-blue);
+      background: #e8f0ff;
+      font-weight: 800;
+    }
+    .side-pill:nth-child(2) { background: #dff2ef; color: #127073; }
+    .side-pill:nth-child(3) { background: #f3e8ff; color: #6f3ab8; }
+    .side-pill:nth-child(4) { background: #fde7df; color: var(--pen-red); }
+    .side-pill small { color: var(--ink-soft); font-size: 0.52rem; font-weight: 700; }
+
+    .mini-main { display: grid; gap: 8px; min-width: 0; }
+    .blue-hero {
+      border-radius: 7px;
+      background: #2f66e6;
+      color: #ffffff;
+      padding: 9px;
+      box-shadow: inset 0 -14px 28px rgba(0, 0, 0, 0.08);
+    }
+    .blue-hero strong { display: block; font-size: 0.9rem; line-height: 1.1; }
+    .chip-row { display: flex; flex-wrap: wrap; gap: 4px; margin-top: 6px; }
+    .chip {
+      border-radius: 999px;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 3px 6px;
+      font-size: 0.52rem;
+      font-weight: 800;
+    }
+    .chip.warn { background: #fff0d8; color: #a85b00; }
+
+    .metric-row { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 5px; margin-top: 7px; }
+    .metric {
+      border-radius: 5px;
+      background: #ffffff;
+      color: var(--ink);
+      padding: 5px 4px;
+      text-align: center;
+      font-weight: 800;
+    }
+    .metric small { display: block; color: var(--ink-faint); font-size: 0.48rem; font-weight: 700; }
+
+    .mini-week { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 5px; }
+    .day-cell {
+      min-height: 32px;
+      display: grid;
+      place-items: center;
+      border-radius: 5px;
+      background: #e7f2ea;
+      color: var(--stamp);
+      font-weight: 800;
+    }
+    .day-cell.late { background: #fff0d8; color: #a85b00; }
+    .day-cell.open { background: #f1f2ec; color: var(--ink-faint); }
+
+    .today-note {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 8px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #dfe6d8;
+      padding: 7px;
+      font-weight: 800;
+    }
+    .mini-button {
+      border-radius: 999px;
+      background: #2f66e6;
+      color: #ffffff;
+      padding: 4px 7px;
+      font-size: 0.52rem;
+      white-space: nowrap;
+    }
+
+    .admin-screen {
+      display: grid;
+      grid-template-columns: 0.78fr 0.86fr 1fr;
+      gap: 8px;
+    }
+
+    .admin-list,
+    .review-grid,
+    .today-list,
+    .student-screen,
+    .builder-screen {
+      min-width: 0;
+    }
+
+    .admin-list { display: grid; gap: 6px; }
+    .admin-list .hub-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-radius: 5px;
+      background: #ffffff;
+      border: 1px solid #dfe6d8;
+      padding: 6px;
+      font-weight: 800;
+    }
+    .hub-row small { color: var(--stamp); font-weight: 900; }
+    .hub-row.warn small { color: var(--pen-red); }
+
+    .review-grid { display: grid; gap: 6px; }
+    .review-grid strong,
+    .today-list strong,
+    .bank strong,
+    .builder-main strong {
+      color: var(--ink);
+      font-size: 0.66rem;
+    }
+    .chip-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 5px; margin-top: 6px; }
+    .class-chip {
+      border-radius: 999px;
+      border: 1px solid #dfe6d8;
+      background: #ffffff;
+      padding: 4px 5px;
+      text-align: center;
+      font-weight: 800;
+    }
+    .report-box {
+      border-radius: 6px;
+      background: #e5f5ea;
+      color: var(--stamp);
+      padding: 8px;
+      font-weight: 800;
+    }
+
+    .today-list {
+      display: grid;
+      gap: 5px;
+      border-radius: 6px;
+      background: #ffffff;
+      border: 1px solid #dfe6d8;
+      padding: 8px;
+    }
+    .mini-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      border-top: 1px solid #eef1ea;
+      padding-top: 5px;
+      color: var(--ink-soft);
       font-weight: 700;
+    }
+    .mini-row:first-of-type { border-top: 0; padding-top: 0; }
+    .activity-dot {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--stamp);
+      animation: status-pulse 2.1s ease-in-out infinite;
+    }
+    .activity-dot.red { background: var(--pen-red); }
+    .activity-dot.blue { background: var(--pen-blue); }
+
+    .student-screen {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 0.72fr;
+      gap: 8px;
+    }
+    .student-hero {
+      border-radius: 8px;
+      background: #2458d7;
+      color: #ffffff;
+      padding: 11px;
+    }
+    .student-hero small { display: block; opacity: 0.86; margin-top: 3px; }
+    .score-card {
+      display: grid;
+      place-items: center;
+      border: 1px solid #ead9d4;
+      border-radius: 8px;
+      background: #fff8f6;
+      color: var(--pen-red);
+      font-weight: 900;
+      text-align: center;
+    }
+    .score-card span { display: block; color: var(--ink-soft); font-size: 0.5rem; margin-top: 2px; }
+    .student-bottom {
+      grid-column: 1 / -1;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 8px;
+    }
+    .bar-list {
+      display: grid;
+      gap: 7px;
+      border: 1px solid #dfe6d8;
+      border-radius: 7px;
+      background: #ffffff;
+      padding: 8px;
+    }
+    .bar-line {
+      height: 6px;
+      border-radius: 999px;
+      background: #edf0ea;
+      overflow: hidden;
+    }
+    .bar-fill {
+      display: block;
+      height: 100%;
+      width: var(--w, 70%);
+      transform-origin: left center;
+      border-radius: inherit;
+      background: var(--pen-blue);
+      animation: bar-breathe 3.6s ease-in-out infinite;
+    }
+    .bar-fill.green { background: var(--stamp); animation-delay: 0.45s; }
+    .bar-fill.red { background: var(--pen-red); animation-delay: 0.9s; }
+
+    .review-note {
+      border: 1px solid #dfe6d8;
+      border-radius: 7px;
+      background: #ffffff;
+      padding: 8px;
+      color: var(--ink-soft);
+      font-weight: 700;
+    }
+
+    .builder-screen {
+      display: grid;
+      grid-template-columns: 78px minmax(0, 1fr);
+      gap: 9px;
+    }
+    .bank {
+      display: grid;
+      gap: 6px;
+      border-radius: 7px;
+      background: #ffffff;
+      border: 1px solid #dfe6d8;
+      padding: 8px;
+    }
+    .bank-pill {
+      border-radius: 999px;
+      background: #e7edff;
+      color: #2458d7;
+      padding: 4px 6px;
+      font-weight: 800;
+    }
+    .builder-main { display: grid; gap: 8px; min-width: 0; }
+    .builder-row {
+      border: 1px solid #dfe6d8;
+      border-radius: 7px;
+      background: #ffffff;
+      padding: 8px;
+    }
+    .queue-row {
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+      border-top: 1px solid #eef1ea;
+      padding-top: 5px;
+      margin-top: 5px;
+      font-weight: 800;
+    }
+    .queue-row span { color: var(--pen-blue); }
+    .queue-row .ready { color: var(--stamp); }
     }
 
     /* ---------- Sections ---------- */
@@ -302,6 +641,7 @@
       padding: 24px;
       position: relative;
       overflow: hidden;
+      animation: rise-in 0.58s 0.66s ease both;
       transition: border-color 0.18s ease, background 0.18s ease, box-shadow 0.18s ease, transform 0.18s ease;
     }
 
@@ -316,6 +656,7 @@
     }
 
     .product-card.mocktest::before { background: var(--pen-red); }
+    .product-card.mocktest { animation-delay: 0.78s; }
 
     .product-card:hover {
       border-color: var(--stamp);
@@ -381,6 +722,7 @@
         var(--stamp-soft);
       box-shadow: var(--shadow-sm);
       padding: 28px 30px;
+      animation: rise-in 0.58s 0.9s ease both;
     }
     .cta-band h2 { font-size: clamp(1.3rem, 2vw, 1.7rem); font-weight: 600; }
     .cta-band p { margin-top: 6px; color: var(--ink-soft); font-size: 0.94rem; max-width: 440px; line-height: 1.55; }
@@ -501,7 +843,18 @@
       .hero { gap: 24px; padding: 34px 0 26px; }
       h1 { font-size: clamp(2rem, 10vw, 2.6rem); }
       .hero-actions .button { width: 100%; }
-      .showcase-grid { grid-template-columns: 1fr; }
+      .screen-grid { grid-template-columns: 1fr; }
+      .mock-screen { min-height: 0; }
+      .teacher-screen,
+      .admin-screen,
+      .student-screen,
+      .builder-screen,
+      .student-bottom {
+        grid-template-columns: 1fr;
+      }
+      .mini-sidebar {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
       .section { padding: 34px 0; }
       .cta-band { flex-direction: column; align-items: flex-start; }
       .cta-band .button { width: 100%; }
@@ -535,31 +888,152 @@
             <button class="button button-primary open-demo" type="button">Book a demo</button>
             <a class="button button-outline" href="#products">See how it works</a>
           </div>
-          <p class="hero-note">Built for centres running NDA, JEE, NEET and board-exam batches.</p>
         </div>
 
-        <div class="hero-showcase" aria-label="Ledgr product screenshots">
+        <div class="hero-showcase" aria-label="Ledgr product screen previews">
           <div class="showcase-head">
-            <strong>Product screens</strong>
+            <strong>Live product screens</strong>
             <span>Sample data</span>
           </div>
-          <div class="showcase-grid">
-            <figure class="showcase-item">
-              <img src="assets/classlog-teacher-dashboard.png" alt="Sample ClassLog teacher dashboard" />
-              <span>ClassLog teacher view</span>
-            </figure>
-            <figure class="showcase-item">
-              <img src="assets/classlog-admin-dashboard.png" alt="Sample ClassLog admin dashboard" />
-              <span>ClassLog admin view</span>
-            </figure>
-            <figure class="showcase-item">
-              <img src="assets/mock-tests-student-dashboard.png" alt="Sample Mock Tests student dashboard" />
-              <span>Mock Tests student view</span>
-            </figure>
-            <figure class="showcase-item">
-              <img src="assets/mock-tests-builder-dashboard.png" alt="Sample Mock Tests builder dashboard" />
-              <span>Mock Tests builder view</span>
-            </figure>
+          <div class="screen-grid">
+            <article class="screen-card">
+              <div class="screen-top">
+                <span>Ledgr ClassLog</span>
+                <em>Teacher</em>
+              </div>
+              <div class="mock-screen teacher-screen" aria-hidden="true">
+                <div class="mini-sidebar">
+                  <div class="side-pill">A1 Alpha<small>North hub</small></div>
+                  <div class="side-pill">B2 Beta<small>South</small></div>
+                  <div class="side-pill">C3 Gamma<small>Reasoning</small></div>
+                  <div class="side-pill">D4 Delta<small>Online</small></div>
+                </div>
+                <div class="mini-main">
+                  <div class="blue-hero">
+                    <strong>Class A1 sample</strong>
+                    <div class="chip-row">
+                      <span class="chip">Maths</span>
+                      <span class="chip">North hub</span>
+                      <span class="chip warn">Entry due</span>
+                    </div>
+                    <div class="metric-row">
+                      <span class="metric">1<small>Today</small></span>
+                      <span class="metric">4<small>Week</small></span>
+                      <span class="metric">19<small>Month</small></span>
+                      <span class="metric">3<small>Pending</small></span>
+                    </div>
+                  </div>
+                  <div class="mini-week">
+                    <span class="day-cell">Mon</span>
+                    <span class="day-cell late">Tue</span>
+                    <span class="day-cell">Wed</span>
+                    <span class="day-cell">Thu</span>
+                    <span class="day-cell open">Fri</span>
+                  </div>
+                  <div class="today-note">
+                    <span>Today note</span>
+                    <span class="mini-button">+ Add</span>
+                  </div>
+                </div>
+              </div>
+              <span class="screen-caption">ClassLog teacher view</span>
+            </article>
+
+            <article class="screen-card">
+              <div class="screen-top">
+                <span>Overview</span>
+                <em>Admin</em>
+              </div>
+              <div class="mock-screen admin-screen" aria-hidden="true">
+                <div class="admin-list">
+                  <div class="hub-row warn">North Hub <small>0/12</small></div>
+                  <div class="hub-row">Blue Road <small>8/11</small></div>
+                  <div class="hub-row">Outer Wing <small>4/5</small></div>
+                  <div class="hub-row">East Annex <small>Ready</small></div>
+                </div>
+                <div class="review-grid">
+                  <div class="mini-panel">
+                    <strong>Class review</strong>
+                    <div class="chip-grid">
+                      <span class="class-chip">A1</span>
+                      <span class="class-chip">B2</span>
+                      <span class="class-chip">C3</span>
+                      <span class="class-chip">D4</span>
+                    </div>
+                  </div>
+                  <div class="report-box">Report export is ready</div>
+                </div>
+                <div class="today-list">
+                  <strong>Today's class and subject</strong>
+                  <div class="mini-row"><span class="activity-dot blue"></span>09:00 - Maths</div>
+                  <div class="mini-row"><span class="activity-dot"></span>11:20 - Current</div>
+                  <div class="mini-row"><span class="activity-dot red"></span>12:30 - Physics</div>
+                  <div class="mini-row"><span class="activity-dot"></span>16:00 - Doubt class</div>
+                </div>
+              </div>
+              <span class="screen-caption">ClassLog admin view</span>
+            </article>
+
+            <article class="screen-card">
+              <div class="screen-top">
+                <span>Ledgr Mock Tests</span>
+                <em>Student</em>
+              </div>
+              <div class="mock-screen student-screen" aria-hidden="true">
+                <div class="student-hero">
+                  <strong>NDA Mock 04</strong>
+                  <small>120 questions - 150 minutes</small>
+                  <div class="chip-row">
+                    <span class="chip">Start test</span>
+                    <span class="chip">Review</span>
+                  </div>
+                </div>
+                <div class="score-card">142.5 / 300<span>Top 18% cohort</span></div>
+                <div class="student-bottom">
+                  <div class="bar-list">
+                    <strong>Subject accuracy</strong>
+                    <div class="bar-line"><span class="bar-fill" style="--w: 82%;"></span></div>
+                    <div class="bar-line"><span class="bar-fill green" style="--w: 66%;"></span></div>
+                    <div class="bar-line"><span class="bar-fill red" style="--w: 48%;"></span></div>
+                  </div>
+                  <div class="review-note">
+                    <strong>Teacher review</strong><br />
+                    History needs one more revision.
+                  </div>
+                </div>
+              </div>
+              <span class="screen-caption">Mock Tests student view</span>
+            </article>
+
+            <article class="screen-card">
+              <div class="screen-top">
+                <span>Mock Test Builder</span>
+                <em>Teacher</em>
+              </div>
+              <div class="mock-screen builder-screen" aria-hidden="true">
+                <div class="bank">
+                  <strong>Question Bank</strong>
+                  <span class="bank-pill">NDA</span>
+                  <span class="bank-pill">JEE Main</span>
+                  <span class="bank-pill">NEET</span>
+                  <span class="bank-pill">Board</span>
+                </div>
+                <div class="builder-main">
+                  <div class="builder-row">
+                    <strong>Import review</strong>
+                    <div class="bar-line"><span class="bar-fill green" style="--w: 76%;"></span></div>
+                    <div class="bar-line"><span class="bar-fill red" style="--w: 42%;"></span></div>
+                  </div>
+                  <div class="builder-row">
+                    <strong>Publish queue</strong>
+                    <div class="queue-row">NDA Sunday Test <span>Draft</span></div>
+                    <div class="queue-row">JEE Quiz 01 <span class="ready">Ready</span></div>
+                    <div class="queue-row">NEET Bio 12 <span>Review</span></div>
+                  </div>
+                </div>
+              </div>
+              <span class="screen-caption">Mock Tests builder view</span>
+            </article>
           </div>
         </div>
       </section>
