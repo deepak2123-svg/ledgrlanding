@@ -21,12 +21,12 @@
   --pen-blue-soft: #e1e7ee;
   --pen-red: #a5382b;
   --pen-red-soft: #f3e1dc;
-  --shadow-sm: 0 1px 3px rgba(28, 42, 32, 0.09), 0 1px 2px rgba(28, 42, 32, 0.06);
-  --shadow-md: 0 10px 26px rgba(28, 42, 32, 0.1);
-  --shadow-lg: 0 22px 50px rgba(28, 42, 32, 0.14);
-  --font-display: "Fraunces", Georgia, serif;
+  --shadow-sm: none;
+  --shadow-md: none;
+  --shadow-lg: none;
+  --font-display: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
   --font-sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
-  --font-mono: "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+  --font-mono: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
 }
 
 html {
@@ -156,11 +156,11 @@ img {
   font-size: 0.9rem;
   font-weight: 700;
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, border-color 0.15s ease;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
 }
 
 .button:hover {
-  transform: translateY(-1px);
+  transform: none;
 }
 
 .button-primary {
@@ -283,29 +283,26 @@ img {
   align-items: center;
   width: fit-content;
   gap: 7px;
-  padding: 6px 13px;
-  border: 1.5px solid var(--stamp);
-  border-radius: 4px;
-  color: var(--stamp);
-  box-shadow: inset 0 0 0 3px rgba(31, 92, 63, 0.13);
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  font-weight: 600;
-  letter-spacing: 0.08em;
+  padding: 0;
+  border: 0;
+  color: var(--ink-faint);
+  box-shadow: none;
+  font-family: var(--font-sans);
+  font-size: 0.76rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
   text-transform: uppercase;
-  transform: rotate(-1.4deg);
+  transform: none;
 }
 
 .stamp-badge.blue {
-  border-color: var(--pen-blue);
-  color: var(--pen-blue);
-  box-shadow: inset 0 0 0 3px rgba(38, 64, 95, 0.12);
+  color: var(--ink-faint);
+  box-shadow: none;
 }
 
 .stamp-badge.red {
-  border-color: var(--pen-red);
-  color: var(--pen-red);
-  box-shadow: inset 0 0 0 3px rgba(165, 56, 43, 0.12);
+  color: var(--ink-faint);
+  box-shadow: none;
 }
 
 .hero {
@@ -483,9 +480,9 @@ img {
   height: 7px;
   flex: 0 0 auto;
   margin-top: 8px;
-  border-radius: 1px;
+  border-radius: 50%;
   background: var(--pen-blue);
-  transform: rotate(45deg);
+  transform: none;
 }
 
 .mock-tests .proof-list li::before {
@@ -689,7 +686,7 @@ img {
   border: 1px solid var(--rule-strong);
   border-radius: 10px;
   background: var(--white);
-  box-shadow: 0 30px 70px rgba(28, 42, 32, 0.28);
+  box-shadow: none;
   overflow: auto;
 }
 
