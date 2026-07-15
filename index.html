@@ -338,12 +338,22 @@
 
     .product-card {
       min-width: 0;
+      display: block;
       border: 1px solid var(--rule-strong);
       border-radius: 8px;
       background: var(--surface);
       box-shadow: var(--shadow-sm);
       padding: 24px;
+      transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
     }
+
+    .product-card:hover {
+      transform: translateY(-2px);
+      border-color: var(--stamp);
+      box-shadow: var(--shadow-md);
+    }
+
+    .product-card.mocktest:hover { border-color: var(--pen-red); }
 
     .product-card .stamp-badge { margin-bottom: 14px; }
 
@@ -617,7 +627,7 @@
         </div>
 
         <div class="product-grid">
-          <article class="product-card classlog">
+          <a class="product-card classlog" href="/classlog/" aria-label="Open ClassLog marketing page">
             <span class="stamp-badge blue">For teachers &amp; admins</span>
             <h3>ClassLog</h3>
             <p>A daily register for class work — what was taught, who logged it, and what still needs attention.</p>
@@ -626,9 +636,9 @@
               <li>Admins see pending and cold classes at a glance</li>
               <li>Directors get review-ready reports</li>
             </ul>
-          </article>
+          </a>
 
-          <article class="product-card mocktest">
+          <a class="product-card mocktest" href="/mock-tests/" aria-label="Open Mock Tests marketing page">
             <span class="stamp-badge red">For students</span>
             <h3>Mock Tests</h3>
             <p>Timed practice tests that plug into your syllabus, with results ready to review.</p>
@@ -637,7 +647,7 @@
               <li>Teachers import and manage questions</li>
               <li>Admins publish tests and control access</li>
             </ul>
-          </article>
+          </a>
         </div>
       </section>
 
