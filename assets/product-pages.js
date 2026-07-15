@@ -1,5 +1,3 @@
-const portalButton = document.querySelector("#portalButton");
-const portalMenu = document.querySelector("#portalMenu");
 const demoModal = document.querySelector("#demoModal");
 const closeDemo = document.querySelector("#closeDemo");
 const openDemoButtons = document.querySelectorAll(".open-demo");
@@ -7,31 +5,12 @@ const contactForm = document.querySelector("#contactForm");
 const submitButton = document.querySelector("#submitButton");
 const formStatus = document.querySelector("#formStatus");
 
-const setPortalOpen = (open) => {
-  if (!portalButton || !portalMenu) return;
-  portalMenu.classList.toggle("open", open);
-  portalButton.setAttribute("aria-expanded", String(open));
-};
-
-if (portalButton) {
-  portalButton.addEventListener("click", () => {
-    setPortalOpen(!portalMenu.classList.contains("open"));
-  });
-}
-
-document.addEventListener("click", (event) => {
-  if (!event.target.closest(".portal-wrap")) {
-    setPortalOpen(false);
-  }
-});
-
 const setDemoOpen = (open) => {
   if (!demoModal) return;
   demoModal.classList.toggle("open", open);
   demoModal.setAttribute("aria-hidden", String(!open));
   document.body.classList.toggle("modal-open", open);
   if (open) {
-    setPortalOpen(false);
     setTimeout(() => document.querySelector("#name")?.focus(), 50);
   }
 };
@@ -59,7 +38,6 @@ if (demoModal) {
 
 document.addEventListener("keydown", (event) => {
   if (event.key === "Escape") {
-    setPortalOpen(false);
     setDemoOpen(false);
   }
 });
