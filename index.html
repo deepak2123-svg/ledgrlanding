@@ -142,10 +142,6 @@
     }
 
     .hero-intro {
-      display: grid;
-      grid-template-columns: minmax(0, 1fr) 370px;
-      gap: 28px;
-      align-items: end;
       margin-bottom: 26px;
       animation: rise-in 0.65s 0.08s ease both;
     }
@@ -164,38 +160,6 @@
       gap: 13px;
       grid-column: 1;
       margin-top: 24px;
-    }
-
-    .hero-proof {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 10px;
-      grid-column: 2;
-      grid-row: 1 / span 2;
-    }
-
-    .proof-card {
-      border: 1px solid rgba(174, 187, 153, 0.82);
-      border-radius: 10px;
-      background: rgba(255, 253, 245, 0.76);
-      padding: 12px;
-      box-shadow: inset 0 -1px 0 rgba(174, 187, 153, 0.16);
-    }
-
-    .proof-card strong {
-      display: block;
-      color: var(--ink);
-      font-size: 1.13rem;
-      font-weight: 800;
-      letter-spacing: -0.02em;
-    }
-
-    .proof-card span {
-      display: block;
-      margin-top: 2px;
-      color: var(--ink-faint);
-      font-size: 0.76rem;
-      font-weight: 760;
     }
 
     .admin-mock {
@@ -927,10 +891,8 @@
       .brand-name { font-size: 0.98rem; }
       .topbar .button-primary { min-height: 38px; padding: 0 12px; }
       .hero { gap: 24px; padding: 34px 0 26px; }
-      .hero-intro { grid-template-columns: 1fr; gap: 18px; }
       h1 { font-size: clamp(3rem, 16vw, 4.4rem); }
       .hero-actions .button { width: 100%; }
-      .hero-proof { grid-column: auto; grid-row: auto; }
       .admin-mock { border-radius: 14px; }
       .section { padding: 34px 0; }
       .cta-band { flex-direction: column; align-items: flex-start; }
@@ -961,12 +923,6 @@
               <button class="button button-primary open-demo" type="button">Book a demo</button>
               <a class="button button-outline" href="#products">See products</a>
             </div>
-          </div>
-
-          <div class="hero-proof" aria-label="Ledgr summary">
-            <div class="proof-card"><strong>11 centres</strong><span>reviewed today</span></div>
-            <div class="proof-card"><strong>3 portals</strong><span>student, teacher, admin</span></div>
-            <div class="proof-card"><strong>Live</strong><span>class timelines</span></div>
           </div>
         </div>
 
