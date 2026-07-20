@@ -994,7 +994,7 @@
     }
 
     /* The public preview follows the real admin app's phone drill-down pattern. */
-    @media (max-width: 700px) {
+    @media (max-width: 599.98px) {
       .admin-mock[data-admin-demo] {
         height: clamp(560px, calc(100svh - 28px), 720px);
         min-height: 0;
@@ -1052,6 +1052,8 @@
 
       .mobile-icon-button.report { margin-left: auto; color: #245ed2; }
       .mobile-icon-button svg { width: 19px; height: 19px; }
+      .mobile-admin-actions { margin-left: auto; display: flex; align-items: center; gap: 7px; flex: 0 0 auto; }
+      .mobile-admin-actions .mobile-icon-button.report { margin-left: 0; }
       .mobile-admin-heading { min-width: 0; display: grid; gap: 1px; }
       .mobile-admin-heading span {
         color: #6b7689;
@@ -1072,14 +1074,29 @@
         text-overflow: ellipsis;
         white-space: nowrap;
       }
+      .mobile-admin-heading small {
+        overflow: hidden;
+        color: #68758a;
+        font-size: 9.5px;
+        font-weight: 650;
+        line-height: 1.15;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
 
       .mobile-admin-content {
         height: calc(100% - 62px);
         overflow-x: hidden;
         overflow-y: auto;
-        padding: 13px 11px 92px;
+        padding: 13px 11px calc(94px + env(safe-area-inset-bottom, 0px));
         scrollbar-width: thin;
       }
+
+      .mobile-admin-demo button {
+        -webkit-tap-highlight-color: transparent;
+        transition: transform 120ms cubic-bezier(.22,.8,.24,1), background-color 140ms ease, border-color 140ms ease, color 140ms ease;
+      }
+      .mobile-admin-demo button:active { transform: translateY(1px) scale(.989); }
 
       .mobile-summary-card,
       .mobile-institute-card {
@@ -1122,6 +1139,12 @@
       }
       .mobile-summary-count small { color: #8f98a8; font-size: 13px; }
 
+      .mobile-metric-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 8px; margin-top: 10px; }
+      .mobile-metric-card { min-width: 0; border: 1px solid #d9e1ec; border-radius: 14px; background: #fff; padding: 11px; box-shadow: 0 6px 16px rgba(15,23,42,.035); }
+      .mobile-metric-card > span { display: block; overflow: hidden; color: #697589; font-size: 9px; font-weight: 900; letter-spacing: .075em; text-overflow: ellipsis; text-transform: uppercase; white-space: nowrap; }
+      .mobile-metric-card > strong { display: block; margin-top: 7px; color: #101827; font-family: "Poppins", "Inter", sans-serif; font-size: 21px; font-weight: 850; letter-spacing: -.03em; line-height: 1; }
+      .mobile-metric-card > small { display: block; overflow: hidden; margin-top: 6px; color: #748095; font-size: 10px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+
       .mobile-search {
         height: 48px;
         display: flex;
@@ -1162,6 +1185,9 @@
       }
 
       .mobile-institute-list { display: grid; gap: 5px; }
+      .mobile-list-group { display: grid; gap: 5px; }
+      .mobile-list-group + .mobile-list-group { margin-top: 13px; }
+      .mobile-list-group > h3 { margin: 0 4px 3px; color: #515d70; font-size: 9.5px; font-weight: 900; letter-spacing: .075em; text-transform: uppercase; }
       .mobile-inst-card {
         width: 100%;
         min-height: 65px;
@@ -1179,6 +1205,7 @@
       }
       .mobile-inst-card:active { transform: scale(.99); background: #eef4ff; }
       .mobile-inst-dot { width: 7px; height: 7px; border-radius: 50%; background: #a2adbd; }
+      .mobile-inst-dot.started { background: #12a47f; }
       .mobile-inst-copy { min-width: 0; display: grid; gap: 3px; }
       .mobile-inst-copy strong {
         overflow: hidden;
@@ -1211,6 +1238,31 @@
         font-size: 13px;
         font-weight: 900;
       }
+
+      .mobile-workspace-tabs {
+        position: sticky;
+        top: -13px;
+        z-index: 3;
+        height: 54px;
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0,1fr));
+        gap: 4px;
+        margin: -3px 0 11px;
+        border: 1px solid #d7e0eb;
+        border-radius: 16px;
+        background: rgba(255,255,255,.96);
+        padding: 6px;
+        box-shadow: 0 8px 22px rgba(15,23,42,.065);
+        backdrop-filter: blur(10px);
+        -webkit-backdrop-filter: blur(10px);
+      }
+      .mobile-workspace-tabs button { min-width: 0; display: flex; align-items: center; justify-content: center; gap: 5px; border: 0; border-radius: 11px; background: #f8fafc; color: #5c687b; font-size: 10.5px; font-weight: 850; cursor: pointer; }
+      .mobile-workspace-tabs button.active { background: #101827; color: #fff; }
+      .mobile-workspace-tabs svg { width: 15px; height: 15px; flex: 0 0 15px; }
+
+      .mobile-browse-toggle { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 4px; margin-top: 10px; border: 1px solid #d4deea; border-radius: 14px; background: #f8fafc; padding: 4px; }
+      .mobile-browse-toggle button { min-height: 38px; border: 0; border-radius: 10px; background: transparent; color: #5d687a; font-size: 11px; font-weight: 850; }
+      .mobile-browse-toggle button.active { background: #101827; color: #fff; box-shadow: 0 3px 8px rgba(15,23,42,.15); }
       .mobile-tabs {
         height: 54px;
         display: grid;
@@ -1276,6 +1328,61 @@
       .mobile-row-arrow { display: grid; transform: rotate(180deg); }
       .mobile-row-arrow svg { width: 17px; height: 17px; }
 
+      .mobile-person-row,
+      .mobile-pair-row,
+      .mobile-teacher-card {
+        width: 100%;
+        min-height: 62px;
+        display: grid;
+        grid-template-columns: auto minmax(0,1fr) auto;
+        align-items: center;
+        gap: 10px;
+        border: 1px solid #d9e2ed;
+        border-radius: 14px;
+        background: #fff;
+        color: #101827;
+        padding: 10px 12px;
+        text-align: left;
+        cursor: pointer;
+      }
+      .mobile-person-avatar { width: 38px; height: 38px; display: grid; place-items: center; border-radius: 12px; background: #eaf1ff; color: #245ed2; font-size: 11px; font-weight: 900; }
+      .mobile-person-row > span:nth-child(2),
+      .mobile-pair-row > span:first-child { min-width: 0; display: grid; gap: 4px; }
+      .mobile-person-row strong,
+      .mobile-pair-row strong,
+      .mobile-teacher-card strong { overflow: hidden; font-family: "Poppins", "Inter", sans-serif; font-size: 12.5px; font-weight: 800; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-person-row small,
+      .mobile-pair-row small,
+      .mobile-teacher-card small { overflow: hidden; color: #707c8f; font-size: 10.5px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-pair-row { grid-template-columns: minmax(0,1fr) auto; border-color: #cfe0ff; background: #f7faff; }
+      .mobile-pair-row.green { border-color: #afecc2; background: #f1fcf4; }
+      .mobile-pair-row.orange { border-color: #ffd39b; background: #fff9ee; }
+      .mobile-pair-row.purple { border-color: #d8caff; background: #f7f4ff; }
+      .mobile-pair-row.cyan { border-color: #afe8ef; background: #f0fbfd; }
+      .mobile-chevron { color: #7f8ba0; font-size: 19px; font-weight: 750; }
+
+      .mobile-teacher-list { display: grid; gap: 7px; margin-top: 12px; }
+      .mobile-teacher-card { min-height: 78px; }
+      .mobile-teacher-copy { min-width: 0; display: grid; gap: 3px; }
+      .mobile-teacher-copy em { color: #245ed2; font-size: 9.5px; font-style: normal; font-weight: 800; }
+      .mobile-profile-card { display: flex; align-items: center; gap: 12px; border: 1px solid #d7e0eb; border-radius: 16px; background: #fff; padding: 14px; box-shadow: 0 8px 22px rgba(15,23,42,.05); }
+      .mobile-profile-avatar { width: 54px; height: 54px; flex: 0 0 54px; display: grid; place-items: center; border-radius: 17px; background: #17345f; color: #fff; font-family: "Poppins", "Inter", sans-serif; font-size: 16px; font-weight: 850; }
+      .mobile-profile-card > div:last-child { min-width: 0; }
+      .mobile-profile-card span { color: #68758a; font-size: 9px; font-weight: 900; letter-spacing: .075em; text-transform: uppercase; }
+      .mobile-profile-card h2 { overflow: hidden; margin: 4px 0 1px; font-family: "Poppins", "Inter", sans-serif; font-size: 19px; font-weight: 850; letter-spacing: -.03em; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-profile-card p { margin: 0; color: #68758a; font-size: 10.5px; font-weight: 650; }
+
+      .mobile-detail-section { margin-top: 11px; border: 1px solid #d8e1ec; border-radius: 16px; background: #fff; padding: 12px; box-shadow: 0 6px 18px rgba(15,23,42,.04); }
+      .mobile-detail-section > h3 { margin: 0 2px 9px; color: #647085; font-size: 9.5px; font-weight: 900; letter-spacing: .075em; text-transform: uppercase; }
+      .mobile-detail-row { width: 100%; min-height: 53px; display: flex; align-items: center; justify-content: space-between; gap: 10px; border: 0; border-top: 1px solid #e7ebf1; background: transparent; color: #101827; padding: 9px 3px; text-align: left; cursor: pointer; }
+      .mobile-detail-row:first-of-type { border-top: 0; }
+      .mobile-detail-row > span:first-child { min-width: 0; display: grid; gap: 3px; }
+      .mobile-detail-row strong { overflow: hidden; font-size: 12px; font-weight: 850; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-detail-row small { overflow: hidden; color: #748095; font-size: 10px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-detail-row > span:last-child { flex: 0 0 auto; color: #245ed2; font-size: 10px; font-weight: 850; }
+      .mobile-primary-action { width: 100%; min-height: 46px; display: flex; align-items: center; justify-content: center; gap: 8px; margin-top: 11px; border: 0; border-radius: 14px; background: #17345f; color: #fff; padding: 0 14px; font-size: 12px; font-weight: 900; cursor: pointer; }
+      .mobile-primary-action svg { width: 17px; height: 17px; }
+
       .mobile-timeline-content { padding-left: 10px; padding-right: 10px; }
       .mobile-timeline-title { padding: 3px 2px 11px; }
       .mobile-timeline-title > span { color: #667287; font-size: 9px; font-weight: 900; letter-spacing: .08em; text-transform: uppercase; }
@@ -1314,10 +1421,44 @@
       .mobile-entry-meta strong { margin-left: auto; color: #13874e; }
       .mobile-entry p { margin: 7px 0 0; color: #697588; font-size: 11px; line-height: 1.4; }
 
+      .mobile-report-hero { border: 1px solid #d8e1ec; border-radius: 16px; background: #fff; padding: 14px; box-shadow: 0 8px 22px rgba(15,23,42,.045); }
+      .mobile-report-hero > span,
+      .mobile-report-card .mobile-card-heading span { color: #68758a; font-size: 9px; font-weight: 900; letter-spacing: .075em; text-transform: uppercase; }
+      .mobile-report-hero h2 { margin: 5px 0 0; font-family: "Poppins", "Inter", sans-serif; font-size: 23px; font-weight: 850; letter-spacing: -.04em; line-height: 1.05; }
+      .mobile-report-hero p,
+      .mobile-report-card p { margin: 7px 0 0; color: #6b778a; font-size: 10.5px; line-height: 1.5; }
+      .mobile-report-card { margin-top: 11px; border: 1px solid #d8e1ec; border-radius: 16px; background: #fff; padding: 13px; box-shadow: 0 6px 18px rgba(15,23,42,.04); }
+      .mobile-report-card > h3,
+      .mobile-card-heading h3 { margin: 0; font-family: "Poppins", "Inter", sans-serif; font-size: 15px; font-weight: 850; letter-spacing: -.02em; }
+      .mobile-format-grid { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 6px; margin-top: 10px; }
+      .mobile-format-grid button { min-height: 39px; border: 1px solid #d7e0eb; border-radius: 11px; background: #f8fafc; color: #5c687b; padding: 4px; font-size: 9.5px; font-weight: 850; }
+      .mobile-format-grid button.active { border-color: #245ed2; background: #eaf1ff; color: #245ed2; }
+      .mobile-report-actions { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 7px; margin-top: 9px; }
+      .mobile-report-actions button { min-height: 42px; display: flex; align-items: center; justify-content: center; gap: 6px; border: 1px solid #d5deea; border-radius: 12px; background: #fff; color: #344054; font-size: 10.5px; font-weight: 850; }
+      .mobile-report-actions button.primary { border-color: #d2def8; background: #eef4ff; color: #245ed2; }
+      .mobile-report-actions svg { width: 15px; height: 15px; }
+      .mobile-card-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+      .mobile-card-heading > div { min-width: 0; display: grid; gap: 4px; }
+      .mobile-switch { width: 44px; height: 25px; flex: 0 0 44px; position: relative; border: 0; border-radius: 999px; background: #d7dee8; padding: 3px; }
+      .mobile-switch span { width: 19px; height: 19px; display: block; border-radius: 50%; background: #fff; box-shadow: 0 2px 5px rgba(15,23,42,.2); transition: transform .16s ease; }
+      .mobile-switch.active { background: #17345f; }
+      .mobile-switch.active span { transform: translateX(19px); }
+
+      .mobile-tool-grid { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; margin-top: 11px; }
+      .mobile-tool-card { min-width: 0; min-height: 117px; position: relative; display: flex; flex-direction: column; align-items: flex-start; gap: 8px; border: 1px solid #d8e1ec; border-radius: 16px; background: #fff; color: #101827; padding: 12px; text-align: left; box-shadow: 0 8px 20px rgba(15,23,42,.045); cursor: pointer; }
+      .mobile-tool-card.danger { border-color: #fecdd3; background: #fffafb; }
+      .mobile-tool-icon { width: 36px; height: 36px; display: grid; place-items: center; border-radius: 12px; background: #eef4ff; color: #245ed2; }
+      .mobile-tool-card.danger .mobile-tool-icon { background: #fff1f2; color: #dc3038; }
+      .mobile-tool-icon svg { width: 18px; height: 18px; }
+      .mobile-tool-card > span:nth-child(2) { min-width: 0; display: grid; gap: 4px; }
+      .mobile-tool-card strong { font-family: "Poppins", "Inter", sans-serif; font-size: 12.5px; font-weight: 800; letter-spacing: -.015em; }
+      .mobile-tool-card small { color: #707c8e; font-size: 9.5px; font-weight: 600; line-height: 1.35; }
+      .mobile-tool-card em { position: absolute; top: 12px; right: 12px; border: 1px solid #dde4ed; border-radius: 999px; background: #f8fafc; color: #687489; padding: 4px 7px; font-size: 8.5px; font-style: normal; font-weight: 900; }
+
       .mobile-bottom-nav {
         position: absolute;
         right: 9px;
-        bottom: 9px;
+        bottom: max(9px, calc(env(safe-area-inset-bottom, 0px) + 9px));
         left: 9px;
         z-index: 4;
         height: 66px;
