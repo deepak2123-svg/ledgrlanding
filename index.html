@@ -219,11 +219,13 @@
     }
 
     .report-button {
+      border: 0;
       border-radius: 8px;
       background: #eef4ff;
       color: #225ddd;
       padding: 7px 10px;
       white-space: nowrap;
+      cursor: pointer;
     }
 
     .mock-body {
@@ -252,6 +254,7 @@
       color: #d8dee9;
       font-size: 0.74rem;
       font-weight: 900;
+      cursor: pointer;
     }
 
     .rail-icon.active {
@@ -293,6 +296,26 @@
       font-size: 0.8rem;
       font-weight: 650;
     }
+
+    input.mock-search { width: calc(100% - 28px); outline: 0; }
+    input.mock-search:focus { border-color: #4d7ce7; box-shadow: 0 0 0 3px rgba(47,102,230,.1); }
+    button.inst-row, button.class-chip, button.tab, button.range-pill, button.sort-chip { font: inherit; cursor: pointer; }
+    button.inst-row { width:100%; border:0; text-align:left; background:transparent; }
+    button.inst-row.active { border:1px solid #bed0ff; background:#eef3ff; }
+    button.class-chip, button.tab { appearance:none; }
+    .demo-empty { margin:18px; padding:24px 14px; border:1px dashed #cbd5e1; border-radius:12px; color:#64748b; text-align:center; font-size:.78rem; font-weight:750; }
+    .demo-toast { position:absolute; right:18px; bottom:18px; z-index:5; max-width:300px; padding:11px 14px; border-radius:10px; background:#111827; color:#fff; box-shadow:0 12px 32px rgba(15,23,42,.25); font-size:.76rem; font-weight:800; }
+    .admin-mock { position:relative; }
+    .demo-report-modal { position:absolute; inset:42px 0 0; z-index:10; display:grid; place-items:center; padding:24px; background:rgba(15,23,42,.48); backdrop-filter:blur(4px); }
+    .demo-report-dialog { width:min(520px,100%); border-radius:18px; background:#fff; padding:22px; box-shadow:0 28px 70px rgba(15,23,42,.3); }
+    .demo-report-dialog h3 { margin:0; font-size:1.35rem; }
+    .demo-report-dialog p { color:#64748b; line-height:1.5; }
+    .demo-report-options { display:grid; grid-template-columns:repeat(3,1fr); gap:8px; margin:16px 0; }
+    .demo-report-options button { border:1px solid #d7e0ed; border-radius:10px; background:#fff; padding:11px 8px; font-weight:800; cursor:pointer; }
+    .demo-report-options button.active { border-color:#2f66e6; background:#eef4ff; color:#225ddd; }
+    .demo-dialog-actions { display:flex; justify-content:flex-end; gap:8px; }
+    .demo-dialog-actions button { min-height:40px; border:1px solid #d7e0ed; border-radius:10px; background:#fff; padding:0 14px; font-weight:850; cursor:pointer; }
+    .demo-dialog-actions .primary { border-color:#17345f; background:#17345f; color:#fff; }
 
     .update-pill {
       width: fit-content;
@@ -925,7 +948,7 @@
           </div>
         </div>
 
-        <div class="admin-mock" role="img" aria-label="Sample Ledgr admin dashboard showing institutes, classes, and a live class timeline">
+        <div class="admin-mock" data-admin-demo role="region" aria-label="Interactive sample Ledgr admin dashboard using fictional data">
           <div class="mock-top">
             <div class="crumbs">
               <span class="mock-rail-logo">L</span>
@@ -1179,6 +1202,7 @@
   </div>
 
   <script type="module" src="/assets/sample-reports.js"></script>
+  <script src="/assets/admin-demo.js"></script>
   <script>
     const demoModal = document.querySelector("#demoModal");
     const closeDemo = document.querySelector("#closeDemo");
