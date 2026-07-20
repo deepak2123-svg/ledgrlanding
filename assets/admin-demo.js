@@ -36,14 +36,23 @@
     ]},
   ];
   const teachers = ["A. Mehta","N. Singh","R. Verma","K. Rao","P. Sharma","M. Gill","S. Yadav"];
-  const topics = [
-    ["Chemical bonding","Chemistry","A. Mehta","Hybridisation","In Progress",0],
-    ["Reading comprehension drill","English","N. Singh","Explanation","Completed",0],
-    ["Modern history timeline","GS","R. Verma","","In Progress",2],
-    ["Current affairs recap","GS","R. Verma","","In Progress",2],
-    ["Questions on logarithmic inequality","Mathematics","K. Rao","Practice","Completed",3],
-    ["Laws of motion numericals","Physics","P. Sharma","Worksheet","Completed",8],
-    ["Cell division revision","Biology","M. Gill","Revision","In Progress",14],
+  const lessons = [
+    ["Chemical equilibrium and Le Chatelier’s principle","Chemistry","Numerical practice"],
+    ["Newton’s laws: free-body diagrams","Physics","Concept application"],
+    ["Limits and continuity","Mathematics","Worked examples"],
+    ["Cell cycle and mitosis","Biology","Diagram revision"],
+    ["Reading comprehension: inference questions","English","Guided practice"],
+    ["Indian Constitution: fundamental rights","Political Science","Discussion"],
+    ["Modern history: national movement","History","Timeline review"],
+    ["Current affairs: science and technology","General Studies","Weekly recap"],
+    ["Organic chemistry reaction mechanisms","Chemistry","Board questions"],
+    ["Electrostatics and electric field","Physics","Problem solving"],
+    ["Probability distributions","Mathematics","Question drill"],
+    ["Human physiology: circulation","Biology","NCERT review"],
+    ["Trigonometric identities","Mathematics","Worksheet"],
+    ["Grammar: clauses and sentence correction","English","Error spotting"],
+    ["Indian geography: monsoon system","Geography","Map work"],
+    ["Economy: inflation and monetary policy","Economics","Current examples"],
   ];
   const state = { institute:"north", item:"a4", mode:"Class", period:"This Week", sort:"Recent", instituteQuery:"", itemQuery:"", rail:4, report:false, format:"PDF" };
   const esc = value => String(value??"").replace(/[&<>'"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[c]));
@@ -51,7 +60,18 @@
   const visibleInstitutes = () => institutes.filter(item=>item.name.toLowerCase().includes(state.instituteQuery.toLowerCase()));
   const periodDays = {Today:0,Yesterday:1,"This Week":7,"This Month":31}[state.period];
   const activeName = () => state.mode==="Teacher" ? state.item : (currentInstitute().classes.find(item=>item.id===state.item)?.name||currentInstitute().classes[0]?.name||"All classes");
-  const entries = () => topics.filter((_,index)=>state.period==="Today"?index<2:state.period==="Yesterday"?index>=2&&index<4:topics[index][5]<=periodDays).map((topic,index)=>({topic:topic[0],subject:topic[1],teacher:topic[2],detail:topic[3],status:topic[4],day:index<2?"Monday, July 13":index<4?"Saturday, July 11":index<5?"Friday, July 10":"Earlier this month",start:index%2?"9:00":"10:45",end:index%2?"10:30":"12:00",duration:index%2?"1h 30m":"1h 15m"})).filter(entry=>state.mode!=="Teacher"||entry.teacher===state.item);
+  const hash = value => [...String(value||"")].reduce((sum,character)=>sum+character.charCodeAt(0),0);
+  const classEntries = () => {
+    const selectionKey = `${state.institute}:${state.mode === "Teacher" ? "teacher-view" : state.item}`;
+    const lessonOffset = hash(selectionKey) % lessons.length;
+    const teacherOffset = hash(state.item || state.institute) % teachers.length;
+    return Array.from({length:7},(_,index)=>{
+      const lesson=lessons[(lessonOffset+index*3)%lessons.length];
+      const teacher=state.mode === "Teacher" ? state.item : teachers[(teacherOffset+index*2)%teachers.length];
+      return {topic:lesson[0],subject:lesson[1],teacher,detail:lesson[2],status:index%3===1?"In Progress":"Completed",age:[0,0,2,2,3,8,14][index],day:index<2?"Monday, July 13":index<4?"Saturday, July 11":index<5?"Friday, July 10":"Earlier this month",start:index%2?"9:00":"10:45",end:index%2?"10:30":"12:00",duration:index%2?"1h 30m":"1h 15m"};
+    });
+  };
+  const entries = () => classEntries().filter((entry,index)=>state.period==="Today"?index<2:state.period==="Yesterday"?index>=2&&index<4:entry.age<=periodDays);
   const groupedEntries = () => entries().reduce((map,entry)=>{(map[entry.day]??=[]).push(entry);return map;},{});
   const percent = institute => Math.round(institute.logged/institute.teachers*100);
 
