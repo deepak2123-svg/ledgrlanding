@@ -978,6 +978,12 @@
       .mock-body { min-width: 1180px; }
     }
 
+    /* Keep the approved desktop panel widths readable before the phone breakpoint. */
+    @media (min-width: 600px) and (max-width: 1420px) {
+      .admin-mock[data-admin-demo] { overflow-x: auto; overflow-y: hidden; }
+      .admin-mock[data-admin-demo] .mock-body { min-width: 1360px; }
+    }
+
     @media (max-width: 720px) {
       .page { padding: 14px 14px 26px; }
       .topbar { top: 8px; padding: 8px; border-radius: 8px; }
