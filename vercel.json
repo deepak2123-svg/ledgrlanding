@@ -1,0 +1,6 @@
+{
+  "redirects": [
+    { "source": "/mock-tests", "destination": "/classlog/", "permanent": true },
+    { "source": "/mock-tests/", "destination": "/classlog/", "permanent": true }
+  ]
+}

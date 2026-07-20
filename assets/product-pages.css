@@ -433,10 +433,6 @@ img {
   transform: none;
 }
 
-.mock-tests .proof-list li::before {
-  background: var(--pen-red);
-}
-
 .gateway-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -484,10 +480,6 @@ img {
   width: fit-content;
   color: var(--stamp);
   font-weight: 800;
-}
-
-.mock-tests .gateway-card a {
-  color: var(--pen-red);
 }
 
 .step-grid {
@@ -576,13 +568,6 @@ img {
     var(--stamp-soft);
   box-shadow: var(--shadow-sm);
   padding: 28px 30px;
-}
-
-.mock-tests .cta-band {
-  border-color: var(--pen-red);
-  background:
-    linear-gradient(135deg, rgba(255, 255, 255, 0.42), rgba(243, 225, 220, 0.88)),
-    var(--pen-red-soft);
 }
 
 .cta-band h2 {

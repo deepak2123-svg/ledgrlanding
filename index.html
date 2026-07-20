@@ -4,7 +4,9 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Ledgr Classes — The daily register for coaching centres</title>
-  <meta name="description" content="Ledgr Classes gives coaching centres two simple tools: ClassLog for daily teaching, and Mock Tests for student practice." />
+  <meta name="description" content="Ledgr ClassLog gives coaching centres daily teaching logs, live admin visibility, syllabus tracking and share-ready institute reports." />
+  <link rel="canonical" href="https://ledgrclasses.com/" />
+  <link rel="stylesheet" href="/assets/sample-reports.css" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
@@ -691,6 +693,8 @@
       gap: 16px;
     }
 
+    .product-grid.classlog-only-grid { grid-template-columns: 1fr; }
+
     .product-card {
       min-width: 0;
       min-height: 240px;
@@ -717,16 +721,11 @@
       background: var(--pen-blue);
     }
 
-    .product-card.mocktest::before { background: var(--pen-red); }
-    .product-card.mocktest { animation-delay: 0.36s; }
-
     .product-card:hover {
       border-color: var(--stamp);
       box-shadow: var(--shadow-md);
       transform: translateY(-3px);
     }
-
-    .product-card.mocktest:hover { border-color: var(--pen-red); }
 
     .product-card h3 {
       font-size: 2rem;
@@ -1092,34 +1091,36 @@
 
       <section id="products" class="section" aria-labelledby="products-title">
         <div class="section-head">
-          <h2 id="products-title">Two products. One operating rhythm.</h2>
-          <p>ClassLog keeps the teaching day accountable. Mock Tests turns student practice into review-ready results.</p>
+          <h2 id="products-title">One clear operating rhythm for every class.</h2>
+          <p>ClassLog connects fast teacher entries with live admin visibility, syllabus progress and review-ready institute reports.</p>
         </div>
 
-        <div class="product-grid">
-          <a class="product-card classlog" href="/classlog/" aria-label="Open ClassLog marketing page">
+        <div class="product-grid classlog-only-grid">
+          <a class="product-card classlog" href="/classlog/" aria-label="Explore ClassLog">
             <div>
               <h3>ClassLog</h3>
-              <p>Daily class logs, pending-class visibility, teacher accountability and admin reports.</p>
+              <p>Daily class logs, pending-class visibility, teacher accountability, syllabus tracking and Ledgr Reports.</p>
             </div>
-            <div class="tag-list"><span>Teacher app</span><span>Admin panel</span><span>Reports</span></div>
-          </a>
-
-          <a class="product-card mocktest" href="/mock-tests/" aria-label="Open Mock Tests marketing page">
-            <div>
-              <h3>Mock Tests</h3>
-              <p>Student attempts, teacher question import, admin publishing and result review.</p>
-            </div>
-            <div class="tag-list"><span>Student portal</span><span>Question bank</span><span>Results</span></div>
+            <div class="tag-list"><span>Teacher app</span><span>Admin panel</span><span>Ledgr Report</span></div>
           </a>
         </div>
+      </section>
+
+      <section class="section sample-reports-section" aria-labelledby="sample-reports-title">
+        <div class="section-head">
+          <span class="sample-eyebrow">Ledgr Report samples</span>
+          <h2 id="sample-reports-title">See the kind of institute reports you’ll get.</h2>
+          <p>Explore real report layouts generated from ClassLog. Each public sample shows how teaching activity becomes a clear, share-ready institute summary.</p>
+        </div>
+        <div class="sample-report-status" data-sample-report-status role="status">Loading sample reports…</div>
+        <div class="sample-report-grid" data-sample-report-list></div>
       </section>
 
       <section class="section" aria-labelledby="demo-title">
         <div class="cta-band">
           <div>
             <h2 id="demo-title">See it running in your centre.</h2>
-            <p>We'll set up ClassLog, Mock Tests, or both. No pressure — just a walkthrough.</p>
+            <p>We’ll set up ClassLog around your institutes, teachers, sections and reporting workflow. No pressure — just a walkthrough.</p>
           </div>
           <button class="button button-primary open-demo" type="button">Book a demo</button>
         </div>
@@ -1128,11 +1129,11 @@
       <footer class="footer">
         <div class="footer-brand">
           <span class="brand-mark" style="width:28px;height:28px;font-size:0.9rem;border-radius:5px;">L</span>
-          <span>Ledgr Classes — class logs and mock tests for coaching centres.</span>
+          <span>Ledgr ClassLog — daily teaching visibility for coaching centres.</span>
         </div>
         <div class="footer-links">
-          <a href="https://teacher.ledgrclasses.com/">ClassLog login</a>
-          <a href="https://student.test.ledgrclasses.com/student-login">Mock Test login</a>
+          <a href="https://teacher.ledgrclasses.com/">Teacher App</a>
+          <a href="https://admin.ledgrclasses.com/">Admin Panel</a>
         </div>
       </footer>
     </div>
@@ -1163,7 +1164,7 @@
         </div>
         <div class="field">
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Optional: city, number of teachers, or whether you want ClassLog, Mock Tests, or both."></textarea>
+          <textarea id="message" name="message" placeholder="Optional: city, number of teachers, or your current class-reporting workflow."></textarea>
         </div>
         <div class="hidden-field" aria-hidden="true">
           <label for="website">Website</label>
@@ -1177,6 +1178,7 @@
     </div>
   </div>
 
+  <script type="module" src="/assets/sample-reports.js"></script>
   <script>
     const demoModal = document.querySelector("#demoModal");
     const closeDemo = document.querySelector("#closeDemo");

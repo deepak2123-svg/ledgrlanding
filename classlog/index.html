@@ -5,10 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>ClassLog by Ledgr Classes | Daily class logging for coaching centres</title>
   <meta name="description" content="ClassLog gives teachers a fast daily register and gives coaching-centre admins live visibility into pending classes, teacher activity and review-ready reports." />
+  <link rel="canonical" href="https://ledgrclasses.com/classlog/" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <link rel="stylesheet" href="../assets/product-pages.css" />
+  <link rel="stylesheet" href="../assets/sample-reports.css" />
 </head>
 <body class="product-page classlog">
   <main class="page">
@@ -41,6 +43,16 @@
         <div class="hero-visual" data-frame-label="Teacher app preview">
           <img src="../assets/classlog-teacher-dashboard.png" alt="Sample ClassLog teacher workspace showing a demo class log board, filters and add-entry action" />
         </div>
+      </section>
+
+      <section class="section sample-reports-section" aria-labelledby="sample-reports-title">
+        <div class="section-head">
+          <span class="sample-eyebrow">Ledgr Report samples</span>
+          <h2 id="sample-reports-title">See the kind of institute reports you’ll get.</h2>
+          <p>Preview the clear, share-ready institute reports ClassLog creates from daily teaching activity.</p>
+        </div>
+        <div class="sample-report-status" data-sample-report-status role="status">Loading sample reports…</div>
+        <div class="sample-report-grid" data-sample-report-list></div>
       </section>
 
       <section class="section" aria-labelledby="classlog-work-title">
@@ -122,7 +134,8 @@
         </div>
         <div class="footer-links">
           <a href="/">Home</a>
-          <a href="/mock-tests/">Mock Tests</a>
+          <a href="https://teacher.ledgrclasses.com/">Teacher App</a>
+          <a href="https://admin.ledgrclasses.com/">Admin Panel</a>
         </div>
       </footer>
     </div>
@@ -152,7 +165,7 @@
         </div>
         <div class="field">
           <label for="message">Message</label>
-          <textarea id="message" name="message" placeholder="Optional: city, number of teachers, or whether you want ClassLog, Mock Tests, or both."></textarea>
+          <textarea id="message" name="message" placeholder="Optional: city, number of teachers, or your current class-reporting workflow."></textarea>
         </div>
         <div class="hidden-field" aria-hidden="true">
           <label for="website">Website</label>
@@ -166,6 +179,7 @@
     </div>
   </div>
 
+  <script type="module" src="../assets/sample-reports.js"></script>
   <script src="../assets/product-pages.js"></script>
 </body>
 </html>
