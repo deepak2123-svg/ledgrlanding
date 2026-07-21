@@ -851,6 +851,92 @@
       font-weight: 900;
     }
 
+    .coverage-message {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      align-items: center;
+      gap: clamp(24px, 5vw, 72px);
+      min-height: 240px;
+      border: 1px solid var(--rule-strong);
+      border-radius: 8px;
+      background: linear-gradient(180deg, rgba(255, 255, 255, 0.62), rgba(255, 253, 245, 0.98));
+      box-shadow: var(--shadow-sm);
+      padding: clamp(26px, 5vw, 48px);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .coverage-message::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: var(--pen-blue);
+    }
+
+    .coverage-label {
+      color: var(--stamp-dark);
+      font-size: 0.78rem;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .coverage-message h2 {
+      max-width: 520px;
+      margin-top: 12px;
+      font-size: clamp(2.2rem, 5vw, 4.8rem);
+      line-height: 0.96;
+      font-weight: 800;
+      letter-spacing: -0.055em;
+    }
+
+    .coverage-ticker {
+      min-width: 0;
+      height: 1.25em;
+      overflow: hidden;
+      border-left: 3px solid var(--stamp);
+      padding-left: clamp(18px, 3vw, 30px);
+      outline: none;
+    }
+
+    .coverage-ticker:focus-visible {
+      border-radius: 4px;
+      box-shadow: 0 0 0 3px rgba(31, 92, 63, 0.16);
+    }
+
+    .coverage-ticker-track {
+      display: grid;
+      animation: coverage-ticker 9s ease-in-out infinite;
+    }
+
+    .coverage-message:hover .coverage-ticker-track,
+    .coverage-message:focus-within .coverage-ticker-track {
+      animation-play-state: paused;
+    }
+
+    .coverage-ticker-line {
+      min-height: 1.25em;
+      display: flex;
+      align-items: center;
+      color: var(--ink-soft);
+      font-family: var(--font-display);
+      font-size: clamp(1.55rem, 3vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: -0.04em;
+      white-space: nowrap;
+    }
+
+    @keyframes coverage-ticker {
+      0%, 27% { transform: translateY(0); }
+      33%, 60% { transform: translateY(-33.3333%); }
+      66%, 93% { transform: translateY(-66.6667%); }
+      100% { transform: translateY(0); }
+    }
+
     /* ---------- CTA band ---------- */
     .cta-band {
       display: flex;
@@ -997,6 +1083,14 @@
       .cta-band { flex-direction: column; align-items: flex-start; }
       .cta-band .button { width: 100%; }
       .footer { flex-direction: column; align-items: flex-start; }
+      .coverage-message { grid-template-columns: 1fr; gap: 26px; }
+      .coverage-message h2 { max-width: 460px; }
+      .coverage-ticker { padding-left: 18px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .coverage-ticker-track { animation: none !important; transform: none; }
+      .coverage-ticker-line:not(:first-child) { display: none; }
     }
 
     /* The public preview follows the real admin app's phone drill-down pattern. */
@@ -1507,7 +1601,6 @@
             <h1 id="hero-title">One desk for every class.</h1>
             <div class="hero-actions">
               <button class="button button-primary open-demo" type="button">Book a demo</button>
-              <a class="button button-outline" href="#products">See products</a>
             </div>
           </div>
         </div>
@@ -1677,27 +1770,25 @@
       </section>
 
       <section id="products" class="section" aria-labelledby="products-title">
-        <div class="section-head">
-          <h2 id="products-title">One clear operating rhythm for every class.</h2>
-          <p>ClassLog connects fast teacher entries with live admin visibility, syllabus progress and review-ready institute reports.</p>
-        </div>
-
-        <div class="product-grid classlog-only-grid">
-          <a class="product-card classlog" href="/classlog/" aria-label="Explore ClassLog">
-            <div>
-              <h3>ClassLog</h3>
-              <p>Daily class logs, pending-class visibility, teacher accountability, syllabus tracking and Ledgr Reports.</p>
+        <div class="coverage-message" aria-labelledby="products-title">
+          <div>
+            <span class="coverage-label">ClassLog</span>
+            <h2 id="products-title">How much syllabus been covered</h2>
+          </div>
+          <div class="coverage-ticker" tabindex="0" aria-label="ClassLog coverage views">
+            <div class="coverage-ticker-track" aria-live="polite">
+              <span class="coverage-ticker-line">What was covered this month</span>
+              <span class="coverage-ticker-line">What was covered this week</span>
+              <span class="coverage-ticker-line">What was covered today</span>
             </div>
-            <div class="tag-list"><span>Teacher app</span><span>Admin panel</span><span>Ledgr Report</span></div>
-          </a>
+          </div>
         </div>
       </section>
 
       <section class="section sample-reports-section" aria-labelledby="sample-reports-title">
         <div class="section-head">
           <span class="sample-eyebrow">Ledgr Report samples</span>
-          <h2 id="sample-reports-title">See the kind of institute reports you’ll get.</h2>
-          <p>Explore real report layouts generated from ClassLog. Each public sample shows how teaching activity becomes a clear, share-ready institute summary.</p>
+          <h2 id="sample-reports-title">Ledgr Report - Sample</h2>
         </div>
         <div class="sample-report-status" data-sample-report-status role="status">Loading sample reports…</div>
         <div class="sample-report-grid" data-sample-report-list></div>
