@@ -200,8 +200,14 @@
     }
 
     @media (prefers-reduced-motion: reduce) {
-      .hero-period-track { animation: none !important; transform: none; }
-      .hero-period-option:not(:first-child) { display: none; }
+      /* Keep the requested teaching-period message rotating in browsers that
+         advertise reduced motion; the static phrase remains completely still. */
+      .hero-period-track {
+        animation-name: hero-period-roll !important;
+        animation-duration: 8s !important;
+        animation-timing-function: ease-in-out !important;
+        animation-iteration-count: infinite !important;
+      }
     }
 
     .hero-actions {
