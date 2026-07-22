@@ -72,6 +72,7 @@
     reportScheduleEnabled: false,
     toast: "",
     desktopPane: 0,
+    panelWidths: { institutes: 300, classes: 360 },
     mobileDirection: 0,
   };
 
@@ -162,7 +163,18 @@
 
   function instituteRows() {
     const query = state.instituteQuery.toLowerCase();
-    return institutes.filter((item) => item.name.toLowerCase().includes(query)).map((item) => `<button class="inst-row ${item.id === state.institute ? "active" : ""}" data-institute="${item.id}"><span class="inst-dot" style="background:#9aa5b5"></span><span>${esc(item.name)}<small>${item.teachers} teachers · open details</small></span><span class="inst-count">${item.logged ? `${item.logged}/${item.teachers}` : "Open"}</span></button>`).join("") || '<div class="demo-empty">No institute found.</div>';
+    const filtered = institutes.filter((item) => item.name.toLowerCase().includes(query));
+    if (!filtered.length) return '<div class="demo-empty">No institute found.</div>';
+
+    const renderRow = (item) => {
+      const opened = item.logged > 0;
+      const percent = opened ? Math.round((item.logged / item.teachers) * 100) : 0;
+      return `<button class="inst-row ${item.id === state.institute ? "active" : ""}" data-institute="${item.id}"><span class="inst-dot" style="background:${opened ? "#ef4444" : "#9ca3af"}"></span><span>${esc(item.name)}<small>${opened ? `3 classes · ${item.teachers} teachers` : `${item.teachers} teachers · open details`}</small></span><span class="inst-count">${opened ? `${item.logged}/${item.teachers}` : "Open"}</span><span class="inst-percent">${opened ? `${percent}%` : ""}</span></button>`;
+    };
+
+    const opened = filtered.filter((item) => item.logged > 0);
+    const unopened = filtered.filter((item) => item.logged === 0);
+    return `${opened.length ? `<div class="update-pill red">0-24% updated</div>${opened.map(renderRow).join("")}` : ""}${unopened.length ? `<div class="update-pill">Not opened yet</div>${unopened.map(renderRow).join("")}` : ""}`;
   }
 
   function panelItems() {
@@ -175,87 +187,117 @@
 
   function timeline() {
     const rows = fakeRows();
-    return `<article class="day-card"><div class="day-head"><span>Monday, July 13</span><span class="line"></span><span>${rows.length} entries · ${rows.length + 3}h</span></div>${rows.map((row) => `<div class="entry"><div class="time">${row.start} - <span>${row.end}</span><span class="duration">${row.duration}</span></div><div><div class="entry-title"><span class="flag">Note</span> <span class="status ${row.status === "Completed" ? "done" : ""}">● ${row.status}</span> ${esc(row.topic)}</div><div class="meta-line"><span>${esc(row.subject)}</span><span class="class-badge">${esc(row.section)}</span></div><div class="entry-detail">${esc(row.detail)}</div></div><div class="teacher">${esc(row.teacher)}</div></div>`).join("")}</article>`;
+    return `<article class="day-card"><div class="day-head"><span>Monday, July 13</span><span class="line"></span><span>${rows.length} entries · ${rows.length + 3}h</span></div>${rows.map((row) => `<div class="entry"><div class="time">${row.start} - <span>${row.end}</span><span class="duration">${row.duration}</span></div><div class="entry-main"><div class="entry-top"><div class="entry-copy"><div class="entry-title"><span class="flag">Note</span><span class="status ${row.status === "Completed" ? "done" : ""}">● ${row.status}</span> ${esc(row.topic)}</div></div><div class="teacher">${esc(row.teacher)}</div></div><div class="meta-line"><span>${esc(row.subject)}</span><span class="class-badge">${esc(row.section)}</span></div><div class="entry-detail">${esc(row.detail)}</div></div></div>`).join("")}</article>`;
   }
 
   function reportModal() {
     return state.report ? `<div class="demo-report-modal" data-close-report><div class="demo-report-dialog" role="dialog" aria-modal="true"><h3>Ledgr Report</h3><p>Prepare a sample report preview for ${esc(currentInstitute().name)}.</p><div class="demo-report-options">${["PDF", "Summary", "Teacher status"].map((format) => `<button data-format="${format}" class="${format === state.format ? "active" : ""}">${format}</button>`).join("")}</div><div class="demo-dialog-actions"><button data-cancel-report>Cancel</button><button class="primary" data-prepare-report>Prepare ${state.format}</button></div></div></div>` : "";
   }
 
-  function desktopSlideNav() {
-    const labels = ["Institutes", "Classes and teachers", "Teaching timeline"];
-    return `<nav class="demo-slide-nav" aria-label="Preview panels"><button class="demo-pane-arrow" data-desktop-pane="${Math.max(0, state.desktopPane - 1)}" aria-label="Previous panel" ${state.desktopPane === 0 ? "disabled" : ""}>${icon("back")}</button><div class="demo-pane-dots">${labels.map((label, index) => `<button data-desktop-pane="${index}" class="${index === state.desktopPane ? "active" : ""}" aria-label="Open ${label}" aria-current="${index === state.desktopPane ? "step" : "false"}"><span></span></button>`).join("")}</div><span class="demo-pane-label">${labels[state.desktopPane]}</span><button class="demo-pane-arrow next" data-desktop-pane="${Math.min(2, state.desktopPane + 1)}" aria-label="Next panel" ${state.desktopPane === 2 ? "disabled" : ""}>${icon("back")}</button></nav>`;
+  const panelLimits = {
+    institutes: { min: 170, max: 430, collapsed: 44, layer: 112, default: 300 },
+    classes: { min: 220, max: 560, collapsed: 46, layer: 124, default: 360 },
+  };
+
+  function responsivePanelLimits(key) {
+    const limits = panelLimits[key];
+    const width = root.clientWidth || window.innerWidth;
+    if (width >= 900) return limits;
+    const fraction = key === "institutes" ? 0.34 : 0.38;
+    const responsiveMax = Math.max(limits.min, Math.min(limits.max, Math.round(width * fraction)));
+    return { ...limits, max: responsiveMax, default: Math.min(limits.default, responsiveMax) };
   }
 
-  function bindDesktopSwipe() {
-    const viewport = root.querySelector(".demo-panel-viewport");
-    const track = root.querySelector(".demo-panel-track");
-    if (!viewport || !track) return;
-    let pointerId = null;
-    let startX = 0;
-    let startY = 0;
-    let dragging = false;
+  function clampPanelWidth(key, value) {
+    const limits = responsivePanelLimits(key);
+    return Math.max(limits.collapsed, Math.min(limits.max, Number(value) || limits.default));
+  }
 
-    const settle = (event, cancelled = false) => {
-      if (pointerId === null || (event?.pointerId != null && event.pointerId !== pointerId)) return;
-      const dx = event ? event.clientX - startX : 0;
-      const threshold = Math.min(92, viewport.clientWidth * 0.16);
-      const fromPane = state.desktopPane;
-      let nextPane = fromPane;
-      if (!cancelled && dragging && Math.abs(dx) >= threshold) nextPane = Math.max(0, Math.min(2, fromPane + (dx < 0 ? 1 : -1)));
-      pointerId = null;
-      dragging = false;
-      viewport.classList.remove("is-dragging");
-      state.desktopPane = nextPane;
-      render(fromPane);
+  function desktopPanelLayout() {
+    const width = root.clientWidth || window.innerWidth;
+    const handle = window.matchMedia("(pointer: coarse)").matches || width < 900 ? 16 : 10;
+    return {
+      handle,
+      institutes: clampPanelWidth("institutes", state.panelWidths.institutes),
+      classes: clampPanelWidth("classes", state.panelWidths.classes),
     };
-
-    viewport.addEventListener("pointerdown", (event) => {
-      if (event.button !== 0 || event.target.closest("button, input, a, select, textarea")) return;
-      pointerId = event.pointerId;
-      startX = event.clientX;
-      startY = event.clientY;
-      dragging = false;
-    });
-    viewport.addEventListener("pointermove", (event) => {
-      if (event.pointerId !== pointerId) return;
-      const dx = event.clientX - startX;
-      const dy = event.clientY - startY;
-      if (!dragging && Math.abs(dx) < 8) return;
-      if (!dragging && Math.abs(dy) > Math.abs(dx)) {
-        pointerId = null;
-        return;
-      }
-      if (!dragging) {
-        dragging = true;
-        viewport.classList.add("is-dragging");
-        viewport.setPointerCapture?.(event.pointerId);
-      }
-      event.preventDefault();
-      const boundedDx = Math.max(-viewport.clientWidth * 0.34, Math.min(viewport.clientWidth * 0.34, dx));
-      track.style.transition = "none";
-      track.style.transform = `translate3d(${(-state.desktopPane * viewport.clientWidth) + boundedDx}px,0,0)`;
-    });
-    viewport.addEventListener("pointerup", (event) => settle(event));
-    viewport.addEventListener("pointercancel", (event) => settle(event, true));
   }
 
-  function renderDesktop(fromPane = state.desktopPane) {
+  function panelLayer(key, label, eyebrow, metric) {
+    const iconName = key === "institutes" ? "building" : "school";
+    return `<button class="demo-panel-layer" data-expand-panel="${key}" aria-label="Expand ${key} panel"><span class="demo-panel-layer-icon">${icon(iconName)}</span><span class="demo-panel-layer-label">${esc(label)}</span><span class="demo-panel-layer-meta">${esc(eyebrow)}${metric ? `<b>${esc(metric)}</b>` : ""}</span></button>`;
+  }
+
+  function resizeHandle(key, width) {
+    const limits = responsivePanelLimits(key);
+    return `<div class="demo-panel-resizer" data-resize-panel="${key}" data-current-width="${width}" role="separator" aria-label="Resize ${key} panel" aria-orientation="vertical" aria-valuemin="${limits.collapsed}" aria-valuemax="${limits.max}" aria-valuenow="${width}" tabindex="0" title="Drag to resize this panel. Double-click to reset."><span></span></div>`;
+  }
+
+  function bindPanelResizers() {
+    root.querySelectorAll("[data-resize-panel]").forEach((handle) => {
+      const key = handle.dataset.resizePanel;
+      const limits = responsivePanelLimits(key);
+
+      handle.addEventListener("dblclick", () => {
+        state.panelWidths[key] = limits.default;
+        renderDesktop();
+      });
+
+      handle.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        event.preventDefault();
+        const startX = event.clientX;
+        const startWidth = Number(handle.dataset.currentWidth) || limits.default;
+        let nextWidth = startWidth;
+        root.classList.add("is-resizing");
+        handle.setPointerCapture?.(event.pointerId);
+
+        const move = (moveEvent) => {
+          nextWidth = clampPanelWidth(key, startWidth + moveEvent.clientX - startX);
+          state.panelWidths[key] = nextWidth;
+          root.style.setProperty(key === "institutes" ? "--demo-institutes-w" : "--demo-classes-w", `${nextWidth}px`);
+          handle.setAttribute("aria-valuenow", String(Math.round(nextWidth)));
+        };
+
+        const end = () => {
+          window.removeEventListener("pointermove", move);
+          window.removeEventListener("pointerup", end);
+          window.removeEventListener("pointercancel", end);
+          root.classList.remove("is-resizing");
+          if (nextWidth < limits.min) state.panelWidths[key] = limits.collapsed;
+          renderDesktop();
+        };
+
+        window.addEventListener("pointermove", move);
+        window.addEventListener("pointerup", end);
+        window.addEventListener("pointercancel", end);
+      });
+    });
+  }
+
+  function renderDesktop() {
     const institute = currentInstitute();
     const selectedLabel = state.mode === "Teacher" ? state.item : currentClass().name;
-    const crumbTail = state.desktopPane > 0 ? `<span class="slash">/</span><button data-desktop-pane="1" class="${state.desktopPane === 1 ? "current" : ""}">${esc(institute.name)}</button>` : "";
-    const timelineCrumb = state.desktopPane > 1 ? `<span class="slash">/</span><button data-desktop-pane="2" class="current">${esc(selectedLabel)}</button>` : "";
-    root.innerHTML = `<div class="mock-top"><div class="crumbs"><span class="mock-rail-logo">L</span><button data-desktop-pane="0" class="${state.desktopPane === 0 ? "current" : ""}">Overview</button>${crumbTail}${timelineCrumb}</div><div class="demo-top-actions"><button class="report-button" data-report>${icon("report")} Ledgr Report</button></div></div><div class="mock-body"><aside class="icon-rail">${[["overview", "Overview"], ["building", "Institutes"], ["books", "Syllabus"], ["school", "Classes"], ["settings", "Settings"], ["report", "Ledgr Report"], ["send", "Messenger"]].map(([key, label], index) => `<button class="rail-icon ${index === 5 ? "active" : ""}" title="${label}" aria-label="${label}">${icon(key)}</button>`).join("")}</aside><div class="demo-panel-viewport" tabindex="0" aria-label="Interactive ClassLog preview"><div class="demo-panel-track"><section class="institutes demo-slide-panel" data-slide="0" ${state.desktopPane === 0 ? "" : "inert aria-hidden=\"true\""}><div class="panel-head"><span>${institutes.length} institutes · today</span><span class="danger-count">${institutes.reduce((sum, item) => sum + item.logged, 0)}/${institutes.reduce((sum, item) => sum + item.teachers, 0)}</span></div>${searchBox("institute", "Search institutes", state.instituteQuery)}<div class="update-pill">Not opened yet</div><div class="institute-list">${instituteRows()}</div></section><section class="class-panel demo-slide-panel" data-slide="1" ${state.desktopPane === 1 ? "" : "inert aria-hidden=\"true\""}><div class="demo-class-head"><div class="institute-title"><span>Institute</span><h2>${esc(institute.name)}</h2></div><span class="demo-head-count">${institute.logged}/${institute.teachers}</span></div><div class="tabs">${[["Class", "class"], ["Teacher", "teacher"], ["Class+teacher", "group"]].map(([mode, key]) => `<button class="tab ${state.mode === mode ? "active" : ""}" data-mode="${mode}">${icon(key)}${mode}</button>`).join("")}</div>${searchBox("item", "Search class or teacher", state.itemQuery)}<div class="sort-row"><span>Sort</span><div class="demo-sort-toggle"><button data-sort="Recent" class="${state.sort === "Recent" ? "active" : ""}">Recent</button><button data-sort="A-Z" class="${state.sort === "A-Z" ? "active" : ""}">A-Z</button></div></div><div class="demo-class-label">${state.mode === "Teacher" ? "Teachers" : "Classes"}</div><div class="demo-class-list">${panelItems()}</div></section><section class="timeline-panel demo-slide-panel" data-slide="2" ${state.desktopPane === 2 ? "" : "inert aria-hidden=\"true\""}><div class="timeline-title"><h2>${esc(institute.name)}</h2><div class="range-pills">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="range-pill ${period === state.period ? "active" : ""}" data-period="${period}">${period}</button>`).join("")}</div></div><div class="timeline-card">${timeline()}</div></section></div>${desktopSlideNav()}</div></div>${reportModal()}`;
-    const track = root.querySelector(".demo-panel-track");
-    if (track) {
-      const safeFrom = Math.max(0, Math.min(2, Number(fromPane) || 0));
-      track.style.transform = `translate3d(-${safeFrom * 100}%,0,0)`;
-      if (safeFrom !== state.desktopPane) {
-        track.getBoundingClientRect();
-        window.requestAnimationFrame(() => { track.style.transform = `translate3d(-${state.desktopPane * 100}%,0,0)`; });
-      }
-    }
-    bindDesktopSwipe();
+    const layout = desktopPanelLayout();
+    const institutesLayered = layout.institutes <= responsivePanelLimits("institutes").layer;
+    const classesLayered = layout.classes <= responsivePanelLimits("classes").layer;
+    const totalLogged = institutes.reduce((sum, item) => sum + item.logged, 0);
+    const totalTeachers = institutes.reduce((sum, item) => sum + item.teachers, 0);
+
+    root.style.setProperty("--demo-institutes-w", `${layout.institutes}px`);
+    root.style.setProperty("--demo-classes-w", `${layout.classes}px`);
+    root.style.setProperty("--demo-resizer-w", `${layout.handle}px`);
+
+    const institutesPanel = institutesLayered
+      ? panelLayer("institutes", institute.name, "Institute", `${institute.logged}/${institute.teachers}`)
+      : `<section class="institutes"><div class="demo-institute-head"><div class="panel-head"><span>${institutes.length} institutes · today</span><span class="danger-count">${totalLogged}/${totalTeachers}</span></div>${searchBox("institute", "Search institutes", state.instituteQuery)}</div><div class="institute-list">${instituteRows()}</div></section>`;
+    const classesPanel = classesLayered
+      ? panelLayer("classes", selectedLabel, state.mode, String(classes.length))
+      : `<section class="class-panel"><div class="demo-class-head-shell"><div class="demo-class-head"><div class="institute-title"><span>Institute</span><h2>${esc(institute.name)}</h2></div><span class="demo-head-count">${institute.logged}/${institute.teachers}</span></div><div class="tabs">${[["Class", "class"], ["Teacher", "teacher"], ["Class+teacher", "group"]].map(([mode, key]) => `<button class="tab ${state.mode === mode ? "active" : ""}" data-mode="${mode}">${icon(key)}<span>${mode}</span></button>`).join("")}</div>${searchBox("item", "Search class or teacher", state.itemQuery)}<div class="sort-row"><span>Sort</span><div class="demo-sort-toggle"><button data-sort="Recent" class="${state.sort === "Recent" ? "active" : ""}">Recent</button><button data-sort="A-Z" class="${state.sort === "A-Z" ? "active" : ""}">A-Z</button></div></div></div><div class="demo-class-label">${state.mode === "Teacher" ? "Teachers" : state.mode === "Class+teacher" ? "Class + teacher" : "Classes"}</div><div class="demo-class-list">${panelItems()}</div></section>`;
+    const railItems = [["overview", "Teachers"], ["building", "Institutes"], ["books", "Syllabus"], ["school", "Sections"], ["settings", "Admins"], ["report", "Ledgr Report"], ["send", "Messenger"]];
+
+    root.innerHTML = `<div class="mock-top"><div class="demo-top-left"><div class="demo-top-logo-cell"><span class="mock-rail-logo">L</span></div><div class="crumbs"><button data-focus-panel="institutes">Overview</button><span class="slash">/</span><button data-focus-panel="classes">${esc(institute.name)}</button><span class="slash">/</span><button data-focus-panel="timeline" class="current">${esc(selectedLabel)}</button></div></div><div class="demo-top-actions"><button class="report-button" data-report>${icon("report")} Ledgr Report</button></div></div><div class="mock-body"><aside class="icon-rail">${railItems.map(([key, label], index) => `<button class="rail-icon ${index === 5 ? "active" : ""}" title="${label}" aria-label="${label}" data-demo-action="Open ${label}">${icon(key)}</button>`).join("")}<span class="demo-rail-spacer"></span><button class="rail-icon" title="Feedback" aria-label="Feedback" data-demo-action="Open Feedback">${icon("message")}</button></aside>${institutesPanel}${resizeHandle("institutes", layout.institutes)}${classesPanel}${resizeHandle("classes", layout.classes)}<section class="timeline-panel"><div class="timeline-title"><h2>${esc(selectedLabel)}</h2><div class="range-pills">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="range-pill ${period === state.period ? "active" : ""}" data-period="${period}">${period}</button>`).join("")}</div></div><div class="timeline-card">${timeline()}</div></section></div>${reportModal()}`;
+    bindPanelResizers();
   }
 
   function mobileHeader({ title, subtitle = "", eyebrow = "Ledgr Admin", back = false, report = false }) {
@@ -473,6 +515,24 @@
   }
 
   root.addEventListener("click", (event) => {
+    const expandPanel = event.target.closest("[data-expand-panel]");
+    if (expandPanel && !phoneMedia.matches) {
+      const key = expandPanel.dataset.expandPanel;
+      if (panelLimits[key]) state.panelWidths[key] = responsivePanelLimits(key).default;
+      renderDesktop();
+      return;
+    }
+
+    const focusPanel = event.target.closest("[data-focus-panel]");
+    if (focusPanel && !phoneMedia.matches) {
+      const key = focusPanel.dataset.focusPanel;
+      if (panelLimits[key] && state.panelWidths[key] <= panelLimits[key].layer) {
+        state.panelWidths[key] = responsivePanelLimits(key).default;
+        renderDesktop();
+      }
+      return;
+    }
+
     const desktopPane = event.target.closest("[data-desktop-pane]");
     if (desktopPane && !phoneMedia.matches) {
       const fromPane = state.desktopPane;
@@ -746,19 +806,27 @@
       render();
       return;
     }
-    if (!phoneMedia.matches && !event.target.matches("input, textarea, select") && ["ArrowLeft", "ArrowRight"].includes(event.key)) {
-      const fromPane = state.desktopPane;
-      const direction = event.key === "ArrowRight" ? 1 : -1;
-      const nextPane = Math.max(0, Math.min(2, fromPane + direction));
-      if (nextPane !== fromPane) {
-        event.preventDefault();
-        state.desktopPane = nextPane;
-        render(fromPane);
-      }
+    const resizeHandle = event.target.closest("[data-resize-panel]");
+    if (!phoneMedia.matches && resizeHandle && ["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) {
+      const key = resizeHandle.dataset.resizePanel;
+      const limits = responsivePanelLimits(key);
+      event.preventDefault();
+      if (event.key === "Home") state.panelWidths[key] = limits.collapsed;
+      else if (event.key === "End") state.panelWidths[key] = limits.default;
+      else state.panelWidths[key] = clampPanelWidth(key, (Number(resizeHandle.dataset.currentWidth) || limits.default) + (event.key === "ArrowRight" ? 12 : -12));
+      renderDesktop();
     }
   });
 
   if (phoneMedia.addEventListener) phoneMedia.addEventListener("change", render);
   else phoneMedia.addListener(render);
+  let resizeFrame = 0;
+  window.addEventListener("resize", () => {
+    if (phoneMedia.matches || resizeFrame) return;
+    resizeFrame = window.requestAnimationFrame(() => {
+      resizeFrame = 0;
+      renderDesktop();
+    });
+  });
   render();
 })();

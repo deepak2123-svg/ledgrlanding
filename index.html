@@ -373,112 +373,116 @@
     .demo-dialog-actions button { min-height:40px; border:1px solid #d7e0ed; border-radius:10px; background:#fff; padding:0 14px; font-weight:850; cursor:pointer; }
     .demo-dialog-actions .primary { border-color:#17345f; background:#17345f; color:#fff; }
 
-    /* Pixel-matched public demo of the current admin tracking surface. */
-    .admin-mock[data-admin-demo] { width:100%; margin-left:0; transform:none; animation:none; border-radius:18px; border-color:#cfd7e4; box-shadow:0 20px 55px rgba(15,23,42,.14); }
-    .admin-mock[data-admin-demo]:hover { transform:none; box-shadow:0 20px 55px rgba(15,23,42,.14); }
-    .admin-mock[data-admin-demo] .mock-top { height:56px; padding:0 14px 0 12px; font-size:12px; }
-    .admin-mock[data-admin-demo] .mock-rail-logo { width:32px; height:32px; border-radius:8px; }
-    .admin-mock[data-admin-demo] .crumbs { gap:14px; }
-    .admin-mock[data-admin-demo] .crumbs .slash { color:#5f6b80; font-size:20px; }
-    .demo-top-actions { display:flex; align-items:center; gap:12px; }
-    .admin-mock[data-admin-demo] .report-button { min-height:38px; display:inline-flex; align-items:center; gap:8px; padding:0 14px; border:1px solid #b9c9e0; border-radius:9px; font-weight:850; }
-    .admin-mock[data-admin-demo] .mock-body { grid-template-columns:56px minmax(0,1fr); height:654px; min-height:0; background:#f7f9fc; overflow:hidden; }
-    .admin-mock[data-admin-demo] .icon-rail { gap:8px; padding:10px 7px; background:#0b1118; }
-    .admin-mock[data-admin-demo] .rail-icon { width:40px; height:40px; border-radius:10px; font-size:0; }
-    .admin-mock[data-admin-demo] .rail-icon svg { width:19px; height:19px; stroke:currentColor; }
-    .admin-mock[data-admin-demo] .institutes { background:#f5f7fa; overflow:hidden; }
-    .admin-mock[data-admin-demo] .panel-head { height:44px; padding:0 14px; font-size:11px; }
-    .admin-mock[data-admin-demo] .mock-search { height:44px; margin:0 14px 14px; padding:0 14px 0 39px; border-radius:10px; background:#f7f9fc; font-size:13px; }
-    .demo-search-wrap { position:relative; }
-    .demo-search-wrap svg { position:absolute; left:27px; top:14px; width:14px; height:14px; color:#8793a6; z-index:1; }
-    .admin-mock[data-admin-demo] .update-pill { margin:4px 14px 8px; border:1px solid #dfe5ee; background:#f8fafc; color:#4b5567; padding:7px 10px; font-size:10px; }
-    .admin-mock[data-admin-demo] .institute-list { flex:1; min-height:0; align-content:start; gap:3px; padding:0 9px 76px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
-    .admin-mock[data-admin-demo] .inst-row { grid-template-columns:8px minmax(0,1fr) auto; min-height:58px; padding:9px 11px; border-radius:9px; color:#111827; font-family:"Poppins","Inter",sans-serif; font-size:14px; font-weight:700; line-height:1.22; }
-    .admin-mock[data-admin-demo] .inst-row.active { border:0; border-left:3px solid #1d4ed8; background:#dbeafe; color:#1d4ed8; padding-left:8px; }
-    .admin-mock[data-admin-demo] .inst-row small { color:#7b8799; font-size:10.5px; font-weight:600; }
-    .admin-mock[data-admin-demo] .inst-count { min-width:51px; text-align:center; background:#eef3ff; color:#2563dc; padding:6px 8px; font-size:11px; }
-    .admin-mock[data-admin-demo] .class-panel { background:#fff; }
-    .demo-class-head { display:flex; align-items:end; justify-content:space-between; gap:12px; padding:22px 18px 12px; }
-    .admin-mock[data-admin-demo] .institute-title { min-width:0; padding:0; }
-    .admin-mock[data-admin-demo] .institute-title h2 { max-width:285px; margin-top:8px; font-size:24px; }
-    .demo-head-count { flex:0 0 auto; min-width:72px; border:1px solid #ffc5c8; border-radius:999px; background:#fff1f2; color:#dc3038; padding:8px 12px; text-align:center; font-size:13px; font-weight:900; }
-    .admin-mock[data-admin-demo] .tabs { height:52px; margin:0 18px 14px; padding:4px; }
-    .admin-mock[data-admin-demo] .tab { display:flex; align-items:center; justify-content:center; gap:7px; font-size:12px; }
-    .admin-mock[data-admin-demo] .tab svg { width:15px; height:15px; }
-    .admin-mock[data-admin-demo] .class-panel .mock-search { width:calc(100% - 36px); margin-left:18px; margin-right:18px; }
-    .admin-mock[data-admin-demo] .sort-row { height:60px; padding:0 18px; border-bottom:1px solid #dbe3ef; }
-    .demo-sort-toggle { display:flex; border:1px solid #d6deea; border-radius:999px; padding:3px; background:#f8fafc; }
-    .demo-sort-toggle button { min-width:72px; height:34px; border:0; border-radius:999px; background:transparent; color:#596579; font-size:12px; font-weight:850; cursor:pointer; }
-    .demo-sort-toggle button.active { background:#101827; color:#fff; }
-    .demo-class-label { padding:15px 18px 9px; color:#6d788c; font-size:10.5px; font-weight:900; letter-spacing:.08em; text-transform:uppercase; }
-    .demo-class-list { flex:1; min-height:0; display:grid; align-content:start; gap:8px; padding:0 14px 76px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
-    .demo-class-row { width:100%; min-height:48px; display:flex; align-items:center; gap:9px; border:1px solid #cfe0ff; border-radius:9px; background:#f5f8ff; color:#1f5bd8; padding:0 14px; text-align:left; font-family:"Poppins","Inter",sans-serif; font-size:13px; font-weight:700; cursor:pointer; }
-    .demo-class-row.green { border-color:#afecc2; background:#effff3; color:#087b58; }
-    .demo-class-row.orange { border-color:#ffd39b; background:#fff8eb; color:#ad5905; }
-    .demo-class-row.purple { border-color:#d8caff; background:#f5f1ff; color:#6e45dc; }
-    .demo-class-row.cyan { border-color:#afe8ef; background:#edfcff; color:#04768c; }
-    .demo-class-row.active { box-shadow:0 0 0 2px rgba(37,99,220,.18); }
-    .admin-mock[data-admin-demo] .timeline-panel { min-height:0; overflow:hidden; padding:0; background:#f5f7fa; }
-    .admin-mock[data-admin-demo] .timeline-title { display:block; margin:0; padding:24px 30px 18px; border-bottom:1px solid #dbe3ed; }
-    .admin-mock[data-admin-demo] .timeline-title h2 { font-size:34px; line-height:1.05; letter-spacing:-.035em; }
-    .admin-mock[data-admin-demo] .range-pills { margin-top:16px; padding:10px; border-radius:14px; }
-    .admin-mock[data-admin-demo] .range-pills .range-pill { min-height:38px; padding:0 14px; font-size:12px; }
-    .admin-mock[data-admin-demo] .timeline-card { flex:1; min-height:0; margin:0; padding:20px 24px 76px; display:block; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
-    .admin-mock[data-admin-demo] .day-card { padding:0 16px; border-radius:13px; box-shadow:0 5px 15px rgba(15,23,42,.04); }
-    .admin-mock[data-admin-demo] .day-head { height:56px; grid-template-columns:auto 1fr auto; padding:0 2px; }
-    .admin-mock[data-admin-demo] .day-head .line { height:1px; background:#e2e8f0; }
-    .admin-mock[data-admin-demo] .entry { grid-template-columns:minmax(112px,.9fr) minmax(0,2fr) minmax(94px,.8fr); min-height:90px; margin:0; padding:17px 2px; align-items:start; }
-    .admin-mock[data-admin-demo] .time { font-family:"Poppins","Inter",sans-serif; font-size:17px; }
-    .admin-mock[data-admin-demo] .duration { margin-top:7px; font-size:13px; }
-    .admin-mock[data-admin-demo] .entry-title { font-family:"Poppins","Inter",sans-serif; font-size:15px; }
-    .admin-mock[data-admin-demo] .entry-title .flag { border-left:3px solid #4538b8; padding-left:8px; }
-    .admin-mock[data-admin-demo] .meta-line { margin-top:8px; font-size:12px; }
-    .admin-mock[data-admin-demo] .entry-detail { margin-top:10px; color:#667085; font-size:12px; font-weight:500; }
-    .admin-mock[data-admin-demo] .teacher { text-align:right; font-size:11px; text-transform:none; }
-
-    .admin-mock[data-admin-demo] .crumbs button {
-      min-width:0;
-      border:0;
-      background:transparent;
-      color:#aab2c3;
-      padding:5px 0;
-      font:inherit;
-      font-weight:700;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-      cursor:pointer;
+    /* Contained replica of the current ClassLog admin workspace. */
+    .admin-mock[data-admin-demo] {
+      --demo-institutes-w:300px;
+      --demo-classes-w:360px;
+      --demo-resizer-w:10px;
+      width:100%;
+      margin-left:0;
+      transform:none;
+      animation:none;
+      border-radius:18px;
+      border-color:#cfd7e4;
+      color:#111827;
+      font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+      box-shadow:0 20px 55px rgba(15,23,42,.14);
     }
-    .admin-mock[data-admin-demo] .crumbs button.current { color:#fff; }
-    .demo-panel-viewport { position:relative; min-width:0; height:100%; overflow:hidden; background:#f5f7fa; touch-action:pan-y; cursor:grab; }
-    .demo-panel-viewport.is-dragging { cursor:grabbing; user-select:none; }
-    .demo-panel-track { display:flex; width:100%; height:100%; transition:transform .42s cubic-bezier(.22,1,.36,1); will-change:transform; }
-    .demo-slide-panel { flex:0 0 100%; width:100%; height:100%; min-width:0; display:flex; flex-direction:column; border-right:0; font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; }
-    .demo-slide-panel .panel-head,
-    .demo-slide-panel .inst-row small,
-    .demo-slide-panel .inst-count,
-    .demo-slide-panel .update-pill,
-    .demo-slide-panel .mock-search,
-    .demo-slide-panel .sort-row,
-    .demo-slide-panel .demo-class-label,
-    .demo-slide-panel .range-pills,
-    .demo-slide-panel .meta-line,
-    .demo-slide-panel .entry-detail,
-    .demo-slide-panel .teacher { font-family:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif; }
-    .demo-slide-panel .institute-title h2,
-    .demo-slide-panel .timeline-title h2,
-    .demo-slide-panel .time,
-    .demo-slide-panel .entry-title { font-family:"Poppins","Inter",sans-serif; }
-    .demo-slide-nav { position:absolute; left:50%; bottom:12px; z-index:4; min-height:44px; display:flex; align-items:center; gap:10px; transform:translateX(-50%); border:1px solid #d6deea; border-radius:999px; background:rgba(255,255,255,.96); padding:5px 7px; box-shadow:0 10px 28px rgba(15,23,42,.14); backdrop-filter:blur(8px); }
-    .demo-pane-arrow { width:32px; height:32px; display:grid; place-items:center; border:0; border-radius:50%; background:#1a2f5a; color:#fff; cursor:pointer; }
-    .demo-pane-arrow.next svg { transform:rotate(180deg); }
-    .demo-pane-arrow:disabled { background:#e5e9f0; color:#9aa5b5; cursor:default; }
-    .demo-pane-arrow svg { width:16px; height:16px; }
-    .demo-pane-dots { display:flex; align-items:center; gap:5px; }
-    .demo-pane-dots button { width:18px; height:28px; display:grid; place-items:center; border:0; background:transparent; cursor:pointer; }
-    .demo-pane-dots span { width:7px; height:7px; border-radius:50%; background:#bcc6d5; transition:width .2s ease,background .2s ease; }
-    .demo-pane-dots button.active span { width:20px; border-radius:999px; background:#1d4ed8; }
-    .demo-pane-label { min-width:112px; color:#4b5563; font-size:11px; font-weight:800; text-align:center; white-space:nowrap; }
+    .admin-mock[data-admin-demo]:hover { transform:none; box-shadow:0 20px 55px rgba(15,23,42,.14); }
+    .admin-mock[data-admin-demo] .mock-top { height:46px; padding:0 12px 0 0; gap:10px; font-size:12.5px; }
+    .demo-top-left { min-width:0; height:46px; display:flex; align-items:center; flex:1; overflow:hidden; }
+    .demo-top-logo-cell { width:48px; height:46px; flex:0 0 48px; display:grid; place-items:center; border-right:1px solid rgba(255,255,255,.06); }
+    .admin-mock[data-admin-demo] .mock-rail-logo { width:26px; height:26px; border-radius:7px; background:#13966b; font-family:"Poppins","Inter",sans-serif; font-size:12px; }
+    .admin-mock[data-admin-demo] .crumbs { height:46px; gap:2px; padding-left:8px; }
+    .admin-mock[data-admin-demo] .crumbs .slash { color:rgba(255,255,255,.22); padding:0 3px; font-size:14px; font-weight:800; }
+    .admin-mock[data-admin-demo] .crumbs button { min-width:0; height:28px; border:0; border-radius:6px; background:transparent; color:rgba(255,255,255,.54); padding:0 7px; font-size:12.5px; font-weight:700; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; cursor:pointer; }
+    .admin-mock[data-admin-demo] .crumbs button.current { color:#fff; font-weight:850; }
+    .demo-top-actions { display:flex; align-items:center; gap:8px; flex:0 0 auto; }
+    .admin-mock[data-admin-demo] .report-button { height:32px; min-height:32px; display:inline-flex; align-items:center; gap:7px; padding:0 12px; border:1px solid #c7d7f5; border-radius:8px; background:#eef4ff; color:#1d4ed8; font-size:12.5px; font-weight:850; }
+    .admin-mock[data-admin-demo] .report-button svg { width:15px; height:15px; }
+    .admin-mock[data-admin-demo] .mock-body { grid-template-columns:48px var(--demo-institutes-w) var(--demo-resizer-w) var(--demo-classes-w) var(--demo-resizer-w) minmax(0,1fr); height:664px; min-height:0; background:#f4f7fb; overflow:hidden; transition:grid-template-columns .28s cubic-bezier(.2,.8,.2,1); }
+    .admin-mock[data-admin-demo].is-resizing .mock-body { transition:none; }
+    .admin-mock[data-admin-demo] .icon-rail { display:flex; flex-direction:column; align-items:center; gap:6px; padding:8px 7px; background:#0d1117; overflow:hidden auto; }
+    .admin-mock[data-admin-demo] .rail-icon { width:34px; height:34px; min-height:34px; border-radius:8px; border-color:rgba(255,255,255,.08); background:rgba(255,255,255,.055); font-size:0; flex:0 0 auto; }
+    .admin-mock[data-admin-demo] .rail-icon svg { width:19px; height:19px; stroke:currentColor; }
+    .admin-mock[data-admin-demo] .rail-icon.active { border-color:rgba(255,255,255,.08); background:rgba(59,130,246,.2); }
+    .demo-rail-spacer { flex:1; }
+    .admin-mock[data-admin-demo] .institutes,
+    .admin-mock[data-admin-demo] .class-panel,
+    .admin-mock[data-admin-demo] .timeline-panel { height:100%; min-width:0; display:flex; flex-direction:column; overflow:hidden; border-right:1px solid rgba(148,163,184,.26); }
+    .admin-mock[data-admin-demo] .institutes { background:#fff; }
+    .demo-institute-head { padding:12px; border-bottom:1px solid rgba(148,163,184,.26); background:#fff; }
+    .admin-mock[data-admin-demo] .panel-head { height:auto; padding:0; color:#7b8799; font-size:11px; font-weight:900; letter-spacing:1.1px; }
+    .admin-mock[data-admin-demo] .danger-count { color:#ed3037; font-size:11px; letter-spacing:0; }
+    .demo-search-wrap { position:relative; margin-top:10px; }
+    .demo-search-wrap svg { position:absolute; left:13px; top:13px; width:14px; height:14px; color:#8793a6; z-index:1; }
+    .admin-mock[data-admin-demo] .mock-search { width:100%; height:40px; margin:0; padding:0 12px 0 37px; border:1px solid rgba(148,163,184,.34); border-radius:10px; background:#f8fafc; color:#111827; font-size:12.5px; font-weight:650; }
+    .admin-mock[data-admin-demo] .mock-search::placeholder { color:#7b8799; opacity:1; }
+    .admin-mock[data-admin-demo] .institute-list { flex:1; min-height:0; display:block; padding:7px 8px 14px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+    .admin-mock[data-admin-demo] .update-pill { margin:8px 8px 6px; border:1px solid #e2e8f0; border-radius:999px; background:#f8fafc; color:#596579; padding:5px 9px; font-size:10.5px; font-weight:900; letter-spacing:.9px; text-transform:uppercase; }
+    .admin-mock[data-admin-demo] .update-pill.red { border-color:#fee2e2; background:#fff7f7; color:#b91c1c; }
+    .admin-mock[data-admin-demo] .inst-row { width:100%; min-height:51px; display:grid; grid-template-columns:7px minmax(0,1fr) auto 34px; gap:9px; align-items:center; margin-bottom:2px; padding:8px 9px; border:1px solid transparent; border-radius:9px; background:#fbfcff; color:#111827; font-family:"Inter",system-ui,sans-serif; font-size:12.5px; font-weight:650; line-height:1.2; }
+    .admin-mock[data-admin-demo] .inst-row.active { border:1px solid #c7d2fe; background:#eef2ff; color:#1d4ed8; padding:8px 9px; font-weight:850; }
+    .admin-mock[data-admin-demo] .inst-row small { color:#7b8799; font-size:10.5px; font-weight:500; line-height:1.25; }
+    .admin-mock[data-admin-demo] .inst-count { min-width:46px; height:24px; display:inline-flex; align-items:center; justify-content:center; padding:0 8px; border-radius:999px; background:#eef2ff; color:#1d4ed8; font-size:11px; font-weight:900; white-space:nowrap; }
+    .admin-mock[data-admin-demo] .inst-percent { width:34px; color:#1d4ed8; font-size:10.5px; font-weight:900; text-align:right; white-space:nowrap; }
+    .admin-mock[data-admin-demo] .class-panel { background:#f8fafd; }
+    .demo-class-head-shell { padding:18px 16px 14px; border-bottom:1px solid rgba(148,163,184,.26); background:#fff; }
+    .demo-class-head { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; padding:0; }
+    .admin-mock[data-admin-demo] .institute-title { min-width:0; padding:0; }
+    .admin-mock[data-admin-demo] .institute-title span { color:#7b8799; font-size:11px; font-weight:900; letter-spacing:1.1px; }
+    .admin-mock[data-admin-demo] .institute-title h2 { max-width:none; margin-top:7px; font-size:22px; font-weight:800; letter-spacing:-.035em; }
+    .demo-head-count { flex:0 0 auto; min-width:62px; height:30px; display:inline-flex; align-items:center; justify-content:center; border:1px solid #fecaca; border-radius:999px; background:#fff1f2; color:#dc2626; padding:0 12px; font-size:12.5px; font-weight:900; }
+    .admin-mock[data-admin-demo] .tabs { min-height:40px; height:auto; margin:13px 0 0; padding:3px; border-color:rgba(148,163,184,.26); border-radius:10px; gap:3px; }
+    .admin-mock[data-admin-demo] .tab { min-width:0; min-height:34px; display:flex; align-items:center; justify-content:center; gap:5px; padding:0 6px; border:0; font-size:11.25px; white-space:nowrap; overflow:hidden; }
+    .admin-mock[data-admin-demo] .tab svg { width:14px; height:14px; flex:0 0 auto; }
+    .admin-mock[data-admin-demo] .class-panel .demo-search-wrap { margin-top:13px; }
+    .admin-mock[data-admin-demo] .sort-row { height:auto; margin-top:12px; padding:0; border:0; color:#7b8799; font-size:10.5px; letter-spacing:.7px; }
+    .demo-sort-toggle { display:flex; border:1px solid rgba(148,163,184,.26); border-radius:999px; padding:3px; background:#f8fafc; gap:3px; }
+    .demo-sort-toggle button { min-width:64px; height:28px; border:0; border-radius:999px; background:transparent; color:#596579; font-size:11.5px; font-weight:900; cursor:pointer; }
+    .demo-sort-toggle button.active { background:#111827; color:#fff; }
+    .demo-class-label { padding:12px 14px 9px; color:#7b8799; font-size:10.5px; font-weight:900; letter-spacing:.9px; text-transform:uppercase; }
+    .demo-class-list { flex:1; min-height:0; display:block; padding:0 12px 14px; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+    .demo-class-row { width:100%; min-height:43px; display:flex; align-items:center; gap:8px; margin-bottom:8px; border:1px solid #dbeafe; border-radius:9px; background:#f8faff; color:#1d4ed8; padding:9px 12px; text-align:left; font-family:"Inter",system-ui,sans-serif; font-size:12.5px; font-weight:850; cursor:pointer; }
+    .demo-class-row.green { border-color:#bbf7d0; background:#f0fdf4; color:#047857; }
+    .demo-class-row.orange { border-color:#fed7aa; background:#fffbeb; color:#b45309; }
+    .demo-class-row.purple { border-color:#ddd6fe; background:#f5f3ff; color:#6d28d9; }
+    .demo-class-row.cyan { border-color:#bae6fd; background:#ecfeff; color:#0e7490; }
+    .demo-class-row.active { border-color:#1d4ed8; box-shadow:0 0 0 2px rgba(37,99,235,.10); }
+    .admin-mock[data-admin-demo] .timeline-panel { border-right:0; padding:0; background:#f4f7fb; }
+    .admin-mock[data-admin-demo] .timeline-title { display:block; margin:0; padding:20px 24px 16px; border-bottom:1px solid rgba(148,163,184,.26); background:#f8fafc; }
+    .admin-mock[data-admin-demo] .timeline-title h2 { font-family:"Poppins","Inter",sans-serif; font-size:34px; line-height:1.02; font-weight:800; letter-spacing:-.04em; }
+    .admin-mock[data-admin-demo] .range-pills { margin-top:13px; padding:10px; border:1px solid rgba(148,163,184,.26); border-radius:12px; background:#f8fafc; }
+    .admin-mock[data-admin-demo] .range-pills .range-pill { min-height:32px; padding:0 12px; border-color:#c9d6e8; font-size:11.5px; }
+    .admin-mock[data-admin-demo] .timeline-card { flex:1; min-height:0; margin:0; padding:16px 20px 22px; display:block; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
+    .admin-mock[data-admin-demo] .day-card { padding:16px 18px; border-radius:10px; border-color:rgba(148,163,184,.26); box-shadow:0 10px 26px rgba(15,23,42,.06); }
+    .admin-mock[data-admin-demo] .day-head { height:auto; grid-template-columns:auto 1fr auto; gap:12px; padding:0; margin-bottom:12px; font-size:11.5px; letter-spacing:.9px; }
+    .admin-mock[data-admin-demo] .day-head::after { display:none; }
+    .admin-mock[data-admin-demo] .day-head .line { height:1px; background:rgba(148,163,184,.3); }
+    .admin-mock[data-admin-demo] .entry { grid-template-columns:142px minmax(0,1fr); gap:16px; min-height:0; margin:0; padding:16px 0 14px; align-items:start; }
+    .admin-mock[data-admin-demo] .entry:first-of-type { padding:8px 0 14px; }
+    .admin-mock[data-admin-demo] .time { font-family:"Inter",system-ui,sans-serif; font-size:15px; line-height:1.1; }
+    .admin-mock[data-admin-demo] .duration { margin-top:7px; color:#15803d; font-size:12.5px; }
+    .entry-main { min-width:0; }
+    .entry-top { display:flex; align-items:flex-start; justify-content:space-between; gap:10px; min-width:0; }
+    .entry-copy { min-width:0; display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    .admin-mock[data-admin-demo] .entry-title { min-width:0; max-width:520px; display:inline; font-family:"Poppins","Inter",sans-serif; font-size:15.5px; font-weight:800; line-height:1.2; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+    .admin-mock[data-admin-demo] .entry-title .flag { display:inline-flex; align-items:center; gap:6px; margin-right:8px; border:0; padding:0; color:#4637b8; font-family:"Inter",sans-serif; font-size:10.5px; font-weight:900; letter-spacing:.45px; }
+    .admin-mock[data-admin-demo] .entry-title .flag::before { content:""; width:3px; height:15px; border-radius:999px; background:#4637b8; }
+    .admin-mock[data-admin-demo] .status { font-size:10.5px; }
+    .admin-mock[data-admin-demo] .meta-line { margin-top:7px; font-size:12px; }
+    .admin-mock[data-admin-demo] .entry-detail { margin-top:7px; color:#667085; font-size:12.5px; font-weight:500; line-height:1.45; }
+    .admin-mock[data-admin-demo] .teacher { max-width:180px; color:#111827; font-size:11.5px; font-weight:900; text-align:right; text-transform:none; overflow:hidden; text-overflow:ellipsis; }
+    .demo-panel-resizer { min-width:var(--demo-resizer-w); width:var(--demo-resizer-w); display:flex; align-items:center; justify-content:center; border-right:1px solid rgba(148,163,184,.26); border-left:1px solid rgba(148,163,184,.16); background:#f8fafc; cursor:col-resize; touch-action:none; z-index:5; }
+    .demo-panel-resizer span { width:2px; height:46px; border-radius:999px; background:rgba(148,163,184,.56); }
+    .demo-panel-resizer:focus-visible { outline:2px solid #1d4ed8; outline-offset:-2px; }
+    .admin-mock[data-admin-demo].is-resizing .demo-panel-resizer { background:#eaf2ff; }
+    .admin-mock[data-admin-demo].is-resizing .demo-panel-resizer span { background:#1d4ed8; box-shadow:0 0 0 3px rgba(29,78,216,.1); }
+    .demo-panel-layer { width:100%; height:100%; min-width:0; display:flex; flex-direction:column; align-items:center; justify-content:space-between; gap:9px; padding:11px 6px; border:0; border-right:1px solid rgba(148,163,184,.26); background:#fff; color:#111827; cursor:pointer; font-family:"Inter",sans-serif; }
+    .demo-panel-layer-icon { width:27px; height:27px; display:grid; place-items:center; border-radius:8px; background:#eef4ff; color:#1d4ed8; flex:0 0 auto; }
+    .demo-panel-layer-icon svg { width:15px; height:15px; }
+    .demo-panel-layer-label { flex:1; min-height:0; display:flex; align-items:center; writing-mode:vertical-rl; transform:rotate(180deg); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; font-size:12.5px; font-weight:900; line-height:1; }
+    .demo-panel-layer-meta { display:flex; flex-direction:column; align-items:center; gap:5px; color:#7b8799; font-size:9.5px; font-weight:900; letter-spacing:.9px; text-transform:uppercase; writing-mode:vertical-rl; transform:rotate(180deg); }
 
     .update-pill {
       width: fit-content;
@@ -1075,22 +1079,21 @@
       .mock-body { min-width: 0; }
     }
 
-    /* Desktop and tablet use a full-width, swipeable panel deck. */
+    /* Desktop and tablet retain the real admin's simultaneous resizable panels. */
     @media (min-width: 600px) and (max-width: 1420px) {
       .admin-mock[data-admin-demo] { overflow-x: hidden; overflow-y: hidden; }
-      .admin-mock[data-admin-demo] .mock-body { min-width: 0; grid-template-columns:48px minmax(0,1fr); }
-      .admin-mock[data-admin-demo] .entry { grid-template-columns:minmax(112px,.75fr) minmax(0,2fr) minmax(94px,.72fr); gap:12px; }
-      .admin-mock[data-admin-demo] .teacher { min-width: 0; overflow: hidden; text-overflow: ellipsis; }
+      .admin-mock[data-admin-demo] .mock-body { min-width:0; }
+      .admin-mock[data-admin-demo] .teacher { min-width:0; }
     }
 
-    /* The timeline remains a readable three-column surface because it owns the full deck width. */
+    /* Compact the real timeline without changing its hierarchy at tablet widths. */
     @media (min-width: 600px) and (max-width: 1100px) {
       h1 { font-size: clamp(2.35rem, 6vw, 3rem); max-width: none; white-space: nowrap; }
-      .admin-mock[data-admin-demo] .timeline-title { padding:20px 20px 16px; }
-      .admin-mock[data-admin-demo] .timeline-title h2 { min-width:0; font-size:30px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
-      .admin-mock[data-admin-demo] .timeline-card { padding:14px 14px 76px; }
-      .admin-mock[data-admin-demo] .day-card { padding:0 12px; }
-      .demo-pane-label { display:none; }
+      .admin-mock[data-admin-demo] .timeline-title { padding:16px 18px 13px; }
+      .admin-mock[data-admin-demo] .timeline-title h2 { min-width:0; font-size:28px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+      .admin-mock[data-admin-demo] .timeline-card { padding:12px 14px 22px; }
+      .admin-mock[data-admin-demo] .day-card { padding:14px; }
+      .admin-mock[data-admin-demo] .entry { grid-template-columns:118px minmax(0,1fr); gap:12px; }
     }
 
     @media (max-width: 720px) {
