@@ -1,35 +1,66 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-import { collection, getDocs, getFirestore, orderBy, query } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-firestore.js";
+const SAMPLE_REPORTS = [
+  {
+    title: "Ledgr Sample - Daily Report.pdf",
+    period: "Daily",
+    fileId: "1qAhRubQMEoHXy3GnhtURNyfN8UmBub9B",
+  },
+  {
+    title: "Ledgr Sample - Weekly Report.pdf",
+    period: "Weekly",
+    fileId: "1xCbyDt0Jazih_CiOSgjHewEy6C9X_PLd",
+  },
+  {
+    title: "Ledgr Sample - Monthly Report.pdf",
+    period: "Monthly",
+    fileId: "1VCkxFHpqeVRbVnwR7nJnXbfVwSayawdc",
+  },
+];
 
-const app = initializeApp({
-  apiKey: "AIzaSyCCPbJdMU0xQHWCtVLakaFeeRCdY3kMP4s",
-  authDomain: "classtracker-84920.firebaseapp.com",
-  projectId: "classtracker-84920",
-  storageBucket: "classtracker-84920.firebasestorage.app",
-  messagingSenderId: "170006710635",
-  appId: "1:170006710635:web:cf27aa33008adb93daa42e",
-});
+const escapeHtml = value => String(value).replace(
+  /[&<>'"]/g,
+  character => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[character],
+);
 
-const escapeHtml = value => String(value || "").replace(/[&<>'"]/g, character => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;",'"':"&quot;"}[character]));
-const safeUrl = value => { try { const url = new URL(value); return url.protocol === "https:" ? url.href : ""; } catch { return ""; } };
+const renderReportCard = report => {
+  const title = escapeHtml(report.title);
+  const period = escapeHtml(report.period);
+  const previewUrl = `https://drive.google.com/file/d/${report.fileId}/preview`;
+  const openUrl = `https://drive.google.com/file/d/${report.fileId}/view?usp=sharing`;
+  const downloadUrl = `https://drive.google.com/uc?export=download&id=${report.fileId}`;
 
-async function renderSampleReports() {
-  const lists = [...document.querySelectorAll("[data-sample-report-list]")];
-  const statuses = [...document.querySelectorAll("[data-sample-report-status]")];
-  if (!lists.length) return;
-  try {
-    const snapshot = await getDocs(query(collection(getFirestore(app), "sampleReports"), orderBy("createdAt", "desc")));
-    const reports = snapshot.docs.map(item => item.data()).filter(item => item.title && safeUrl(item.downloadUrl));
-    if (!reports.length) {
-      statuses.forEach(element => { element.textContent = "Sample reports are being prepared. Book a demo and we’ll walk you through a live report."; });
-      return;
-    }
-    const cards = reports.map(report => { const url=safeUrl(report.downloadUrl); const title=escapeHtml(report.title); return `<article class="sample-report-card"><div class="sample-report-icon" aria-hidden="true">PDF</div><h3>${title}</h3><p>Public sample Ledgr Report</p><div class="sample-report-actions"><a class="sample-report-action primary" href="${url}" target="_blank" rel="noopener noreferrer">Preview PDF</a><a class="sample-report-action" href="${url}" download>Download</a></div></article>`; }).join("");
-    lists.forEach(element => { element.innerHTML = cards; });
-    statuses.forEach(element => { element.textContent = ""; });
-  } catch {
-    statuses.forEach(element => { element.textContent = "Sample reports are temporarily unavailable. Please book a demo to see Ledgr Report in action."; });
-  }
+  return `
+    <article class="sample-report-card">
+      <div class="sample-report-preview">
+        <iframe
+          src="${previewUrl}"
+          title="Preview of ${title}"
+          loading="lazy"
+          allow="autoplay"
+        ></iframe>
+      </div>
+      <div class="sample-report-card-body">
+        <div class="sample-report-icon" aria-hidden="true">PDF</div>
+        <h3>${title}</h3>
+        <p>${period} Ledgr Report sample</p>
+        <div class="sample-report-actions">
+          <a class="sample-report-action primary" href="${openUrl}" target="_blank" rel="noopener noreferrer">Open PDF</a>
+          <a class="sample-report-action" href="${downloadUrl}" target="_blank" rel="noopener noreferrer">Download PDF</a>
+        </div>
+      </div>
+    </article>
+  `;
+};
+
+function renderSampleReports() {
+  const cards = SAMPLE_REPORTS.map(renderReportCard).join("");
+
+  document.querySelectorAll("[data-sample-report-list]").forEach(element => {
+    element.innerHTML = cards;
+  });
+
+  document.querySelectorAll("[data-sample-report-status]").forEach(element => {
+    element.textContent = "";
+  });
 }
 
 renderSampleReports();
