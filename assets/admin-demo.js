@@ -29,24 +29,66 @@
     { id: "aarav", name: "Aarav Mehta", subject: "Chemistry", institute: "north", classes: ["virat", "dropper"], logged: 3 },
     { id: "naina", name: "Naina Singh", subject: "English", institute: "north", classes: ["virat", "foundation"], logged: 2 },
     { id: "rohan", name: "Rohan Verma", subject: "Social Science", institute: "north", classes: ["foundation", "virat"], logged: 4 },
+    { id: "meera", name: "Meera Joshi", subject: "Maths", institute: "north", classes: ["virat", "madhav"], logged: 4 },
+    { id: "dev", name: "Dev Arora", subject: "Physics", institute: "north", classes: ["virat", "dropper"], logged: 3 },
+    { id: "isha", name: "Isha Malhotra", subject: "Biology", institute: "north", classes: ["sankalp", "keshav"], logged: 3 },
+    { id: "rahul", name: "Rahul Khanna", subject: "MAT", institute: "north", classes: ["foundation", "madhav"], logged: 2 },
     { id: "kavya", name: "Kavya Rao", subject: "Maths", institute: "merit", classes: ["virat", "madhav"], logged: 1 },
     { id: "piyush", name: "Piyush Gupta", subject: "MAT", institute: "horizon", classes: ["foundation", "madhav"], logged: 3 },
     { id: "jaya", name: "Jaya Sharma", subject: "Chemistry", institute: "horizon", classes: ["sankalp", "dropper"], logged: 2 },
+    { id: "sahil", name: "Sahil Batra", subject: "Physics", institute: "horizon", classes: ["virat", "foundation"], logged: 2 },
+    { id: "tanvi", name: "Tanvi Menon", subject: "Biology", institute: "horizon", classes: ["sankalp", "keshav"], logged: 2 },
     { id: "anuradha", name: "Anuradha Gupta", subject: "English", institute: "summit", classes: ["foundation", "keshav"], logged: 2 },
     { id: "usha", name: "Usha Adhikari", subject: "Social Science", institute: "scholars", classes: ["foundation", "dropper"], logged: 1 },
     { id: "girish", name: "Girish Bansal", subject: "Maths", institute: "bright", classes: ["virat", "madhav"], logged: 3 },
+    { id: "zoya", name: "Zoya Mirza", subject: "English", institute: "axis", classes: ["foundation", "virat"], logged: 1 },
+    { id: "omkar", name: "Omkar Desai", subject: "Chemistry", institute: "pioneer", classes: ["dropper", "sankalp"], logged: 1 },
   ];
 
   const teachers = teacherProfiles.map((teacher) => teacher.name);
   const lessons = [
-    ["Triangles", "Maths, MAT", "Properties of triangles", "Completed", "7th A"],
-    ["Paper discussed", "Chemistry", "Practice paper review", "Doubts", "8th A"],
-    ["Tenses", "English", "Simple present tense", "Completed", "6th A"],
-    ["Syllogism", "MAT", "Statement and conclusion", "Started", "Aarambh-1"],
-    ["The rise of an empire", "Social Science", "Explained early kingdoms and administration", "In Progress", "7th A"],
-    ["Applications of Differentiation", "Maths", "Angle of intersection", "Completed", "Madhav-7"],
-    ["Chemical equilibrium", "Chemistry", "Le Chatelier’s principle", "Completed", "Virat-2"],
-    ["Cell cycle and mitosis", "Biology", "Diagram-based revision", "In Progress", "Sankalp-4"],
+    { topic: "Linear equations in two variables", subject: "Maths", detail: "Graphical solutions and consistency of equation pairs" },
+    { topic: "Quadratic roots and discriminant", subject: "Maths", detail: "Nature of roots with factorisation practice" },
+    { topic: "Arithmetic progressions", subject: "Maths", detail: "Finding the nth term and sum of a sequence" },
+    { topic: "Applications of differentiation", subject: "Maths", detail: "Increasing functions, maxima and minima" },
+    { topic: "Probability distributions", subject: "Maths", detail: "Mean and variance of discrete outcomes" },
+    { topic: "Coordinate geometry revision", subject: "Maths", detail: "Distance, section formula and locus questions" },
+    { topic: "Chemical bonding", subject: "Chemistry", detail: "Hybridisation, bond angles and molecular shape" },
+    { topic: "Mole concept", subject: "Chemistry", detail: "Stoichiometric ratios and limiting reagent problems" },
+    { topic: "Chemical equilibrium", subject: "Chemistry", detail: "Le Chatelier’s principle and equilibrium constants" },
+    { topic: "Redox reactions", subject: "Chemistry", detail: "Oxidation numbers and balancing equations" },
+    { topic: "Thermodynamics", subject: "Chemistry", detail: "Enthalpy changes and Hess’s law examples" },
+    { topic: "Organic reaction mechanisms", subject: "Chemistry", detail: "Electrophiles, nucleophiles and intermediates" },
+    { topic: "Reported speech", subject: "English", detail: "Tense, pronoun and time-expression changes" },
+    { topic: "Reading comprehension drill", subject: "English", detail: "Inference, tone and contextual vocabulary" },
+    { topic: "Clauses and sentence correction", subject: "English", detail: "Identifying dependent clauses and common errors" },
+    { topic: "Formal letter writing", subject: "English", detail: "Structure, tone and concise supporting details" },
+    { topic: "Active and passive voice", subject: "English", detail: "Transformations across common tense forms" },
+    { topic: "Poetry close reading", subject: "English", detail: "Imagery, rhythm and central idea discussion" },
+    { topic: "Constitutional values", subject: "Social Science", detail: "Justice, liberty, equality and fraternity in practice" },
+    { topic: "The rise of an empire", subject: "Social Science", detail: "Early kingdoms, administration and trade routes" },
+    { topic: "Resources and development", subject: "Social Science", detail: "Resource planning and sustainable land use" },
+    { topic: "Indian national movement", subject: "Social Science", detail: "Major phases, leaders and regional participation" },
+    { topic: "Federalism in India", subject: "Social Science", detail: "Union, state and local government responsibilities" },
+    { topic: "Climate and monsoon patterns", subject: "Social Science", detail: "Seasonal winds and regional rainfall variation" },
+    { topic: "Syllogism", subject: "MAT", detail: "Statements, conclusions and Venn-diagram checks" },
+    { topic: "Number series", subject: "MAT", detail: "Mixed patterns using differences and ratios" },
+    { topic: "Coding and decoding", subject: "MAT", detail: "Letter shifts, symbol rules and pattern detection" },
+    { topic: "Direction sense", subject: "MAT", detail: "Multi-step paths and shortest-distance questions" },
+    { topic: "Data sufficiency", subject: "MAT", detail: "Testing whether given statements resolve a problem" },
+    { topic: "Analogy and classification", subject: "MAT", detail: "Relationship-based grouping and odd-one-out sets" },
+    { topic: "Motion in a straight line", subject: "Physics", detail: "Position-time and velocity-time graph analysis" },
+    { topic: "Laws of motion", subject: "Physics", detail: "Free-body diagrams, friction and connected blocks" },
+    { topic: "Work, energy and power", subject: "Physics", detail: "Work-energy theorem and conservation problems" },
+    { topic: "Ray optics", subject: "Physics", detail: "Mirror formula, lenses and sign conventions" },
+    { topic: "Current electricity", subject: "Physics", detail: "Resistivity, series circuits and Kirchhoff’s rules" },
+    { topic: "Electromagnetic induction", subject: "Physics", detail: "Magnetic flux, Faraday’s law and Lenz’s law" },
+    { topic: "Cell structure", subject: "Biology", detail: "Organelles, membranes and cell specialisation" },
+    { topic: "Cell cycle and mitosis", subject: "Biology", detail: "Phase sequence with diagram-based revision" },
+    { topic: "Mendelian genetics", subject: "Biology", detail: "Monohybrid crosses and inheritance ratios" },
+    { topic: "Human physiology", subject: "Biology", detail: "Digestion, absorption and enzyme functions" },
+    { topic: "Plant transport", subject: "Biology", detail: "Xylem, phloem and transpiration pull" },
+    { topic: "Ecosystem interactions", subject: "Biology", detail: "Food webs, energy flow and population balance" },
   ];
 
   const phoneMedia = window.matchMedia("(max-width: 599.98px)");
@@ -55,6 +97,8 @@
     mode: "Class",
     item: "virat",
     period: "This Month",
+    rangeStart: "2026-06-24",
+    rangeEnd: "2026-07-06",
     sort: "Recent",
     instituteQuery: "",
     itemQuery: "",
@@ -114,47 +158,130 @@
   const currentItem = () => state.mode === "Teacher" ? state.item : currentClass().name;
   const className = (id) => classes.find((item) => item.id === id)?.name || id;
   const instituteName = (id) => institutes.find((item) => item.id === id)?.name || institutes[0].name;
-  const subjectMatchesLesson = (subject, lesson) => String(lesson[1]).split(",").map((part) => part.trim()).includes(subject);
+  const DEMO_TODAY = "2026-07-13";
+  const DEMO_FIRST_DAY = "2026-06-13";
+  const dateFormatter = new Intl.DateTimeFormat("en-US", { weekday: "long", month: "long", day: "numeric" });
+  const timeSlots = [
+    ["6:00", 45], ["5:40", 60], ["5:10", 80], ["4:35", 55],
+    ["3:50", 70], ["3:05", 45], ["2:20", 60], ["1:30", 50],
+  ];
+  const statuses = ["Completed", "In Progress", "Completed", "Doubts", "Started", "Completed"];
 
-  function fakeRows(forMobile = false) {
-    if (!forMobile) {
-      const seed = [...`${state.institute}:${state.item}`].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-      const count = { Today: 3, Yesterday: 4, "This Week": 6, "This Month": 8, Range: 5 }[state.period] || 8;
-      return Array.from({ length: count }, (_, index) => {
-        const lesson = lessons[(seed + index) % lessons.length];
-        return {
-          start: ["6:00", "5:40", "5:40", "5:40", "5:20", "5:10", "4:45", "4:10"][index],
-          end: ["6:45", "6:40", "6:40", "6:25", "6:00", "6:30", "5:30", "5:10"][index],
-          duration: ["45m", "1h", "1h", "45m", "40m", "1h 20m", "45m", "1h"][index],
-          topic: lesson[0],
-          subject: lesson[1],
-          detail: lesson[2],
-          status: lesson[3],
-          section: lesson[4],
-          teacher: state.mode === "Teacher" ? state.item : teachers[(seed + index * 2) % teachers.length],
-        };
-      });
+  const hashText = (value) => [...String(value)].reduce((hash, char) => ((hash * 31) + char.charCodeAt(0)) >>> 0, 2166136261);
+  const parseDateKey = (key) => new Date(`${key}T12:00:00`);
+  const toDateKey = (date) => {
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, "0");
+    const day = String(date.getDate()).padStart(2, "0");
+    return `${year}-${month}-${day}`;
+  };
+  const shiftDateKey = (key, days) => {
+    const date = parseDateKey(key);
+    date.setDate(date.getDate() + days);
+    return toDateKey(date);
+  };
+  const formatDateKey = (key) => dateFormatter.format(parseDateKey(key));
+  const formatDuration = (minutes) => {
+    const hours = Math.floor(minutes / 60);
+    const remainder = minutes % 60;
+    if (!hours) return `${remainder}m`;
+    return remainder ? `${hours}h ${remainder}m` : `${hours}h`;
+  };
+  const addTime = (start, minutes) => {
+    const [hour, minute] = start.split(":").map(Number);
+    const total = hour * 60 + minute + minutes;
+    const nextHour = Math.floor(total / 60) % 12 || 12;
+    return `${nextHour}:${String(total % 60).padStart(2, "0")}`;
+  };
+  const statusClass = (status) => status === "Completed" ? "done" : status === "Started" ? "started" : status === "Doubts" ? "doubts" : "";
+  const subjectMatchesLesson = (subject, lesson) => lesson.subject === subject;
+
+  function selectedTeacherProfile() {
+    if (state.timelineScope === "pair") return currentTeacher();
+    if (state.timelineScope === "teacher" || state.mode === "Teacher") {
+      return teacherProfiles.find((teacher) => teacher.name === state.item || teacher.id === state.item) || currentTeacher();
     }
-    const seed = [...`${state.institute}:${state.item}:${state.mobileTeacher}`].reduce((sum, char) => sum + char.charCodeAt(0), 0);
-    const count = { Today: 3, Yesterday: 4, "This Week": 6, "This Month": 8, Range: 5 }[state.period] || 8;
-    const scopedTeacher = ["teacher", "pair"].includes(state.timelineScope) ? currentTeacher() : null;
-    const lessonPool = scopedTeacher ? lessons.filter((lesson) => subjectMatchesLesson(scopedTeacher.subject, lesson)) : lessons;
-    return Array.from({ length: count }, (_, index) => {
-      const lesson = lessonPool[(seed + index) % lessonPool.length] || lessons[(seed + index) % lessons.length];
-      const matchingTeachers = teacherProfiles.filter((teacher) => subjectMatchesLesson(teacher.subject, lesson));
-      const teacher = scopedTeacher || matchingTeachers[(seed + index) % matchingTeachers.length] || teacherProfiles[index % teacherProfiles.length];
-      return {
-        start: ["6:00", "5:40", "5:40", "5:40", "5:20", "5:10", "4:45", "4:10"][index],
-        end: ["6:45", "6:40", "6:40", "6:25", "6:00", "6:30", "5:30", "5:10"][index],
-        duration: ["45m", "1h", "1h", "45m", "40m", "1h 20m", "45m", "1h"][index],
-        topic: lesson[0],
-        subject: scopedTeacher?.subject || lesson[1],
-        detail: lesson[2],
-        status: lesson[3],
-        section: ["class", "pair"].includes(state.timelineScope) ? currentClass().name : lesson[4],
-        teacher: teacher.name,
-      };
+    return null;
+  }
+
+  function activityDataset() {
+    const scopedTeacher = selectedTeacherProfile();
+    const scopedClass = ["class", "pair"].includes(state.timelineScope) ? currentClass() : null;
+    const instituteTeachers = teacherProfiles.filter((teacher) => teacher.institute === state.institute);
+    const availableTeachers = instituteTeachers.length ? instituteTeachers : teacherProfiles;
+    const availableSubjects = new Set(availableTeachers.map((teacher) => teacher.subject));
+    const lessonPool = scopedTeacher
+      ? lessons.filter((lesson) => subjectMatchesLesson(scopedTeacher.subject, lesson))
+      : lessons.filter((lesson) => availableSubjects.has(lesson.subject));
+    const seed = hashText(`${state.institute}:${state.item}:${state.mobileTeacher}:${state.timelineScope}`);
+    const rows = [];
+
+    for (let dayOffset = 0; dayOffset <= 30; dayOffset += 1) {
+      const dateKey = shiftDateKey(DEMO_TODAY, -dayOffset);
+      const dailyCount = 4 + ((seed + dayOffset * 11) % 4);
+      for (let index = 0; index < dailyCount; index += 1) {
+        const lesson = lessonPool[(seed + dayOffset * 7 + index * 5) % lessonPool.length] || lessons[(seed + index) % lessons.length];
+        const matchingTeachers = availableTeachers.filter((teacher) => teacher.subject === lesson.subject);
+        const teacher = scopedTeacher || matchingTeachers[(seed + dayOffset + index * 3) % matchingTeachers.length] || teacherProfiles[(seed + index) % teacherProfiles.length];
+        const teacherClasses = teacher.classes.length ? teacher.classes : classes.map((item) => item.id);
+        const section = scopedClass || classes.find((item) => item.id === teacherClasses[(dayOffset + index) % teacherClasses.length]) || classes[(seed + index) % classes.length];
+        const [start, minutes] = timeSlots[(seed + dayOffset * 3 + index) % timeSlots.length];
+        const status = statuses[(seed + dayOffset + index * 2) % statuses.length];
+        rows.push({
+          id: `${dateKey}-${dayOffset}-${index}`,
+          dateKey,
+          start,
+          end: addTime(start, minutes),
+          minutes,
+          duration: formatDuration(minutes),
+          topic: lesson.topic,
+          subject: scopedTeacher?.subject || lesson.subject,
+          detail: lesson.detail,
+          status,
+          section: section.name,
+          teacher: teacher.name,
+        });
+      }
+    }
+    return rows;
+  }
+
+  function periodBounds() {
+    if (state.period === "Today") return [DEMO_TODAY, DEMO_TODAY];
+    if (state.period === "Yesterday") {
+      const yesterday = shiftDateKey(DEMO_TODAY, -1);
+      return [yesterday, yesterday];
+    }
+    if (state.period === "This Week") return [shiftDateKey(DEMO_TODAY, -6), DEMO_TODAY];
+    if (state.period === "Range") return [state.rangeStart, state.rangeEnd];
+    return [`${DEMO_TODAY.slice(0, 7)}-01`, DEMO_TODAY];
+  }
+
+  function filteredRows() {
+    const [start, end] = periodBounds();
+    return activityDataset().filter((row) => row.dateKey >= start && row.dateKey <= end);
+  }
+
+  function groupedRows() {
+    const groups = new Map();
+    filteredRows().forEach((row) => {
+      if (!groups.has(row.dateKey)) groups.set(row.dateKey, []);
+      groups.get(row.dateKey).push(row);
     });
+    return [...groups].map(([dateKey, rows]) => ({
+      dateKey,
+      rows,
+      minutes: rows.reduce((sum, row) => sum + row.minutes, 0),
+    }));
+  }
+
+  function rangeControls() {
+    if (state.period !== "Range") return "";
+    return `<div class="demo-range-controls" aria-label="Custom date range"><label><span>From</span><input type="date" min="${DEMO_FIRST_DAY}" max="${state.rangeEnd}" value="${state.rangeStart}" data-range-start></label><label><span>To</span><input type="date" min="${state.rangeStart}" max="${DEMO_TODAY}" value="${state.rangeEnd}" data-range-end></label></div>`;
+  }
+
+  function periodButtons(className) {
+    return `<div class="${className}">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="${className === "range-pills" ? "range-pill " : ""}${period === state.period ? "active" : ""}" data-period="${period}" aria-pressed="${period === state.period}">${period}</button>`).join("")}</div>${rangeControls()}`;
   }
 
   function searchBox(kind, label, value) {
@@ -186,8 +313,9 @@
   }
 
   function timeline() {
-    const rows = fakeRows();
-    return `<article class="day-card"><div class="day-head"><span>Monday, July 13</span><span class="line"></span><span>${rows.length} entries · ${rows.length + 3}h</span></div>${rows.map((row) => `<div class="entry"><div class="time">${row.start} - <span>${row.end}</span><span class="duration">${row.duration}</span></div><div class="entry-main"><div class="entry-top"><div class="entry-copy"><div class="entry-title"><span class="flag">Note</span><span class="status ${row.status === "Completed" ? "done" : ""}">● ${row.status}</span> ${esc(row.topic)}</div></div><div class="teacher">${esc(row.teacher)}</div></div><div class="meta-line"><span>${esc(row.subject)}</span><span class="class-badge">${esc(row.section)}</span></div><div class="entry-detail">${esc(row.detail)}</div></div></div>`).join("")}</article>`;
+    const groups = groupedRows();
+    if (!groups.length) return '<div class="demo-empty timeline-empty"><strong>No teaching entries</strong><span>Try a wider date range.</span></div>';
+    return groups.map((group) => `<article class="day-card"><div class="day-head"><span>${esc(formatDateKey(group.dateKey))}</span><span class="line"></span><span>${group.rows.length} ${group.rows.length === 1 ? "entry" : "entries"} · ${formatDuration(group.minutes)}</span></div>${group.rows.map((row) => `<div class="entry"><div class="time">${row.start} - <span>${row.end}</span><span class="duration">${row.duration}</span></div><div class="entry-main"><div class="entry-top"><div class="entry-copy"><div class="entry-title"><span class="flag">Note</span><span class="status ${statusClass(row.status)}">● ${row.status}</span> ${esc(row.topic)}</div></div><div class="teacher">${esc(row.teacher)}</div></div><div class="meta-line"><span>${esc(row.subject)}</span><span class="class-badge">${esc(row.section)}</span></div><div class="entry-detail">${esc(row.detail)}</div></div></div>`).join("")}</article>`).join("");
   }
 
   function reportModal() {
@@ -296,7 +424,7 @@
       : `<section class="class-panel"><div class="demo-class-head-shell"><div class="demo-class-head"><div class="institute-title"><span>Institute</span><h2>${esc(institute.name)}</h2></div><span class="demo-head-count">${institute.logged}/${institute.teachers}</span></div><div class="tabs">${[["Class", "class"], ["Teacher", "teacher"], ["Class+teacher", "group"]].map(([mode, key]) => `<button class="tab ${state.mode === mode ? "active" : ""}" data-mode="${mode}">${icon(key)}<span>${mode}</span></button>`).join("")}</div>${searchBox("item", "Search class or teacher", state.itemQuery)}<div class="sort-row"><span>Sort</span><div class="demo-sort-toggle"><button data-sort="Recent" class="${state.sort === "Recent" ? "active" : ""}">Recent</button><button data-sort="A-Z" class="${state.sort === "A-Z" ? "active" : ""}">A-Z</button></div></div></div><div class="demo-class-label">${state.mode === "Teacher" ? "Teachers" : state.mode === "Class+teacher" ? "Class + teacher" : "Classes"}</div><div class="demo-class-list">${panelItems()}</div></section>`;
     const railItems = [["overview", "Teachers"], ["building", "Institutes"], ["books", "Syllabus"], ["school", "Sections"], ["settings", "Admins"], ["report", "Ledgr Report"], ["send", "Messenger"]];
 
-    root.innerHTML = `<div class="mock-top"><div class="demo-top-left"><div class="demo-top-logo-cell"><span class="mock-rail-logo">L</span></div><div class="crumbs"><button data-focus-panel="institutes">Overview</button><span class="slash">/</span><button data-focus-panel="classes">${esc(institute.name)}</button><span class="slash">/</span><button data-focus-panel="timeline" class="current">${esc(selectedLabel)}</button></div></div><div class="demo-top-actions"><button class="report-button" data-report>${icon("report")} Ledgr Report</button></div></div><div class="mock-body"><aside class="icon-rail">${railItems.map(([key, label], index) => `<button class="rail-icon ${index === 5 ? "active" : ""}" title="${label}" aria-label="${label}" data-demo-action="Open ${label}">${icon(key)}</button>`).join("")}<span class="demo-rail-spacer"></span><button class="rail-icon" title="Feedback" aria-label="Feedback" data-demo-action="Open Feedback">${icon("message")}</button></aside>${institutesPanel}${resizeHandle("institutes", layout.institutes)}${classesPanel}${resizeHandle("classes", layout.classes)}<section class="timeline-panel"><div class="timeline-title"><h2>${esc(selectedLabel)}</h2><div class="range-pills">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="range-pill ${period === state.period ? "active" : ""}" data-period="${period}">${period}</button>`).join("")}</div></div><div class="timeline-card">${timeline()}</div></section></div>${reportModal()}`;
+    root.innerHTML = `<div class="mock-top"><div class="demo-top-left"><div class="demo-top-logo-cell"><span class="mock-rail-logo">L</span></div><div class="crumbs"><button data-focus-panel="institutes">Overview</button><span class="slash">/</span><button data-focus-panel="classes">${esc(institute.name)}</button><span class="slash">/</span><button data-focus-panel="timeline" class="current">${esc(selectedLabel)}</button></div></div><div class="demo-top-actions"><button class="report-button" data-report>${icon("report")} Ledgr Report</button></div></div><div class="mock-body"><aside class="icon-rail">${railItems.map(([key, label], index) => `<button class="rail-icon ${index === 5 ? "active" : ""}" title="${label}" aria-label="${label}" data-demo-action="Open ${label}">${icon(key)}</button>`).join("")}<span class="demo-rail-spacer"></span><button class="rail-icon" title="Feedback" aria-label="Feedback" data-demo-action="Open Feedback">${icon("message")}</button></aside>${institutesPanel}${resizeHandle("institutes", layout.institutes)}${classesPanel}${resizeHandle("classes", layout.classes)}<section class="timeline-panel"><div class="timeline-title"><h2>${esc(selectedLabel)}</h2><div class="demo-period-control">${periodButtons("range-pills")}</div></div><div class="timeline-card">${timeline()}</div></section></div>${reportModal()}`;
     bindPanelResizers();
   }
 
@@ -373,9 +501,10 @@
   }
 
   function mobileTimelinePanel() {
-    const rows = fakeRows(true);
+    const groups = groupedRows();
     const title = mobileTimelineTitle();
-    return `<section class="mobile-timeline-title"><span>${esc(title.eyebrow)}</span><h2>${esc(title.title)}</h2><p>${esc(title.subtitle)}</p></section><div class="mobile-periods">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="${period === state.period ? "active" : ""}" data-period="${period}">${period}</button>`).join("")}</div><article class="mobile-day-card"><header><span>Monday, July 13</span><strong>${rows.length} entries · ${rows.length + 3}h</strong></header>${rows.map((row) => `<section class="mobile-entry"><div class="mobile-entry-top"><strong>${row.start} - <span>${row.end}</span></strong><span>${esc(row.teacher)}</span></div><div class="mobile-entry-main"><div><span class="mobile-note">Note</span><span class="mobile-entry-status ${row.status === "Completed" ? "done" : ""}">● ${row.status}</span></div><h3>${esc(row.topic)}</h3></div><div class="mobile-entry-meta"><span>${esc(row.subject)}</span><span>${esc(row.section)}</span><strong>${row.duration}</strong></div><p>${esc(row.detail)}</p></section>`).join("")}</article>`;
+    const days = groups.length ? groups.map((group) => `<article class="mobile-day-card"><header><span>${esc(formatDateKey(group.dateKey))}</span><strong>${group.rows.length} ${group.rows.length === 1 ? "entry" : "entries"} · ${formatDuration(group.minutes)}</strong></header>${group.rows.map((row) => `<section class="mobile-entry"><div class="mobile-entry-top"><strong>${row.start} - <span>${row.end}</span></strong><span>${esc(row.teacher)}</span></div><div class="mobile-entry-main"><div><span class="mobile-note">Note</span><span class="mobile-entry-status ${statusClass(row.status)}">● ${row.status}</span></div><h3>${esc(row.topic)}</h3></div><div class="mobile-entry-meta"><span>${esc(row.subject)}</span><span>${esc(row.section)}</span><strong>${row.duration}</strong></div><p>${esc(row.detail)}</p></section>`).join("")}</article>`).join("") : '<div class="demo-empty timeline-empty"><strong>No teaching entries</strong><span>Try a wider date range.</span></div>';
+    return `<section class="mobile-timeline-title"><span>${esc(title.eyebrow)}</span><h2>${esc(title.title)}</h2><p>${esc(title.subtitle)}</p></section><div class="mobile-period-control">${periodButtons("mobile-periods")}</div><div class="mobile-timeline-days">${days}</div>`;
   }
 
   function mobileWorkspace() {
@@ -485,6 +614,7 @@
     else content = state.mobilePane === "institutes" ? mobileHomeRoot() : mobileWorkspace();
     const motionClass = state.mobileDirection > 0 ? "mobile-slide-forward" : state.mobileDirection < 0 ? "mobile-slide-back" : "";
     root.innerHTML = `<div class="mobile-admin-demo ${motionClass}">${content}${mobileBottomNav()}${state.toast ? `<div class="mobile-demo-toast" role="status">${esc(state.toast)}</div>` : ""}</div>`;
+    window.requestAnimationFrame(() => root.querySelector(".mobile-periods .active")?.scrollIntoView({ block: "nearest", inline: "center" }));
     state.mobileDirection = 0;
   }
 
@@ -797,6 +927,19 @@
       state.teacherQuery = event.target.value;
       const list = root.querySelector(".mobile-teacher-list");
       if (list) list.innerHTML = mobileTeacherRows();
+    }
+  });
+
+  root.addEventListener("change", (event) => {
+    if (event.target.matches("[data-range-start]")) {
+      state.rangeStart = event.target.value || state.rangeStart;
+      if (state.rangeStart > state.rangeEnd) state.rangeEnd = state.rangeStart;
+      render();
+    }
+    if (event.target.matches("[data-range-end]")) {
+      state.rangeEnd = event.target.value || state.rangeEnd;
+      if (state.rangeEnd < state.rangeStart) state.rangeStart = state.rangeEnd;
+      render();
     }
   });
 

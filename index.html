@@ -452,10 +452,17 @@
     .admin-mock[data-admin-demo] .timeline-panel { border-right:0; padding:0; background:#f4f7fb; }
     .admin-mock[data-admin-demo] .timeline-title { display:block; margin:0; padding:20px 24px 16px; border-bottom:1px solid rgba(148,163,184,.26); background:#f8fafc; }
     .admin-mock[data-admin-demo] .timeline-title h2 { font-family:"Poppins","Inter",sans-serif; font-size:34px; line-height:1.02; font-weight:800; letter-spacing:-.04em; }
+    .demo-period-control { margin-top:13px; }
     .admin-mock[data-admin-demo] .range-pills { margin-top:13px; padding:10px; border:1px solid rgba(148,163,184,.26); border-radius:12px; background:#f8fafc; }
+    .demo-period-control .range-pills { margin-top:0; }
     .admin-mock[data-admin-demo] .range-pills .range-pill { min-height:32px; padding:0 12px; border-color:#c9d6e8; font-size:11.5px; }
+    .demo-range-controls { display:flex; flex-wrap:wrap; gap:8px; margin-top:8px; }
+    .demo-range-controls label { min-width:0; display:flex; align-items:center; gap:7px; border:1px solid #d7e0ec; border-radius:10px; background:#fff; padding:6px 9px; color:#68758a; font-size:9px; font-weight:900; letter-spacing:.06em; text-transform:uppercase; }
+    .demo-range-controls input { min-width:124px; border:0; outline:0; background:transparent; color:#172033; padding:0; font-family:"Inter",system-ui,sans-serif; font-size:11px; font-weight:750; color-scheme:light; }
+    .demo-range-controls label:focus-within { border-color:#1d4ed8; box-shadow:0 0 0 3px rgba(37,99,235,.1); }
     .admin-mock[data-admin-demo] .timeline-card { flex:1; min-height:0; margin:0; padding:16px 20px 22px; display:block; overflow-y:auto; overscroll-behavior:contain; scrollbar-width:thin; }
     .admin-mock[data-admin-demo] .day-card { padding:16px 18px; border-radius:10px; border-color:rgba(148,163,184,.26); box-shadow:0 10px 26px rgba(15,23,42,.06); }
+    .admin-mock[data-admin-demo] .day-card + .day-card { margin-top:14px; }
     .admin-mock[data-admin-demo] .day-head { height:auto; grid-template-columns:auto 1fr auto; gap:12px; padding:0; margin-bottom:12px; font-size:11.5px; letter-spacing:.9px; }
     .admin-mock[data-admin-demo] .day-head::after { display:none; }
     .admin-mock[data-admin-demo] .day-head .line { height:1px; background:rgba(148,163,184,.3); }
@@ -470,9 +477,14 @@
     .admin-mock[data-admin-demo] .entry-title .flag { display:inline-flex; align-items:center; gap:6px; margin-right:8px; border:0; padding:0; color:#4637b8; font-family:"Inter",sans-serif; font-size:10.5px; font-weight:900; letter-spacing:.45px; }
     .admin-mock[data-admin-demo] .entry-title .flag::before { content:""; width:3px; height:15px; border-radius:999px; background:#4637b8; }
     .admin-mock[data-admin-demo] .status { font-size:10.5px; }
+    .admin-mock[data-admin-demo] .status.started { color:#2563eb; }
+    .admin-mock[data-admin-demo] .status.doubts { color:#b45309; }
     .admin-mock[data-admin-demo] .meta-line { margin-top:7px; font-size:12px; }
     .admin-mock[data-admin-demo] .entry-detail { margin-top:7px; color:#667085; font-size:12.5px; font-weight:500; line-height:1.45; }
     .admin-mock[data-admin-demo] .teacher { max-width:180px; color:#111827; font-size:11.5px; font-weight:900; text-align:right; text-transform:none; overflow:hidden; text-overflow:ellipsis; }
+    .timeline-empty { min-height:190px; display:grid; place-content:center; gap:5px; border:1px dashed #cbd5e1; border-radius:12px; background:rgba(255,255,255,.76); color:#64748b; text-align:center; }
+    .timeline-empty strong { color:#172033; font-family:"Poppins","Inter",sans-serif; font-size:14px; }
+    .timeline-empty span { font-size:11px; }
     .demo-panel-resizer { min-width:var(--demo-resizer-w); width:var(--demo-resizer-w); display:flex; align-items:center; justify-content:center; border-right:1px solid rgba(148,163,184,.26); border-left:1px solid rgba(148,163,184,.16); background:#f8fafc; cursor:col-resize; touch-action:none; z-index:5; }
     .demo-panel-resizer span { width:2px; height:46px; border-radius:999px; background:rgba(148,163,184,.56); }
     .demo-panel-resizer:focus-visible { outline:2px solid #1d4ed8; outline-offset:-2px; }
@@ -1529,10 +1541,16 @@
         white-space: nowrap;
       }
       .mobile-timeline-title p { margin: 0; overflow: hidden; color: #6d788b; font-size: 11px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+      .mobile-period-control { margin-bottom: 12px; }
       .mobile-periods { display: flex; gap: 6px; margin: 0 -10px 12px; padding: 0 10px 3px; overflow-x: auto; scrollbar-width: none; }
+      .mobile-period-control .mobile-periods { margin-bottom: 0; }
       .mobile-periods::-webkit-scrollbar { display: none; }
       .mobile-periods button { min-height: 36px; flex: 0 0 auto; border: 1px solid #c9d6e8; border-radius: 999px; background: #fff; color: #2f3b4f; padding: 0 13px; font-size: 11px; font-weight: 850; }
       .mobile-periods button.active { border-color: #17345f; background: #17345f; color: #fff; }
+      .mobile-period-control .demo-range-controls { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 6px; margin-top: 8px; }
+      .mobile-period-control .demo-range-controls label { display: grid; gap: 3px; padding: 7px 9px; }
+      .mobile-period-control .demo-range-controls input { width: 100%; min-width: 0; font-size: 10px; }
+      .mobile-timeline-days { display: grid; gap: 10px; }
       .mobile-day-card { border: 1px solid #d8e1eb; border-radius: 16px; background: #fff; padding: 0 13px; box-shadow: 0 5px 18px rgba(15,23,42,.045); }
       .mobile-day-card > header { min-height: 48px; display: flex; align-items: center; justify-content: space-between; gap: 8px; border-bottom: 1px solid #e4e9f0; color: #687488; font-size: 9.5px; font-weight: 900; letter-spacing: .045em; text-transform: uppercase; }
       .mobile-day-card > header strong { color: #4d596b; font-size: 9px; white-space: nowrap; }
@@ -1547,6 +1565,8 @@
       .mobile-note { border-left: 3px solid #4538b8; color: #4034ad; padding-left: 6px; font-size: 9px; font-weight: 900; text-transform: uppercase; }
       .mobile-entry-status { color: #c76005; font-size: 9px; font-weight: 850; }
       .mobile-entry-status.done { color: #087b58; }
+      .mobile-entry-status.started { color: #2563eb; }
+      .mobile-entry-status.doubts { color: #b45309; }
       .mobile-entry-main h3 { margin: 4px 0 0; font-family: "Poppins", "Inter", sans-serif; font-size: 15px; font-weight: 800; letter-spacing: -.025em; line-height: 1.25; }
       .mobile-entry-meta { display: flex; align-items: center; gap: 7px; margin-top: 7px; color: #657185; font-size: 10.5px; font-weight: 750; }
       .mobile-entry-meta span:nth-child(2) { border-radius: 999px; background: #e7efff; color: #245ed2; padding: 4px 8px; }
