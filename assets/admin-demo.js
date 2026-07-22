@@ -71,6 +71,8 @@
     reportScheduleOpen: false,
     reportScheduleEnabled: false,
     toast: "",
+    desktopPane: 0,
+    mobileDirection: 0,
   };
 
   const esc = (value) => String(value ?? "").replace(/[&<>'"]/g, (char) => ({
@@ -177,13 +179,83 @@
   }
 
   function reportModal() {
-    return state.report ? `<div class="demo-report-modal" data-close-report><div class="demo-report-dialog" role="dialog" aria-modal="true"><h3>Ledgr Report</h3><p>Prepare a fictional report preview for ${esc(currentInstitute().name)}.</p><div class="demo-report-options">${["PDF", "Summary", "Teacher status"].map((format) => `<button data-format="${format}" class="${format === state.format ? "active" : ""}">${format}</button>`).join("")}</div><div class="demo-dialog-actions"><button data-cancel-report>Cancel</button><button class="primary" data-prepare-report>Prepare ${state.format}</button></div></div></div>` : "";
+    return state.report ? `<div class="demo-report-modal" data-close-report><div class="demo-report-dialog" role="dialog" aria-modal="true"><h3>Ledgr Report</h3><p>Prepare a sample report preview for ${esc(currentInstitute().name)}.</p><div class="demo-report-options">${["PDF", "Summary", "Teacher status"].map((format) => `<button data-format="${format}" class="${format === state.format ? "active" : ""}">${format}</button>`).join("")}</div><div class="demo-dialog-actions"><button data-cancel-report>Cancel</button><button class="primary" data-prepare-report>Prepare ${state.format}</button></div></div></div>` : "";
   }
 
-  // The desktop renderer intentionally remains structurally identical to the approved contained preview.
-  function renderDesktop() {
+  function desktopSlideNav() {
+    const labels = ["Institutes", "Classes and teachers", "Teaching timeline"];
+    return `<nav class="demo-slide-nav" aria-label="Preview panels"><button class="demo-pane-arrow" data-desktop-pane="${Math.max(0, state.desktopPane - 1)}" aria-label="Previous panel" ${state.desktopPane === 0 ? "disabled" : ""}>${icon("back")}</button><div class="demo-pane-dots">${labels.map((label, index) => `<button data-desktop-pane="${index}" class="${index === state.desktopPane ? "active" : ""}" aria-label="Open ${label}" aria-current="${index === state.desktopPane ? "step" : "false"}"><span></span></button>`).join("")}</div><span class="demo-pane-label">${labels[state.desktopPane]}</span><button class="demo-pane-arrow next" data-desktop-pane="${Math.min(2, state.desktopPane + 1)}" aria-label="Next panel" ${state.desktopPane === 2 ? "disabled" : ""}>${icon("back")}</button></nav>`;
+  }
+
+  function bindDesktopSwipe() {
+    const viewport = root.querySelector(".demo-panel-viewport");
+    const track = root.querySelector(".demo-panel-track");
+    if (!viewport || !track) return;
+    let pointerId = null;
+    let startX = 0;
+    let startY = 0;
+    let dragging = false;
+
+    const settle = (event, cancelled = false) => {
+      if (pointerId === null || (event?.pointerId != null && event.pointerId !== pointerId)) return;
+      const dx = event ? event.clientX - startX : 0;
+      const threshold = Math.min(92, viewport.clientWidth * 0.16);
+      const fromPane = state.desktopPane;
+      let nextPane = fromPane;
+      if (!cancelled && dragging && Math.abs(dx) >= threshold) nextPane = Math.max(0, Math.min(2, fromPane + (dx < 0 ? 1 : -1)));
+      pointerId = null;
+      dragging = false;
+      viewport.classList.remove("is-dragging");
+      state.desktopPane = nextPane;
+      render(fromPane);
+    };
+
+    viewport.addEventListener("pointerdown", (event) => {
+      if (event.button !== 0 || event.target.closest("button, input, a, select, textarea")) return;
+      pointerId = event.pointerId;
+      startX = event.clientX;
+      startY = event.clientY;
+      dragging = false;
+    });
+    viewport.addEventListener("pointermove", (event) => {
+      if (event.pointerId !== pointerId) return;
+      const dx = event.clientX - startX;
+      const dy = event.clientY - startY;
+      if (!dragging && Math.abs(dx) < 8) return;
+      if (!dragging && Math.abs(dy) > Math.abs(dx)) {
+        pointerId = null;
+        return;
+      }
+      if (!dragging) {
+        dragging = true;
+        viewport.classList.add("is-dragging");
+        viewport.setPointerCapture?.(event.pointerId);
+      }
+      event.preventDefault();
+      const boundedDx = Math.max(-viewport.clientWidth * 0.34, Math.min(viewport.clientWidth * 0.34, dx));
+      track.style.transition = "none";
+      track.style.transform = `translate3d(${(-state.desktopPane * viewport.clientWidth) + boundedDx}px,0,0)`;
+    });
+    viewport.addEventListener("pointerup", (event) => settle(event));
+    viewport.addEventListener("pointercancel", (event) => settle(event, true));
+  }
+
+  function renderDesktop(fromPane = state.desktopPane) {
     const institute = currentInstitute();
-    root.innerHTML = `<div class="mock-top"><div class="crumbs"><span class="mock-rail-logo">L</span><span>Overview</span><span class="slash">/</span><strong>${esc(institute.name)}</strong></div><div class="demo-top-actions"><button class="report-button" data-report>${icon("report")} Ledgr Report</button><div class="demo-user"><span class="demo-avatar">FA</span><span>Fictional Admin</span></div></div></div><div class="mock-body"><aside class="icon-rail">${[["overview", "Overview"], ["building", "Institutes"], ["books", "Syllabus"], ["school", "Classes"], ["settings", "Settings"], ["report", "Ledgr Report"], ["send", "Messenger"]].map(([key, label], index) => `<button class="rail-icon ${index === 5 ? "active" : ""}" title="${label}" aria-label="${label}">${icon(key)}</button>`).join("")}</aside><section class="institutes"><div class="panel-head"><span>${institutes.length} institutes · today</span><span class="danger-count">${institutes.reduce((sum, item) => sum + item.logged, 0)}/${institutes.reduce((sum, item) => sum + item.teachers, 0)}</span></div>${searchBox("institute", "Search institutes", state.instituteQuery)}<div class="update-pill">Not opened yet</div><div class="institute-list">${instituteRows()}</div></section><section class="class-panel"><div class="demo-class-head"><div class="institute-title"><span>Institute</span><h2>${esc(institute.name)}</h2></div><span class="demo-head-count">${institute.logged}/${institute.teachers}</span></div><div class="tabs">${[["Class", "class"], ["Teacher", "teacher"], ["Class+teacher", "group"]].map(([mode, key]) => `<button class="tab ${state.mode === mode ? "active" : ""}" data-mode="${mode}">${icon(key)}${mode}</button>`).join("")}</div>${searchBox("item", "Search class or teacher", state.itemQuery)}<div class="sort-row"><span>Sort</span><div class="demo-sort-toggle"><button data-sort="Recent" class="${state.sort === "Recent" ? "active" : ""}">Recent</button><button data-sort="A-Z" class="${state.sort === "A-Z" ? "active" : ""}">A-Z</button></div></div><div class="demo-class-label">${state.mode === "Teacher" ? "Teachers" : "Classes"}</div><div class="demo-class-list">${panelItems()}</div></section><section class="timeline-panel"><div class="timeline-title"><h2>${esc(institute.name)}</h2><div class="range-pills">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="range-pill ${period === state.period ? "active" : ""}" data-period="${period}">${period}</button>`).join("")}</div></div><div class="timeline-card">${timeline()}</div></section></div>${reportModal()}`;
+    const selectedLabel = state.mode === "Teacher" ? state.item : currentClass().name;
+    const crumbTail = state.desktopPane > 0 ? `<span class="slash">/</span><button data-desktop-pane="1" class="${state.desktopPane === 1 ? "current" : ""}">${esc(institute.name)}</button>` : "";
+    const timelineCrumb = state.desktopPane > 1 ? `<span class="slash">/</span><button data-desktop-pane="2" class="current">${esc(selectedLabel)}</button>` : "";
+    root.innerHTML = `<div class="mock-top"><div class="crumbs"><span class="mock-rail-logo">L</span><button data-desktop-pane="0" class="${state.desktopPane === 0 ? "current" : ""}">Overview</button>${crumbTail}${timelineCrumb}</div><div class="demo-top-actions"><button class="report-button" data-report>${icon("report")} Ledgr Report</button></div></div><div class="mock-body"><aside class="icon-rail">${[["overview", "Overview"], ["building", "Institutes"], ["books", "Syllabus"], ["school", "Classes"], ["settings", "Settings"], ["report", "Ledgr Report"], ["send", "Messenger"]].map(([key, label], index) => `<button class="rail-icon ${index === 5 ? "active" : ""}" title="${label}" aria-label="${label}">${icon(key)}</button>`).join("")}</aside><div class="demo-panel-viewport" tabindex="0" aria-label="Interactive ClassLog preview"><div class="demo-panel-track"><section class="institutes demo-slide-panel" data-slide="0" ${state.desktopPane === 0 ? "" : "inert aria-hidden=\"true\""}><div class="panel-head"><span>${institutes.length} institutes · today</span><span class="danger-count">${institutes.reduce((sum, item) => sum + item.logged, 0)}/${institutes.reduce((sum, item) => sum + item.teachers, 0)}</span></div>${searchBox("institute", "Search institutes", state.instituteQuery)}<div class="update-pill">Not opened yet</div><div class="institute-list">${instituteRows()}</div></section><section class="class-panel demo-slide-panel" data-slide="1" ${state.desktopPane === 1 ? "" : "inert aria-hidden=\"true\""}><div class="demo-class-head"><div class="institute-title"><span>Institute</span><h2>${esc(institute.name)}</h2></div><span class="demo-head-count">${institute.logged}/${institute.teachers}</span></div><div class="tabs">${[["Class", "class"], ["Teacher", "teacher"], ["Class+teacher", "group"]].map(([mode, key]) => `<button class="tab ${state.mode === mode ? "active" : ""}" data-mode="${mode}">${icon(key)}${mode}</button>`).join("")}</div>${searchBox("item", "Search class or teacher", state.itemQuery)}<div class="sort-row"><span>Sort</span><div class="demo-sort-toggle"><button data-sort="Recent" class="${state.sort === "Recent" ? "active" : ""}">Recent</button><button data-sort="A-Z" class="${state.sort === "A-Z" ? "active" : ""}">A-Z</button></div></div><div class="demo-class-label">${state.mode === "Teacher" ? "Teachers" : "Classes"}</div><div class="demo-class-list">${panelItems()}</div></section><section class="timeline-panel demo-slide-panel" data-slide="2" ${state.desktopPane === 2 ? "" : "inert aria-hidden=\"true\""}><div class="timeline-title"><h2>${esc(institute.name)}</h2><div class="range-pills">${["Today", "Yesterday", "This Week", "This Month", "Range"].map((period) => `<button class="range-pill ${period === state.period ? "active" : ""}" data-period="${period}">${period}</button>`).join("")}</div></div><div class="timeline-card">${timeline()}</div></section></div>${desktopSlideNav()}</div></div>${reportModal()}`;
+    const track = root.querySelector(".demo-panel-track");
+    if (track) {
+      const safeFrom = Math.max(0, Math.min(2, Number(fromPane) || 0));
+      track.style.transform = `translate3d(-${safeFrom * 100}%,0,0)`;
+      if (safeFrom !== state.desktopPane) {
+        track.getBoundingClientRect();
+        window.requestAnimationFrame(() => { track.style.transform = `translate3d(-${state.desktopPane * 100}%,0,0)`; });
+      }
+    }
+    bindDesktopSwipe();
   }
 
   function mobileHeader({ title, subtitle = "", eyebrow = "Ledgr Admin", back = false, report = false }) {
@@ -325,7 +397,7 @@
     admins: {
       title: "Admins",
       subtitle: "Roles and permissions",
-      rows: [["Fictional Admin", "Owner · all institutes"], ["Operations Admin", "Reports and institutes"], ["Academic Admin", "Syllabus and sections"]],
+      rows: [["Lead Admin", "Owner · all institutes"], ["Operations Admin", "Reports and institutes"], ["Academic Admin", "Syllabus and sections"]],
     },
     messenger: {
       title: "Messenger",
@@ -369,11 +441,13 @@
     else if (state.mobileSurface === "report") content = mobileReportSurface();
     else if (["tools", "tool"].includes(state.mobileSurface)) content = mobileToolsSurface();
     else content = state.mobilePane === "institutes" ? mobileHomeRoot() : mobileWorkspace();
-    root.innerHTML = `<div class="mobile-admin-demo">${content}${mobileBottomNav()}${state.toast ? `<div class="mobile-demo-toast" role="status">${esc(state.toast)}</div>` : ""}</div>`;
+    const motionClass = state.mobileDirection > 0 ? "mobile-slide-forward" : state.mobileDirection < 0 ? "mobile-slide-back" : "";
+    root.innerHTML = `<div class="mobile-admin-demo ${motionClass}">${content}${mobileBottomNav()}${state.toast ? `<div class="mobile-demo-toast" role="status">${esc(state.toast)}</div>` : ""}</div>`;
+    state.mobileDirection = 0;
   }
 
-  function render() {
-    phoneMedia.matches ? renderMobile() : renderDesktop();
+  function render(fromPane = null) {
+    phoneMedia.matches ? renderMobile() : renderDesktop(fromPane == null ? state.desktopPane : fromPane);
   }
 
   function showToast(message) {
@@ -383,6 +457,7 @@
 
   function handleMobileBack() {
     state.toast = "";
+    state.mobileDirection = -1;
     if (state.mobileSurface === "home") {
       state.mobilePane = state.mobilePane === "timeline" ? "classes" : "institutes";
       return;
@@ -398,10 +473,19 @@
   }
 
   root.addEventListener("click", (event) => {
+    const desktopPane = event.target.closest("[data-desktop-pane]");
+    if (desktopPane && !phoneMedia.matches) {
+      const fromPane = state.desktopPane;
+      state.desktopPane = Math.max(0, Math.min(2, Number(desktopPane.dataset.desktopPane) || 0));
+      render(fromPane);
+      return;
+    }
+
     const mobileNav = event.target.closest("[data-mobile-nav]");
     if (mobileNav) {
       const target = mobileNav.dataset.mobileNav;
       state.toast = "";
+      state.mobileDirection = target === "home" ? -1 : 1;
       state.mobileSurface = target;
       if (target === "home") state.mobilePane = "institutes";
       if (target === "teachers") state.mobileTeacherView = "list";
@@ -418,6 +502,7 @@
 
     if (event.target.closest("[data-mobile-report]")) {
       state.mobileSurface = "report";
+      state.mobileDirection = 1;
       state.toast = "";
       render();
       return;
@@ -430,6 +515,7 @@
       if (target === "entries") {
         state.mobilePane = "timeline";
         state.timelineScope = "institute";
+        state.mobileDirection = 1;
       } else {
         state.mobilePane = "classes";
         state.mode = target === "teachers" ? "Teacher" : "Class";
@@ -447,15 +533,20 @@
 
     const institute = event.target.closest("[data-institute]");
     if (institute) {
+      const fromPane = state.desktopPane;
       state.institute = institute.dataset.institute;
       if (phoneMedia.matches) {
         state.mobileSurface = "home";
         state.mobilePane = "classes";
+        state.mobileDirection = 1;
         state.mode = "Class";
         state.item = classes[0].id;
         state.itemQuery = "";
+        render();
+      } else {
+        state.desktopPane = 1;
+        render(fromPane);
       }
-      render();
       return;
     }
 
@@ -467,6 +558,7 @@
       state.item = teacher.name;
       state.timelineScope = "teacher";
       state.mobilePane = "timeline";
+      state.mobileDirection = 1;
       render();
       return;
     }
@@ -478,18 +570,25 @@
       state.mode = "Class+teacher";
       state.timelineScope = "pair";
       state.mobilePane = "timeline";
+      state.mobileDirection = 1;
       render();
       return;
     }
 
     const item = event.target.closest("[data-item]");
     if (item) {
+      const fromPane = state.desktopPane;
       state.item = item.dataset.item;
       if (phoneMedia.matches) {
         state.timelineScope = "class";
         state.mobilePane = "timeline";
+        state.mobileDirection = 1;
+        render();
+      } else {
+        state.timelineScope = state.mode === "Teacher" ? "teacher" : state.mode === "Class+teacher" ? "pair" : "class";
+        state.desktopPane = 2;
+        render(fromPane);
       }
-      render();
       return;
     }
 
@@ -501,6 +600,7 @@
       state.mode = "Teacher";
       state.item = teacher.name;
       state.mobileTeacherView = "detail";
+      state.mobileDirection = 1;
       render();
       return;
     }
@@ -511,6 +611,7 @@
       state.mode = "Class+teacher";
       state.timelineScope = "pair";
       state.mobileTeacherView = "timeline";
+      state.mobileDirection = 1;
       render();
       return;
     }
@@ -520,6 +621,7 @@
       state.item = currentTeacher().name;
       state.timelineScope = "teacher";
       state.mobileTeacherView = "timeline";
+      state.mobileDirection = 1;
       render();
       return;
     }
@@ -642,6 +744,17 @@
     if (event.key === "Escape" && state.report) {
       state.report = false;
       render();
+      return;
+    }
+    if (!phoneMedia.matches && !event.target.matches("input, textarea, select") && ["ArrowLeft", "ArrowRight"].includes(event.key)) {
+      const fromPane = state.desktopPane;
+      const direction = event.key === "ArrowRight" ? 1 : -1;
+      const nextPane = Math.max(0, Math.min(2, fromPane + direction));
+      if (nextPane !== fromPane) {
+        event.preventDefault();
+        state.desktopPane = nextPane;
+        render(fromPane);
+      }
     }
   });
 
